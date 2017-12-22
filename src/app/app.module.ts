@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { StatusComponent } from './subcomponents/status.component';
 
+import { StatusService } from './services/status.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { StatusComponent } from './subcomponents/status.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [StatusService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
