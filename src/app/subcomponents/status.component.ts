@@ -24,7 +24,7 @@ export class StatusComponent implements OnInit {
    */
   toIconText(c: AppStatusEntry): string {
     switch (c) {
-      case AppStatusEntry.Untracked:
+      case AppStatusEntry.Added:
         return 'add_circle_outline';
       case AppStatusEntry.Modified:
         return 'check_circle';

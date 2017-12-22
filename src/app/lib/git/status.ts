@@ -32,7 +32,7 @@ function toAppWorkingFileChange(entry: FileEntry): AppStatusEntry {
   if (entry.kind === 'ordinary') {
     switch (entry.type) {
       case 'added':
-        return AppStatusEntry.Untracked;
+        return AppStatusEntry.Added;
       case 'modified':
         return AppStatusEntry.Modified;
       case 'deleted':
@@ -45,7 +45,7 @@ function toAppWorkingFileChange(entry: FileEntry): AppStatusEntry {
   } else if (entry.kind === 'conflicted') {
     return AppStatusEntry.Conflicted;
   } else if (entry.kind === 'untracked') {
-    return AppStatusEntry.Untracked;
+    return AppStatusEntry.Added;
   }
 
   throw new Error(`Unknown file status ${entry}`);

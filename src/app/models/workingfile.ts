@@ -26,7 +26,7 @@ export enum GitStatusEntry {
  * The file status as represented in this app.
  */
 export enum AppStatusEntry {
-  Untracked,
+  Added,
   Modified,
   Deleted,
   RenameedOrCopied,
