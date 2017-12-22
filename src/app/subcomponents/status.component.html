@@ -1,3 +1,12 @@
-<ul>
-  <li *ngFor="let change of changes">{{change.path}}</li>
+<ul class="changes fancy-scroll">
+  <li class="change" *ngFor="let change of changes">
+    <div class="change-entry">
+      <div class="status-icon {{getIconText(change.state)}}">
+        <i class="icon material-icons">{{getIconText(change.state)}}</i>
+      </div>
+      <div class="path">
+        {{change.path}}
+      </div>
+    </div>
+  </li>
 </ul>

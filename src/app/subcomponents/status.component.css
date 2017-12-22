@@ -1,0 +1,58 @@
+.changes {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: auto;
+}
+
+.change {
+  list-style: none;
+}
+
+.change-entry {
+  border-bottom: 1px solid #eee;
+  display: flex;
+  height: 30px;
+  line-height: 30px;
+}
+
+.status-icon {
+  position: relative;
+  text-align: center;
+  width: 40px; /* fix icon area width */
+}
+
+.icon {
+  line-height: 30px;
+  font-size: 20px;
+}
+
+/**
+Customize icon colors here.
+Class names are equivalent to Material icons name.
+*/
+.status-icon.add_circle_outline {
+  color: #009688;
+  /* color: #fff;
+  background-color: #009688; */
+}
+.status-icon.change_history {
+  color: #FFC107;
+  /* color: #fff;
+  background-color: #FFC107; */
+}
+.status-icon.delete {
+  color: #FF5722;
+  /* color: #fff;
+  background-color: #FF5722; */
+}
+.status-icon.arrow_forward {
+  color: #03A9F4;
+  /* color: #fff;
+  background-color: #03A9F4; */
+}
+
+.path {
+  flex: 1; /* file path takes the rest */
+  font-size: 12px;
+}
