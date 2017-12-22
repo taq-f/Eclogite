@@ -36,10 +36,10 @@ Class names are equivalent to Material icons name.
   /* color: #fff;
   background-color: #009688; */
 }
-.status-icon.change_history {
-  color: #FFC107;
+.status-icon.check_circle {
+  color: #009688;
   /* color: #fff;
-  background-color: #FFC107; */
+  background-color: #009688; */
 }
 .status-icon.delete {
   color: #FF5722;
@@ -50,6 +50,11 @@ Class names are equivalent to Material icons name.
   color: #03A9F4;
   /* color: #fff;
   background-color: #03A9F4; */
+}
+.status-icon.warning {
+  color: #E91E63;
+  /* color: #fff;
+  background-color: #E91E63; */
 }
 
 .path {

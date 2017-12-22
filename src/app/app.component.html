@@ -1,3 +1,9 @@
-<div style="width: 200px; height: 100vh;">
+<!-- temporarily added to specify repository path for debug -->
+<div style="height: 20px;">
+  repo path
+  <input type="text" [(ngModel)]="repositoryPath">
+  <button (click)="setRepositoryPath()">set repo</button>
+</div>
+<div style="width: 200px; height: calc(100vh - 20px);">
   <app-status></app-status>
 </div>
