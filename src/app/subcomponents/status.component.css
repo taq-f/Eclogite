@@ -55,4 +55,6 @@ Class names are equivalent to Material icons name.
 .path {
   flex: 1; /* file path takes the rest */
   font-size: 12px;
+  overflow-x: hidden;
+  white-space: nowrap;
 }
