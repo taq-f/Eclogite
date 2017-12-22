@@ -69,6 +69,9 @@ const postcssPlugins = function () {
 
 
 module.exports = {
+  "externals": {
+    "dugite": "require('dugite')"
+  },
   "resolve": {
     "extensions": [
       ".ts",
