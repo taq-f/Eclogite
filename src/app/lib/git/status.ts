@@ -17,7 +17,8 @@ export async function getStatus(repositoryPath: string): Promise<ReadonlyArray<A
   }
 
   return parseStatus(result.stdout).map(e => {
-    const fileChange = toAppWorkingFileChange(mapStatus(e.statusCode));
+    const entry = mapStatus(e.statusCode);
+    const fileChange = toAppWorkingFileChange(entry);
     return {
       path: e.path,
       state: fileChange,
@@ -118,7 +119,6 @@ function getTypeMarker(field: string): EntryTypeMarker {
       return EntryTypeMarker.Untracked;
   }
 }
-
 
 /**
  * Conversion from a 2 letter statuscode into file entry.
@@ -306,7 +306,6 @@ export function mapStatus(status: string): FileEntry {
     };
   }
 
-  // as a fallback, we assume the file is modified in some way
   return {
     kind: 'ordinary',
     type: 'modified',

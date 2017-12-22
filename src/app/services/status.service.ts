@@ -19,10 +19,10 @@ export class StatusService {
     );
 
     // return of([
-    //   { path: 'path/to/added.txt', state: AppStatusEntry.Untracked },
-    //   { path: 'path/to/日本語ファイル名', state: AppStatusEntry.Untracked },
-    //   { path: 'path/to/すごく長いファイル名すごく長いファイル名すごく長いファイル名', state: AppStatusEntry.Untracked },
-    //   { path: 'path/to/changed.txt', state: AppStatusEntry.Changed },
+    //   { path: 'path/to/added.txt', state: AppStatusEntry.Added },
+    //   { path: 'path/to/日本語ファイル名', state: AppStatusEntry.Added },
+    //   { path: 'path/to/すごく長いファイル名すごく長いファイル名すごく長いファイル名', state: AppStatusEntry.Added },
+    //   { path: 'path/to/changed.txt', state: AppStatusEntry.Modified, oldPath: 'path/to/before.txt' },
     //   { path: 'path/to/deleted.txt', state: AppStatusEntry.Deleted },
     //   { path: 'path/to/renamed_or_copied.txt', state: AppStatusEntry.RenameedOrCopied },
     //   { path: 'path/to/conflicted.txt', state: AppStatusEntry.Conflicted },
