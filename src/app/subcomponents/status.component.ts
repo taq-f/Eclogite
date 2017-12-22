@@ -33,7 +33,7 @@ export class StatusComponent implements OnInit {
       case ChangeDisplay.RenameedOrCopied:
         return 'arrow_forward';
       default:
-        break;
+        throw new Error(`unknown status: {c}`);
     }
   }
 }
