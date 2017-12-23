@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%;
+}
+
+.category {
+  height: 50px;
+  line-height: 70px;
+  text-align: center;
+}
+
+.changes {
+  margin: 0;
+  padding: 0;
+}
+
+.category, .change {
+  list-style: none;
+}

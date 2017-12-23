@@ -1,0 +1,18 @@
+<div class="wrapper fancy-scroll">
+  <ul class="changes">
+    <li class="category">UNSTAGED</li>
+    <li class="change" *ngFor="let change of unstagedChanges" (click)="selectChange(change)">
+      <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+    </li>
+
+    <li class="category">STAGED</li>
+    <li class="change" *ngFor="let change of stagedChanges" (click)="selectChange(change)">
+      <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+    </li>
+
+    <li class="category">CONFLICTED!</li>
+    <li class="change" *ngFor="let change of conflictedChanges" (click)="selectChange(change)">
+      <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+    </li>
+  </ul>
+</div>
