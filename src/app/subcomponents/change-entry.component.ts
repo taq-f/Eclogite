@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import {trigger, state, style, transition, animate } from '@angular/animations';
 
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 import { StatusService } from '../services/status.service';
@@ -6,11 +7,24 @@ import { StatusService } from '../services/status.service';
 @Component({
   selector: 'app-change-entry',
   templateUrl: './change-entry.component.html',
-  styleUrls: ['./change-entry.component.css']
+  styleUrls: ['./change-entry.component.css'],
+  animations: [
+    trigger('select', [
+      state('unselected', style({backgroundColor: 'transparent'})),
+      state('selected', style({backgroundColor: '#CFD8DC'})),
+      transition('unselected <=> selected', animate('200ms ease')),
+    ])
+  ]
 })
 export class ChangeEntryComponent {
   @Input() change: AppWorkingFileChange;
-  @Input() selected: boolean;
+
+  @Input()
+  set selected(v: boolean) {
+    this.selectState = v ? 'selected': 'unselected';
+  }
+
+  selectState = 'unselected';
 
   /**
    * Convert status into Material icon text.
