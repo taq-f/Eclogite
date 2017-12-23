@@ -1,62 +1,89 @@
-import { AppStatusEntry, AppWorkingFileChange, FileEntry, GitStatusEntry, StatusEntry } from '../../models/workingfile';
+import {
+  AppStatusEntry,
+  AppWorkingFileChange,
+  GitStatusEntry,
+  mapStatusEntry,
+  FileEntry,
+  WorkingFileChange
+} from '../../models/workingfile';
 
 import { git } from './core';
 
 /**
  * Retrieve the status of the repository.
  */
-export async function getStatus(repositoryPath: string): Promise<ReadonlyArray<AppWorkingFileChange>> {
+export async function getStatus(
+  repositoryPath: string
+): Promise<{
+  staged: ReadonlyArray<AppWorkingFileChange>,
+  unstaged: ReadonlyArray<AppWorkingFileChange>,
+  conflicted: ReadonlyArray<AppWorkingFileChange>,
+}> {
   const result = await git(
     ['status', '--untracked-files=all', '--branch', '--porcelain=2', '-z'],
     repositoryPath,
   );
 
   if (result.exitCode !== 0) {
+    // TODO
     console.log('err', result.stderr);
     return;
   }
 
-  return parseStatus(result.stdout).map(e => {
-    const entry = mapStatus(e.statusCode);
-    const fileChange = toAppWorkingFileChange(entry);
-    return {
-      path: e.path,
-      state: fileChange,
-    };
-  });
-}
+  // Prepare three types of changes, which should be categorized separatly.
+  const staged: AppWorkingFileChange[] = [];
+  const unstaged: AppWorkingFileChange[] = [];
+  const conflicted: AppWorkingFileChange[] = [];
 
-/**
- * Get view friendly working file status.
- */
-function toAppWorkingFileChange(entry: FileEntry): AppStatusEntry {
-  if (entry.kind === 'ordinary') {
-    switch (entry.type) {
-      case 'added':
-        return AppStatusEntry.Added;
-      case 'modified':
-        return AppStatusEntry.Modified;
-      case 'deleted':
-        return AppStatusEntry.Deleted;
+  for (const change of parseStatus(result.stdout)) {
+    const entry = mapStatus(change.statusCode);
+
+    if (entry.kind === 'untracked') {
+      unstaged.push({
+        path: change.path,
+        oldPath: undefined,
+        state: AppStatusEntry.Added,
+      });
+      // The untracked file always falls into unstaged changes. Nothing else.
+      continue;
     }
-  } else if (entry.kind === 'copied') {
-    return AppStatusEntry.RenameedOrCopied;
-  } else if (entry.kind === 'renamed') {
-    return AppStatusEntry.RenameedOrCopied;
-  } else if (entry.kind === 'conflicted') {
-    return AppStatusEntry.Conflicted;
-  } else if (entry.kind === 'untracked') {
-    return AppStatusEntry.Added;
+
+    if (entry.kind === 'conflicted') {
+      conflicted.push({
+        path: change.path,
+        oldPath: undefined,
+        state: AppStatusEntry.Conflicted,
+      });
+      // The conflicted file always falls into conflicted changes. Nothing else.
+      continue;
+    }
+
+    if (entry.kind === 'ordinary') {
+      if (entry.index !== GitStatusEntry.Unchanged) {
+        staged.push({
+          path: change.path,
+          oldPath: change.oldPath,
+          state: toAppStatusEntry(entry.index),
+        });
+      }
+      if (entry.workingTree !== GitStatusEntry.Unchanged) {
+        unstaged.push({
+          path: change.path,
+          oldPath: change.oldPath,
+          state: toAppStatusEntry(entry.workingTree),
+        });
+      }
+    }
   }
 
-  throw new Error(`Unknown file status ${entry}`);
+  return { staged, unstaged, conflicted, };
 }
 
 /**
  * Parse "status" output into status entries.
  */
-function parseStatus(output: string): ReadonlyArray<StatusEntry> {
-  const entries = new Array<StatusEntry>();
+function parseStatus(output: string): ReadonlyArray<WorkingFileChange> {
+  const entries = new Array<WorkingFileChange>();
   const fields = output.split('\0');
 
   let field: string | undefined;
@@ -85,6 +112,29 @@ function parseStatus(output: string): ReadonlyArray<StatusEntry> {
   }
 
   return entries;
+}
+
+/**
+ * Get view friendly working file status.
+ */
+function toAppStatusEntry(entry: GitStatusEntry): AppStatusEntry {
+  switch (entry) {
+    case GitStatusEntry.Modified:
+      return AppStatusEntry.Modified;
+    case GitStatusEntry.Added:
+      return AppStatusEntry.Added;
+    case GitStatusEntry.Deleted:
+      return AppStatusEntry.Deleted;
+    case GitStatusEntry.Renamed:
+      return AppStatusEntry.RenamedOrCopied;
+    case GitStatusEntry.Copied:
+      return AppStatusEntry.RenamedOrCopied;
+    case GitStatusEntry.Untracked:
+      return AppStatusEntry.Added;
+    case GitStatusEntry.UpdatedButUnmerged:
+      return AppStatusEntry.Conflicted;
+  }
+  throw new Error(`inappropriate git status entry: ${entry}`);
 }
 
 /**
@@ -124,132 +174,7 @@ function getTypeMarker(field: string): EntryTypeMarker {
  * Conversion from a 2 letter statuscode into file entry.
  */
 export function mapStatus(status: string): FileEntry {
-  if (status === '??') {
-    return {
-      kind: 'untracked',
-    };
-  }
-
-  if (status === '.M') {
-    return {
-      kind: 'ordinary',
-      type: 'modified',
-      index: GitStatusEntry.Unchanged,
-      workingTree: GitStatusEntry.Modified,
-    };
-  }
-
-  if (status === 'M.') {
-    return {
-      kind: 'ordinary',
-      type: 'modified',
-      index: GitStatusEntry.Modified,
-      workingTree: GitStatusEntry.Unchanged,
-    };
-  }
-
-  if (status === '.A') {
-    return {
-      kind: 'ordinary',
-      type: 'added',
-      index: GitStatusEntry.Unchanged,
-      workingTree: GitStatusEntry.Added,
-    };
-  }
-
-  if (status === 'A.') {
-    return {
-      kind: 'ordinary',
-      type: 'added',
-      index: GitStatusEntry.Added,
-      workingTree: GitStatusEntry.Unchanged,
-    };
-  }
-
-  if (status === '.D') {
-    return {
-      kind: 'ordinary',
-      type: 'deleted',
-      index: GitStatusEntry.Unchanged,
-      workingTree: GitStatusEntry.Deleted,
-    };
-  }
-
-  if (status === 'D.') {
-    return {
-      kind: 'ordinary',
-      type: 'deleted',
-      index: GitStatusEntry.Deleted,
-      workingTree: GitStatusEntry.Unchanged,
-    };
-  }
-
-  if (status === 'R.') {
-    return {
-      kind: 'renamed',
-      index: GitStatusEntry.Renamed,
-      workingTree: GitStatusEntry.Unchanged,
-    };
-  }
-
-  if (status === '.R') {
-    return {
-      kind: 'renamed',
-      index: GitStatusEntry.Unchanged,
-      workingTree: GitStatusEntry.Renamed,
-    };
-  }
-
-  if (status === 'C.') {
-    return {
-      kind: 'copied',
-      index: GitStatusEntry.Copied,
-      workingTree: GitStatusEntry.Unchanged,
-    };
-  }
-
-  if (status === '.C') {
-    return {
-      kind: 'copied',
-      index: GitStatusEntry.Unchanged,
-      workingTree: GitStatusEntry.Copied,
-    };
-  }
-
-  if (status === 'AD') {
-    return {
-      kind: 'ordinary',
-      type: 'added',
-      index: GitStatusEntry.Added,
-      workingTree: GitStatusEntry.Deleted,
-    };
-  }
-
-  if (status === 'AM') {
-    return {
-      kind: 'ordinary',
-      type: 'added',
-      index: GitStatusEntry.Added,
-      workingTree: GitStatusEntry.Modified,
-    };
-  }
-
-  if (status === 'RM') {
-    return {
-      kind: 'renamed',
-      index: GitStatusEntry.Renamed,
-      workingTree: GitStatusEntry.Modified,
-    };
-  }
-
-  if (status === 'RD') {
-    return {
-      kind: 'renamed',
-      index: GitStatusEntry.Renamed,
-      workingTree: GitStatusEntry.Deleted,
-    };
-  }
-
+  // Check obvious ones; conflicted.
   if (status === 'DD') {
     return {
       kind: 'conflicted',
@@ -306,18 +231,31 @@ export function mapStatus(status: string): FileEntry {
     };
   }
 
+  // And untracked files are obvious too.
+  if (status === '??') {
+    return {
+      kind: 'untracked',
+    };
+  }
+
+  // From here inspect X and Y parameter
+  const x = mapStatusEntry(status.slice(0, 1));
+  const y = mapStatusEntry(status.slice(1, 2));
+
   return {
     kind: 'ordinary',
-    type: 'modified',
+    index: x,
+    workingTree: y,
   };
 }
+
 
 // Private parsers *************************************************************
 
 /**
  * 1 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <path>
  */
-function parseChangedEntry(field: string): StatusEntry {
+function parseChangedEntry(field: string): WorkingFileChange {
   const changedEntryRe = /^1 ([MADRCUTX?!.]{2}) (N\.\.\.|S[C.][M.][U.]) (\d+) (\d+) (\d+) ([a-f0-9]+) ([a-f0-9]+) ([\s\S]*?)$/;
   const match = changedEntryRe.exec(field);
   if (!match) {
@@ -333,7 +271,7 @@ function parseChangedEntry(field: string): StatusEntry {
 /**
  * 2 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <X><score> <path><sep><origPath>
  */
-function parsedRenamedOrCopiedEntry(field: string, oldPath: string): StatusEntry {
+function parsedRenamedOrCopiedEntry(field: string, oldPath: string): WorkingFileChange {
   const renamedOrCopiedEntryRe = /^2 ([MADRCUTX?!.]{2}) (N\.\.\.|S[C.][M.][U.]) (\d+) (\d+) (\d+) ([a-f0-9]+) ([a-f0-9]+) ([RC]\d+) ([\s\S]*?)$/;
   const match = renamedOrCopiedEntryRe.exec(field);
   if (!match) {
@@ -353,7 +291,7 @@ function parsedRenamedOrCopiedEntry(field: string, oldPath: string): StatusEntry
 /**
  * u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
  */
-function parseUnmergedEntry(field: string): StatusEntry {
+function parseUnmergedEntry(field: string): WorkingFileChange {
   const unmergedEntryRe = /^u ([DAU]{2}) (N\.\.\.|S[C.][M.][U.]) (\d+) (\d+) (\d+) (\d+) ([a-f0-9]+) ([a-f0-9]+) ([a-f0-9]+) ([\s\S]*?)$/;
   const match = unmergedEntryRe.exec(field);
   if (!match) {
@@ -369,7 +307,7 @@ function parseUnmergedEntry(field: string): StatusEntry {
 /**
  * ? path/to/file
  */
-function parseUntrackedField(field: string): StatusEntry {
+function parseUntrackedField(field: string): WorkingFileChange {
   return {
     statusCode: '??',
     path: field.substr(2),

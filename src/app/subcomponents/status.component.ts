@@ -30,7 +30,7 @@ export class StatusComponent implements OnInit {
         return 'check_circle';
       case AppStatusEntry.Deleted:
         return 'delete';
-      case AppStatusEntry.RenameedOrCopied:
+      case AppStatusEntry.RenamedOrCopied:
         return 'arrow_forward';
       case AppStatusEntry.Conflicted:
         return 'warning';
