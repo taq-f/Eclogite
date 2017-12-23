@@ -1,8 +1,11 @@
-
 .change-entry {
   display: flex;
   height: 30px;
   line-height: 30px;
+}
+
+.selected {
+  background-color: red;
 }
 
 .status-icon {

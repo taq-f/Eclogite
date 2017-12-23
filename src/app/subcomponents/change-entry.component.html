@@ -1,4 +1,4 @@
-<div class="change-entry">
+<div class="change-entry" [class.selected]="selected" (click)="toggleSelectState()">
   <div class="status-icon {{toIconText(change.state)}}">
     <i class="icon material-icons">{{toIconText(change.state)}}</i>
   </div>
