@@ -10,12 +10,7 @@ import { StatusService } from '../services/status.service';
 })
 export class ChangeEntryComponent {
   @Input() change: AppWorkingFileChange;
-
-  selected = false;
-
-  toggleSelectState(): void {
-    this.selected = !this.selected;
-  }
+  @Input() selected: boolean;
 
   /**
    * Convert status into Material icon text.

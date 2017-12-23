@@ -14,6 +14,8 @@ export class StatusComponent implements OnInit {
   unstagedChanges: ReadonlyArray<AppWorkingFileChange>;
   conflictedChanges: ReadonlyArray<AppWorkingFileChange>;
 
+  selectedChange: AppWorkingFileChange;
+
   constructor(private statusService: StatusService) { }
 
   ngOnInit(): void {
@@ -22,5 +24,9 @@ export class StatusComponent implements OnInit {
       this.unstagedChanges = fileChanges.unstaged;
       this.conflictedChanges = fileChanges.conflicted;
     });
+  }
+
+  selectChange(c: AppWorkingFileChange) {
+    this.selectedChange = c;
   }
 }
