@@ -9,33 +9,18 @@ import { StatusService } from '../services/status.service';
   styleUrls: ['./status.component.css']
 })
 export class StatusComponent implements OnInit {
-  changes: ReadonlyArray<AppWorkingFileChange>;
+
+  stagedChanges: ReadonlyArray<AppWorkingFileChange>;
+  unstagedChanges: ReadonlyArray<AppWorkingFileChange>;
+  conflictedChanges: ReadonlyArray<AppWorkingFileChange>;
 
   constructor(private statusService: StatusService) { }
 
   ngOnInit(): void {
     this.statusService.getStatus('').subscribe(fileChanges => {
-      this.changes = fileChanges;
+      this.stagedChanges = fileChanges.staged;
+      this.unstagedChanges = fileChanges.unstaged;
+      this.conflictedChanges = fileChanges.conflicted;
     });
-  }
-
-  /**
-   * Convert status into Material icon text.
-   */
-  toIconText(c: AppStatusEntry): string {
-    switch (c) {
-      case AppStatusEntry.Added:
-        return 'add_circle_outline';
-      case AppStatusEntry.Modified:
-        return 'check_circle';
-      case AppStatusEntry.Deleted:
-        return 'delete';
-      case AppStatusEntry.RenamedOrCopied:
-        return 'arrow_forward';
-      case AppStatusEntry.Conflicted:
-        return 'warning';
-      default:
-        throw new Error(`unknown status: {c}`);
-    }
   }
 }

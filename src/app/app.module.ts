@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { StatusComponent } from './subcomponents/status.component';
+import { ChangeEntryComponent } from './subcomponents/change-entry.component';
 
 import { StatusService } from './services/status.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StatusComponent
+    StatusComponent,
+    ChangeEntryComponent
   ],
   imports: [
     BrowserModule,

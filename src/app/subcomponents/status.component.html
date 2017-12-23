@@ -1,12 +1,18 @@
-<ul class="changes fancy-scroll">
-  <li class="change" *ngFor="let change of changes">
-    <div class="change-entry">
-      <div class="status-icon {{toIconText(change.state)}}">
-        <i class="icon material-icons">{{toIconText(change.state)}}</i>
-      </div>
-      <div class="path">
-        {{change.path}}
-      </div>
-    </div>
-  </li>
-</ul>
+<div class="wrapper fancy-scroll">
+  <ul class="changes">
+    <li class="category">Unstaged</li>
+    <li class="change" *ngFor="let change of unstagedChanges">
+      <app-change-entry [change]="change"></app-change-entry>
+    </li>
+
+    <li class="category">Staged</li>
+    <li class="change" *ngFor="let change of stagedChanges">
+      <app-change-entry [change]="change"></app-change-entry>
+    </li>
+
+    <li class="category">Conflicted!</li>
+    <li class="change" *ngFor="let change of conflictedChanges">
+      <app-change-entry [change]="change"></app-change-entry>
+    </li>
+  </ul>
+</div>
