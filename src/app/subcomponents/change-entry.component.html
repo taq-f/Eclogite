@@ -3,6 +3,8 @@
     <i class="icon material-icons">{{toIconText(change.state)}}</i>
   </div>
   <div class="path">
-    {{change.path}}
+    <div class="dir" *ngIf="change.dir !== '.'">{{change.dir}}</div>
+    <div class="sep" *ngIf="change.dir !== '.'">{{change.sep}}</div>
+    <div class="filename">{{change.filename}}</div>
   </div>
 </div>

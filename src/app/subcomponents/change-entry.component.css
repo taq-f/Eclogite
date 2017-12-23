@@ -50,8 +50,27 @@ Class names are equivalent to Material icons name.
 }
 
 .path {
+  display: flex;
   flex: 1; /* file path takes the rest */
   font-size: 12px;
   overflow-x: hidden;
+  padding-right: 5px;
   white-space: nowrap;
+  width: 100%;
+}
+
+.dir, .sep {
+  color: #757575;
+}
+
+.dir {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sep {
+  /* width: 7px; */
+}
+.filename {
+  flex: 1;
 }

@@ -47,8 +47,6 @@ export function mapStatusEntry(letter: string): GitStatusEntry {
   }
 }
 
-
-
 /**
  * The file status as represented in this application.
  *
@@ -86,6 +84,8 @@ export enum AppStatusEntry {
   Conflicted,
 }
 
+export type IndexState = 'staged' | 'unstaged' | 'conflicted';
+
 /**
  * Expressing status entry provided by git status command.
  *
@@ -115,14 +115,18 @@ export interface AppWorkingFileChange {
    * File path which basically relative path from repository root, since git
    * status command provide them that way.
    *
-   * TODO better to split path and filename?
+   * Absolute path, directory name and filename are put separately.
    */
   readonly path: string;
+  readonly dir: string;
+  readonly filename: string;
+  readonly sep: string;
   readonly oldPath?: string;
   /**
    * Status entry that will be described in application.
    */
   readonly state: AppStatusEntry;
+  readonly indexState: IndexState;
 }
 
 export interface OrdinaryEntry {

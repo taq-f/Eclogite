@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
+import { AppStatusEntry, AppWorkingFileChange, IndexState } from '../models/workingfile';
 import { StatusService } from '../services/status.service';
 
 @Component({
@@ -13,15 +13,15 @@ export class StatusComponent implements OnInit {
   /**
    * Changes entries that will be placed in unstaged changes.
    */
-  unstagedChanges: ReadonlyArray<AppWorkingFileChange>;
+  unstagedChanges: AppWorkingFileChange[] = [];
   /**
    * Changes entries that will be placed in staged changes.
    */
-  stagedChanges: ReadonlyArray<AppWorkingFileChange>;
+  stagedChanges: AppWorkingFileChange[] = [];
   /**
    * Changes entries that will be placed in conflicted changes.
    */
-  conflictedChanges: ReadonlyArray<AppWorkingFileChange>;
+  conflictedChanges: AppWorkingFileChange[] = [];
 
   /**
    * A currently selected change entry.
@@ -40,9 +40,18 @@ export class StatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.statusService.getStatus('').subscribe(fileChanges => {
-      this.stagedChanges = fileChanges.staged;
-      this.unstagedChanges = fileChanges.unstaged;
-      this.conflictedChanges = fileChanges.conflicted;
+      const unstaged = this.unstagedChanges;
+      const staged = this.stagedChanges;
+      const conflicted = this.conflictedChanges;
+      for (const f of fileChanges) {
+        if (f.indexState === 'unstaged') {
+          unstaged.push(f);
+        } else if (f.indexState === 'staged') {
+          staged.push(f);
+        } else if (f.indexState === 'conflicted') {
+          conflicted.push(f);
+        }
+      }
     });
   }
 

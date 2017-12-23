@@ -7,6 +7,7 @@ import {
   WorkingFileChange
 } from '../../models/workingfile';
 
+import { dirname, basename, sep } from 'path';
 import { git } from './core';
 
 /**
@@ -14,11 +15,7 @@ import { git } from './core';
  */
 export async function getStatus(
   repositoryPath: string
-): Promise<{
-  staged: ReadonlyArray<AppWorkingFileChange>,
-  unstaged: ReadonlyArray<AppWorkingFileChange>,
-  conflicted: ReadonlyArray<AppWorkingFileChange>,
-}> {
+): Promise<ReadonlyArray<AppWorkingFileChange>> {
   const result = await git(
     ['status', '--untracked-files=all', '--branch', '--porcelain=2', '-z'],
     repositoryPath,
@@ -31,28 +28,35 @@ export async function getStatus(
   }
 
   // Prepare three types of changes, which should be categorized separatly.
-  const staged: AppWorkingFileChange[] = [];
-  const unstaged: AppWorkingFileChange[] = [];
-  const conflicted: AppWorkingFileChange[] = [];
+  const entries: AppWorkingFileChange[] = [];
 
   for (const change of parseStatus(result.stdout)) {
     const entry = mapStatus(change.statusCode);
+    const p = splitPath(change.path);
 
     if (entry.kind === 'untracked') {
-      unstaged.push({
-        path: change.path,
+      entries.push({
+        path: p.path,
+        dir: p.dir,
+        filename: p.filename,
+        sep: p.sep,
         oldPath: undefined,
         state: AppStatusEntry.Added,
+        indexState: 'unstaged',
       });
       // The untracked file always falls into unstaged changes. Nothing else.
       continue;
     }
 
     if (entry.kind === 'conflicted') {
-      conflicted.push({
-        path: change.path,
+      entries.push({
+        path: p.path,
+        dir: p.dir,
+        filename: p.filename,
+        sep: p.sep,
         oldPath: undefined,
         state: AppStatusEntry.Conflicted,
+        indexState: 'conflicted',
       });
       // The conflicted file always falls into conflicted changes. Nothing else.
       continue;
@@ -60,23 +64,31 @@ export async function getStatus(
 
     if (entry.kind === 'ordinary') {
       if (entry.index !== GitStatusEntry.Unchanged) {
-        staged.push({
-          path: change.path,
+        entries.push({
+          path: p.path,
+          dir: p.dir,
+          filename: p.filename,
+          sep: p.sep,
           oldPath: change.oldPath,
           state: toAppStatusEntry(entry.index),
+          indexState: 'staged',
         });
       }
       if (entry.workingTree !== GitStatusEntry.Unchanged) {
-        unstaged.push({
-          path: change.path,
+        entries.push({
+          path: p.path,
+          dir: p.dir,
+          filename: p.filename,
+          sep: p.sep,
           oldPath: change.oldPath,
           state: toAppStatusEntry(entry.workingTree),
+          indexState: 'unstaged',
         });
       }
     }
   }
 
-  return { staged, unstaged, conflicted, };
+  return entries;
 }
 
 /**
@@ -170,10 +182,14 @@ function getTypeMarker(field: string): EntryTypeMarker {
   }
 }
 
+function splitPath(p: string): {path: string, dir: string, filename: string, sep: string} {
+  return { path: p, dir: dirname(p), filename: basename(p), sep: sep };
+}
+
 /**
  * Conversion from a 2 letter statuscode into file entry.
  */
-export function mapStatus(status: string): FileEntry {
+function mapStatus(status: string): FileEntry {
   // Check obvious ones; conflicted.
   if (status === 'DD') {
     return {
