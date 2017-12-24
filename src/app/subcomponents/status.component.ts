@@ -13,15 +13,15 @@ export class StatusComponent implements OnInit {
   /**
    * Changes entries that will be placed in unstaged changes.
    */
-  unstagedChanges: AppWorkingFileChange[] = [];
+  unstagedChanges: ReadonlyArray<AppWorkingFileChange>;
   /**
    * Changes entries that will be placed in staged changes.
    */
-  stagedChanges: AppWorkingFileChange[] = [];
+  stagedChanges: ReadonlyArray<AppWorkingFileChange>;
   /**
    * Changes entries that will be placed in conflicted changes.
    */
-  conflictedChanges: AppWorkingFileChange[] = [];
+  conflictedChanges: ReadonlyArray<AppWorkingFileChange>;
 
   /**
    * A currently selected change entry.
@@ -39,10 +39,14 @@ export class StatusComponent implements OnInit {
   constructor(private statusService: StatusService) { }
 
   ngOnInit(): void {
+    this.loadChanges('');
+  }
+
+  loadChanges(repositoryPath: string):void {
     this.statusService.getStatus('').subscribe(fileChanges => {
-      const unstaged = this.unstagedChanges;
-      const staged = this.stagedChanges;
-      const conflicted = this.conflictedChanges;
+      let unstaged:AppWorkingFileChange[]  = [];
+      let staged:AppWorkingFileChange[]  = [];
+      let conflicted:AppWorkingFileChange[]  = [];
       for (const f of fileChanges) {
         if (f.indexState === 'unstaged') {
           unstaged.push(f);
@@ -52,6 +56,24 @@ export class StatusComponent implements OnInit {
           conflicted.push(f);
         }
       }
+
+      const sortFunc = (a:AppWorkingFileChange, b: AppWorkingFileChange) => {
+        if (a.path > b.path) {
+          return 1;
+        } else if (a.path < b.path) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+
+      unstaged = unstaged.sort(sortFunc);
+      staged = staged.sort(sortFunc);
+      conflicted = conflicted.sort(sortFunc);
+
+      this.unstagedChanges = unstaged;
+      this.stagedChanges = staged;
+      this.conflictedChanges = conflicted;
     });
   }
 
