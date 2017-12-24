@@ -1,0 +1,10 @@
+<mat-dialog-content>
+    <mat-form-field>
+        <input matInput placeholder="Repositoty path" value="">
+    </mat-form-field>
+    <button mat-button color="primary" (click)="openPathSelectDialog()">choose...</button>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button color="primary" [mat-dialog-close]="true">Add</button>
+</mat-dialog-actions>
