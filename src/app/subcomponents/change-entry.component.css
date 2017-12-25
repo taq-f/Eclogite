@@ -7,7 +7,7 @@
 .status-icon {
   position: relative;
   text-align: center;
-  width: 40px; /* fix icon area width */
+  flex: 0 0 40px; /* fix icon area width */
 }
 
 .icon {
@@ -63,6 +63,7 @@ Class names are equivalent to Material icons name.
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 30px;
 }
 .filename {
   flex: 1;
