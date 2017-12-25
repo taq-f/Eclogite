@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
+  color: rgba(0,0,0,.87);
+}
+
+/* Customize scroll bar without much stress because all I need to care is Chrome. */
+.fancy-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.fancy-scroll::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.fancy-scroll::-webkit-scrollbar-thumb {
+  background-color: #E0E0E0;
+  border-radius: 10px;
+}
