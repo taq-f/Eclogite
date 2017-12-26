@@ -113,4 +113,5 @@ pre {
   font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
   margin: 0;
   white-space: pre-wrap;
+  word-break: break-all;
 }
