@@ -6,22 +6,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 import { AppComponent } from './app.component';
+import { RepositorySelectComponent } from './subcomponents/repository-select.component';
 import { RepositoryAddComponent } from './subcomponents/repository-add.component';
 import { StatusComponent } from './subcomponents/status.component';
 import { ChangeEntryComponent } from './subcomponents/change-entry.component';
 
 import { StatusService } from './services/status.service';
+import { RepositoryService } from './services/repository.service';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RepositorySelectComponent,
     RepositoryAddComponent,
     StatusComponent,
     ChangeEntryComponent
   ],
   entryComponents: [
+    RepositorySelectComponent,
     RepositoryAddComponent
   ],
   imports: [
@@ -31,9 +36,13 @@ import { StatusService } from './services/status.service';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatListModule
   ],
-  providers: [StatusService],
+  providers: [
+    StatusService,
+    RepositoryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
