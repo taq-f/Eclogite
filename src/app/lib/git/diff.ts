@@ -1,13 +1,13 @@
 import { git } from './core';
-import { Hunk, Line } from '../../models/diff';
+import { FileDiff, Hunk, HunkLine } from '../../models/diff';
 
 export async function getDiff(
   repositoryPath: string,
   filepath: string
-) {
+): Promise<FileDiff> {
   const args = [
     'diff',
-    'HEAD',
+    // 'HEAD',
     '--no-ext-diff',
     '--patch-with-raw',
     '-z',
@@ -17,6 +17,7 @@ export async function getDiff(
   ];
 
   const result = await git(args, repositoryPath);
+
   if (result.exitCode !== 0) {
     // TODO
     console.log('err', result.stderr);
@@ -25,62 +26,72 @@ export async function getDiff(
 
   const output = result.stdout;
   const components = output.split('\0');
-  const diffLines = components[3].split('\n').slice(4);
+  const diffInfo = components[3].split('\n').slice(2, 4);
+  const diffLines = components[3].split('\n').slice(4, -1);
 
   const diffHeaderRe = /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/;
 
+  let oldFileStartLineNo: number;
+  let newFileStartLineNo: number;
+  let hunk: Hunk;
   const hunks: Hunk[] = [];
-  let lines: Line[];
-  let startBeforeLineNo: number;
-  let startAfterLineNo: number;
+  let hunkLines: HunkLine[];
 
-  for (const l of diffLines) {
-    // Header?
-    const m = diffHeaderRe.exec(l);
+  for (const line of diffLines) {
+    const m = diffHeaderRe.exec(line);
     if (m) {
-      if (lines) {
-        hunks.push({ lines });
-      }
-      lines = [{
-        type: 'header',
-        lineNoBefore: -1,
-        lineNoAfter: -1,
-        content: l,
-      }];
+      // Header! which means start makign a hunk.
+      oldFileStartLineNo = Number(m[1]);
+      newFileStartLineNo = Number(m[3]);
+      hunkLines = [];
 
-      startBeforeLineNo = Number(m[1]);
-      startAfterLineNo = Number(m[3]);
+      hunk = new Hunk({
+        header: {
+          content: line,
+          oldFileStartLineNo: oldFileStartLineNo,
+          newFileStartLineNo: newFileStartLineNo,
+        },
+        lines: hunkLines,
+        selectedState: 'all',
+      });
+
+      hunks.push(hunk);
       continue;
     }
 
-    if (l.startsWith('+')) {
-      lines.push({
+    if (line.startsWith('+')) {
+      hunkLines.push({
         type: 'plus',
-        lineNoBefore: -1,
-        lineNoAfter: startAfterLineNo,
-        content: l,
+        oldLineNo: -1,
+        newLineNo: newFileStartLineNo,
+        content: line,
+        selected: true,
       });
-      startAfterLineNo++;
-    } else if (l.startsWith('-')) {
-      lines.push({
+      newFileStartLineNo++;
+    } else if (line.startsWith('-')) {
+      hunkLines.push({
         type: 'minus',
-        lineNoBefore: startBeforeLineNo,
-        lineNoAfter: -1,
-        content: l,
+        oldLineNo: oldFileStartLineNo,
+        newLineNo: -1,
+        content: line,
+        selected: true,
       });
-      startBeforeLineNo++;
+      oldFileStartLineNo++;
     } else {
-      lines.push({
+      hunkLines.push({
         type: 'unchanged',
-        lineNoBefore: startBeforeLineNo,
-        lineNoAfter: startAfterLineNo,
-        content: l,
+        oldLineNo: oldFileStartLineNo,
+        newLineNo: newFileStartLineNo,
+        content: line,
       });
-      startAfterLineNo++;
-      startBeforeLineNo++;
+      oldFileStartLineNo++;
+      newFileStartLineNo++;
     }
   }
-  hunks.push({ lines });
 
-  console.log(JSON.stringify(hunks, null, 2));
+  return new FileDiff({
+    path: filepath,
+    diffInfo,
+    hunks,
+  });
 }

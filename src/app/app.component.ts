@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppWorkingFileChange } from './models/workingfile';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   repositoryPath = '';
+  filepath: string;
 
-  setRepositoryPath(): void {
-    console.log("set", this.repositoryPath);
+  onEntrySelectChange(v: AppWorkingFileChange): void {
+    this.filepath = v.path;
   }
 }

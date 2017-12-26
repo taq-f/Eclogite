@@ -1,23 +1,24 @@
-<div class="line header {{header.state}}" (click)="toggleSelected(header)">
+<div class="line header {{hunk.selectedState}}" (click)="toggleHunkSelectState(hunk)">
   <div class="add-operation">
     <span class="icon"></span>
   </div>
   <div class="content">
-    <span>{{header.content}}</span>
+    <pre>{{hunk.header.content}}</pre>
   </div>
 </div>
 
-<div class="line {{line.type}}" (click)="toggleSelected(line)" [class.selected]="line.selected" *ngFor="let line of _lines">
+<div *ngFor="let line of hunk.lines" class="line {{line.type}}" [class.selected]="line.selected" (click)="toggleSelected(line)">
   <div class="add-operation">
     <span *ngIf="line.type !== 'unchanged'" class="icon"></span>
   </div>
   <div class="line-no line-no-before">
-    <span *ngIf="line.lineNoBefore > -1">{{line.lineNoBefore}}</span>
+    <span *ngIf="line.oldLineNo > -1">{{line.oldLineNo}}</span>
   </div>
   <div class="line-no line-no-after">
-    <span *ngIf="line.lineNoAfter > -1">{{line.lineNoAfter}}</span>
+    <span *ngIf="line.newLineNo > -1">{{line.newLineNo}}</span>
   </div>
+  <div class="devider"></div>
   <div class="content">
-    <span>{{line.content}}</span>
+    <pre>{{line.content}}</pre>
   </div>
 </div>
