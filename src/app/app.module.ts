@@ -13,9 +13,12 @@ import { RepositorySelectComponent } from './subcomponents/repository-select.com
 import { RepositoryAddComponent } from './subcomponents/repository-add.component';
 import { StatusComponent } from './subcomponents/status.component';
 import { ChangeEntryComponent } from './subcomponents/change-entry.component';
+import { DiffComponent } from './subcomponents/diff.component';
+import { HunkComponent } from './subcomponents/hunk.component';
 
 import { StatusService } from './services/status.service';
 import { RepositoryService } from './services/repository.service';
+import { DiffService } from './services/diff.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,9 @@ import { RepositoryService } from './services/repository.service';
     RepositorySelectComponent,
     RepositoryAddComponent,
     StatusComponent,
-    ChangeEntryComponent
+    ChangeEntryComponent,
+    DiffComponent,
+    HunkComponent
   ],
   entryComponents: [
     RepositorySelectComponent,
@@ -41,7 +46,8 @@ import { RepositoryService } from './services/repository.service';
   ],
   providers: [
     StatusService,
-    RepositoryService
+    RepositoryService,
+    DiffService
   ],
   bootstrap: [AppComponent]
 })
