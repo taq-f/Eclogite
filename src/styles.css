@@ -1,4 +1,4 @@
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 html, body {
   margin: 0;
@@ -31,4 +31,8 @@ body {
 
 .need-caution {
   color: #FF7043;
+}
+
+.mat-tab-label {
+  height: 39px !important;
 }
