@@ -1,0 +1,24 @@
+.header-nav {
+  border-bottom: 1px solid #E0E0E0;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+}
+
+.left-pane {
+  border-right: 1px solid #E0E0E0;
+  box-sizing: border-box;
+  flex: 0 0 250px; /* fix width. TODO want it to be resizable */
+  height: calc(100vh - 40px);
+  overflow: auto;
+}
+
+.right-pane {
+  flex: 1;
+  height: calc(100vh - 40px);
+}
+

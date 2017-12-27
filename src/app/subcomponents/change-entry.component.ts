@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {trigger, state, style, transition, animate } from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 import { StatusService } from '../services/status.service';
@@ -10,8 +10,8 @@ import { StatusService } from '../services/status.service';
   styleUrls: ['./change-entry.component.css'],
   animations: [
     trigger('select', [
-      state('unselected', style({backgroundColor: 'transparent'})),
-      state('selected', style({backgroundColor: '#CFD8DC'})),
+      state('unselected', style({ backgroundColor: 'transparent' })),
+      state('selected', style({ backgroundColor: '#CFD8DC' })),
       transition('unselected <=> selected', animate('200ms ease')),
     ])
   ]
@@ -21,7 +21,7 @@ export class ChangeEntryComponent {
 
   @Input()
   set selected(v: boolean) {
-    this.selectState = v ? 'selected': 'unselected';
+    this.selectState = v ? 'selected' : 'unselected';
   }
 
   selectState = 'unselected';

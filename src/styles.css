@@ -1,4 +1,4 @@
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 
 html, body {
   margin: 0;
@@ -25,4 +25,12 @@ body {
 .fancy-scroll::-webkit-scrollbar-thumb {
   background-color: #E0E0E0;
   border-radius: 10px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.need-caution {
+  color: #FF7043;
 }

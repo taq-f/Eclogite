@@ -1,0 +1,117 @@
+.line {
+  display: flex;
+  font-size: 11px;
+  /* padding-bottom: 5px; */
+  /* padding-top: 5px; */
+  width: 100%;
+  line-height: 23px;
+}
+
+.line > div {
+  /* padding-bottom: 5px; */
+  /* padding-top: 5px; */
+}
+
+.header {
+  /* background-color: #03A9F4; */
+  background-color: #1E88E5;
+  color: #fff;
+}
+
+.unchanged,
+.plus:not(.selected),
+.minus:not(.selected) {
+  color: #78909C;
+}
+
+.icon {
+  /* color: #2196F3; */
+  font-size:15px;
+  left: 7px;
+  position: absolute;
+}
+.unchanged {
+  background-color: #FFF;
+}
+.plus {
+  background-color: #E8F5E9;
+}
+.plus.selected {
+  background-color: #C8E6C9;
+}
+.minus {
+  background-color: #FFEBEE;
+}
+.minus.selected {
+  background-color: #FFCDD2;
+}
+
+.line.header:hover,
+.line.plus:hover,
+.line.minus:hover {
+  /* background-color: red; */
+}
+.line.header,
+.line.plus,
+.line.minus {
+  cursor: pointer;
+}
+
+
+
+.add-operation {
+  flex: 0 0 35px;
+  position: relative;
+}
+.line-no {
+  flex: 0 0 40px;
+  padding-right: 10px;
+  text-align: right;
+}
+.devider {
+  border-right: 4px solid #E0E0E0;
+  flex: 0 0 0px;
+  width: 0;
+}
+.content {
+  padding-left: 10px;
+  flex: 1;
+}
+
+
+.line.none.header .icon::after {
+  content: "check_box_outline_blank";
+  font-family: "Material Icons";
+  color: #FFF;
+}
+.line.partial.header .icon::after {
+  content: "indeterminate_check_box";
+  font-family: "Material Icons";
+  color: #FFF;
+}
+.line.all.header .icon::after {
+  content: "check_box";
+  font-family: "Material Icons";
+  color: #FFF;
+}
+
+
+
+.line:not(.header) .icon::after {
+  content: "check_box_outline_blank";
+  font-family: "Material Icons";
+  color: #78909C;
+}
+
+.line.selected:not(.header) .icon::after {
+  content: "check_box";
+  font-family: "Material Icons";
+  color: #78909C;
+}
+
+pre {
+  font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

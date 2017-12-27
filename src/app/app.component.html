@@ -1,9 +1,12 @@
-<!-- temporarily added to specify repository path for debug -->
-<div style="height: 20px;">
-  repo path
-  <input type="text" [(ngModel)]="repositoryPath">
-  <button (click)="setRepositoryPath()">set repo</button>
+<div class="header-nav">
+  header
+  <button mat-button color="primary" (click)="selectRepository()">Select Repository</button>
 </div>
-<div style="width: 200px; height: calc(100vh - 20px);">
-  <app-status></app-status>
+<div class="content">
+  <div class="left-pane fancy-scroll">
+    <app-status (entrySelectChange)="onEntrySelectChange($event)"></app-status>
+  </div>
+  <div class="right-pane">
+    <app-diff [filepath]="filepath"></app-diff>
+  </div>
 </div>
