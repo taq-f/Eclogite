@@ -8,7 +8,9 @@
       <app-hunk [hunk]="hunk"></app-hunk>
     </div>
   </div>
-  <div *ngIf="!fileDiff" class="">
-    Loading...
+  <div *ngIf="!fileDiff">
+    <div style="height:calc(100vh - 80px); display:flex; justify-content:center; align-items:center;">
+      <img src="assets/app.png" style="opacity:0.5;" alt="" srcset="">
+    </div>
   </div>
 </div>
