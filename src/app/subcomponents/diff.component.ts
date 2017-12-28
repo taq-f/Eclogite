@@ -22,6 +22,7 @@ export class DiffComponent {
     if (v) {
       this._filepath = v;
       this.fileDiff = undefined;
+      console.log('filepath change', v, this.repositoryPath);
       this.diffService.getDiff(
         this.repositoryPath,
         this._filepath).subscribe(fileDiff => {

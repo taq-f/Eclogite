@@ -1,25 +1,10 @@
-<mat-tab-group [selectedIndex]="tabIndex">
-  <mat-tab [label]="repository.name">
-    Content1
-  </mat-tab>
-  <mat-tab label="Files">
-    <div class="content">
-      <div class="left-pane fancy-scroll">
-        <app-status (entrySelectChange)="onEntrySelectChange($event)"></app-status>
-      </div>
-      <div class="right-pane">
-        <app-diff [filepath]="filepath"></app-diff>
-      </div>
-    </div>
-  </mat-tab>
-  <mat-tab [label]="'Branch Name'">
-  </mat-tab>
-</mat-tab-group>
+<nav mat-tab-nav-bar>
+  <a mat-tab-link routerLink="/repository" routerLinkActive="active">
+    Repository
+  </a>
+  <a mat-tab-link routerLink="/workingfiles" routerLinkActive="active">
+    Files
+  </a>
+</nav>
 
-
-
-<!-- <div class="header-nav">
-  <button mat-button color="primary" (click)="addRepository()">Add Repository</button>
-  <button mat-button color="primary" (click)="selectRepository()">Select Repository</button>
-</div>
- -->
+<router-outlet></router-outlet>
