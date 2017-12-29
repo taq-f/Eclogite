@@ -1,17 +1,102 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { fromPromise } from 'rxjs/observable/fromPromise';
 import { Repository } from '../models/repository';
+
+interface SavedRepository {
+  readonly id: string;
+  lastOpen: number;
+  readonly repository: Repository;
+}
 
 @Injectable()
 export class RepositoryService {
 
-  getRepositories(): Observable<ReadonlyArray<Repository>> {
-    return of([
-      { name: 'Repo1', path: '/path/to/Repo1', exists: true },
-      { name: 'Repo2', path: '/path/to/Repo2', exists: true },
-      { name: 'Repo3', path: '/path/to/Repo3', exists: true },
-    ]);
+  addRepository(repository: Repository): Observable<string> {
+    const data = localStorage.getItem('repositories');
+    let list;
+    if (!data) {
+      list = [];
+    } else {
+      list = JSON.parse(data);
+    }
+
+    list.push({
+      id: repository.id,
+      lastOpen: Date.now(),
+      repository,
+    });
+    localStorage.setItem('repositories', JSON.stringify(list));
+
+    return of(repository.id);
+  }
+
+  getRepositories(): Observable<Repository[]> {
+    const data = localStorage.getItem('repositories');
+    if (!data) {
+      return of([]);
+    }
+    const list = JSON.parse(data) as SavedRepository[];
+    return of(list.map(s => s.repository));
+  }
+
+  getRepository(id: string): Observable<Repository> {
+    const data = localStorage.getItem('repositories');
+    if (!data) {
+      return of(undefined);
+    }
+    const list = JSON.parse(data) as SavedRepository[];
+    return of(list.find(r => r.id === id).repository);
+  }
+
+  saveLastOpenRepository(id: string): Observable<void> {
+    localStorage.setItem('lastOpenRepositoryId', id);
+    return of(undefined);
+  }
+
+  getLastOpenRepository(updateOpen = false): Observable<Repository> {
+    const id = localStorage.getItem('lastOpenRepositoryId');
+    if (!id) {
+      return of(undefined);
+    } else {
+      const data = localStorage.getItem('repositories');
+      if (!data) {
+        return of(undefined);
+      }
+      const list = JSON.parse(data) as SavedRepository[];
+      const saved = list.find(r => r.id === id);
+      if (updateOpen) {
+        saved.lastOpen = Date.now();
+        localStorage.setItem('repositories', JSON.stringify(list));
+      }
+      return of(saved.repository);
+    }
+  }
+
+  deleteRepository(id: string): Observable<string> {
+    const data = localStorage.getItem('repositories');
+    if (!data) {
+      return of(undefined);
+    }
+    const list = JSON.parse(data) as SavedRepository[];
+    const index = list.findIndex(s => s.id === id);
+    if (index < 0) {
+      return of(undefined);
+    } else {
+      list.splice(index, 1);
+      localStorage.setItem('repositories', JSON.stringify(list));
+      return of(id);
+    }
+  }
+
+  getRecentlyOpenedRepositories(howMany = 5): Observable<ReadonlyArray<Repository>> {
+    const data = localStorage.getItem('repositories');
+    if (!data) {
+      return of([]);
+    }
+    const list = JSON.parse(data) as SavedRepository[];
+    const sorted = list.sort((a, b) => b.lastOpen - a.lastOpen);
+
+    return of(sorted.map(s => s.repository).slice(0, howMany));
   }
 }

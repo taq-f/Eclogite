@@ -1,0 +1,34 @@
+<div class="container fancy-scroll">
+  <h2>Add Local Repository</h2>
+  <mat-form-field style="width: 400px;">
+    <input matInput placeholder="Repositoty path" [(ngModel)]="repositoryPath">
+  </mat-form-field>
+  <button mat-button (click)="chooseRepositoryPath()">choose...</button>
+  <button mat-button color="accent" [disabled]="!repositoryPath" (click)="addRepository()">Open</button>
+
+  <h2>Recent</h2>
+  <mat-list dense>
+    <mat-list-item *ngFor="let r of recentlyOpenedRepositories">
+      <mat-icon matListIcon class="clickable" (click)="openRepository(r)">folder</mat-icon>
+      <mat-icon matListIcon class="clickable need-caution" (click)="deleteRepository(r)">delete</mat-icon>
+      <h3 matLine>{{r.name}}</h3>
+      <p matLine>{{r.path}}</p>
+    </mat-list-item>
+    <mat-list-item *ngIf="!repositories || repositories.length === 0">
+      no item
+    </mat-list-item>
+  </mat-list>
+
+  <h2>All Repositories</h2>
+  <mat-list dense>
+    <mat-list-item *ngFor="let r of repositories">
+      <mat-icon matListIcon class="clickable" (click)="openRepository(r)">folder</mat-icon>
+      <mat-icon matListIcon class="clickable need-caution" (click)="deleteRepository(r)">delete</mat-icon>
+      <h3 matLine>{{r.name}}</h3>
+      <p matLine>{{r.path}}</p>
+    </mat-list-item>
+    <mat-list-item *ngIf="!repositories || repositories.length === 0">
+      no item
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { AppStatusEntry, AppWorkingFileChange, IndexState } from '../models/workingfile';
 import { StatusService } from '../services/status.service';
@@ -9,6 +9,13 @@ import { StatusService } from '../services/status.service';
   styleUrls: ['./status.component.css']
 })
 export class StatusComponent implements OnInit {
+
+  _repositoryPath: string;
+
+  @Input()
+  set repositoryPath(v: string) {
+    this._repositoryPath = v;
+  }
 
   /**
    * Changes entries that will be placed in unstaged changes.
@@ -39,7 +46,7 @@ export class StatusComponent implements OnInit {
   constructor(private statusService: StatusService) { }
 
   ngOnInit(): void {
-    this.statusService.getStatus('').subscribe(fileChanges => {
+    this.statusService.getStatus(this._repositoryPath).subscribe(fileChanges => {
       const unstaged = this.unstagedChanges;
       const staged = this.stagedChanges;
       const conflicted = this.conflictedChanges;

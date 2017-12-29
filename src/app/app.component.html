@@ -1,12 +1,10 @@
-<div class="header-nav">
-  header
-  <button mat-button color="primary" (click)="selectRepository()">Select Repository</button>
-</div>
-<div class="content">
-  <div class="left-pane fancy-scroll">
-    <app-status (entrySelectChange)="onEntrySelectChange($event)"></app-status>
-  </div>
-  <div class="right-pane">
-    <app-diff [filepath]="filepath"></app-diff>
-  </div>
-</div>
+<nav mat-tab-nav-bar>
+  <a mat-tab-link routerLink="/repository" routerLinkActive="active">
+    Repository
+  </a>
+  <a mat-tab-link routerLink="/workingfiles" routerLinkActive="active">
+    Files
+  </a>
+</nav>
+
+<router-outlet></router-outlet>
