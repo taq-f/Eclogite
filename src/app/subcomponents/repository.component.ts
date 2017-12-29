@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { remote } from 'electron';
 import { sha256 } from 'js-sha256';
 import { basename } from 'path';

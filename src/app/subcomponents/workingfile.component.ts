@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { RepositoryService } from '../services/repository.service';
 import { AppWorkingFileChange } from '../models/workingfile';
@@ -23,6 +23,7 @@ export class WorkingfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private repositoryService: RepositoryService
   ) { }
 
@@ -36,6 +37,9 @@ export class WorkingfileComponent implements OnInit {
       });
     } else {
       this.repositoryService.getLastOpenRepository(true).subscribe(repository => {
+        if (!repository) {
+          this.router.navigate(['/repository']);
+        }
         this.repository = repository;
       });
     }
