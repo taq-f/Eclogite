@@ -9,8 +9,12 @@
   <h2>Recent</h2>
   <mat-list dense>
     <mat-list-item *ngFor="let r of recentlyOpenedRepositories">
-      <mat-icon matListIcon class="clickable" (click)="openRepository(r)">folder</mat-icon>
-      <mat-icon matListIcon class="clickable need-caution" (click)="deleteRepository(r)">delete</mat-icon>
+      <button mat-icon-button (click)="openRepository(r)">
+        <mat-icon>folder</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteRepository(r)">
+        <mat-icon>delete</mat-icon>
+      </button>
       <h3 matLine>{{r.name}}</h3>
       <p matLine>{{r.path}}</p>
     </mat-list-item>
@@ -22,8 +26,12 @@
   <h2>All Repositories</h2>
   <mat-list dense>
     <mat-list-item *ngFor="let r of repositories">
-      <mat-icon matListIcon class="clickable" (click)="openRepository(r)">folder</mat-icon>
-      <mat-icon matListIcon class="clickable need-caution" (click)="deleteRepository(r)">delete</mat-icon>
+      <button mat-icon-button (click)="openRepository(r)">
+        <mat-icon>folder</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteRepository(r)">
+        <mat-icon>delete</mat-icon>
+      </button>
       <h3 matLine>{{r.name}}</h3>
       <p matLine>{{r.path}}</p>
     </mat-list-item>

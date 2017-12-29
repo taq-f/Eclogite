@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 import { remote } from 'electron';
 import { sha256 } from 'js-sha256';
 import { basename } from 'path';
@@ -81,7 +84,9 @@ export class RepositoryComponent implements OnInit {
    * Select and open a repository.
    */
   openRepository(repository: Repository): void {
-    this.router.navigate([`/workingfiles/${repository.id}`]);
+    Observable.of(0).delay(400).subscribe(x => {
+      this.router.navigate([`/workingfiles/${repository.id}`]);
+    });
   }
 
   /**
@@ -89,9 +94,11 @@ export class RepositoryComponent implements OnInit {
    * directory of the repository.
    */
   deleteRepository(repository: Repository): void {
-    this.repositoryService.deleteRepository(repository.id).subscribe(id => {
-      // Make sure to refresh repositoris list.
-      this.getRepositories();
+    Observable.of(0).delay(400).subscribe(x => {
+      this.repositoryService.deleteRepository(repository.id).subscribe(id => {
+        // Make sure to refresh repositoris list.
+        this.getRepositories();
+      });
     });
   }
 }
