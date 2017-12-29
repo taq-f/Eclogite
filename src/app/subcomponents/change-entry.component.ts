@@ -13,8 +13,13 @@ import { StatusService } from '../services/status.service';
       state('unselected', style({ backgroundColor: 'transparent' })),
       state('selected', style({ backgroundColor: '#CFD8DC' })),
       transition('unselected <=> selected', animate('200ms ease')),
+    ]),
+    trigger('flyin', [
+      state('in', style({transform: 'translateX(0)'})),
+      state('void', style({transform: 'translateX(-100%)'})),
+      transition(':enter', animate('0.2s ease-in')),
     ])
-  ]
+   ]
 })
 export class ChangeEntryComponent {
   @Input() change: AppWorkingFileChange;
