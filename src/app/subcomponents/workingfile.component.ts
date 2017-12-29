@@ -19,7 +19,7 @@ export class WorkingfileComponent implements OnInit {
   /**
    * The target file of diff.
    */
-  filepath: string;
+  workingfile: AppWorkingFileChange;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +46,6 @@ export class WorkingfileComponent implements OnInit {
   }
 
   onEntrySelectChange(v: AppWorkingFileChange): void {
-    this.filepath = v.path;
+    this.workingfile = v;
   }
 }

@@ -1,33 +1,68 @@
-import { git } from './core';
+import { git, IGitResult } from './core';
 import { FileDiff, Hunk, HunkLine } from '../../models/diff';
+import { AppStatusEntry } from '../../models/workingfile';
 
 export async function getDiff(
   repositoryPath: string,
-  filepath: string
+  filepath: string,
+  status: AppStatusEntry
 ): Promise<FileDiff> {
-  const args = [
-    'diff',
-    // 'HEAD',
-    '--no-ext-diff',
-    '--patch-with-raw',
-    '-z',
-    '--no-color',
-    '--',
-    filepath,
-  ];
+  console.log(status);
 
-  const result = await git(args, repositoryPath);
+  let result: IGitResult;
+  let successExitCode: Set<number> | undefined;
 
-  if (result.exitCode !== 0) {
+  if (status === AppStatusEntry.Added) {
+    // git diff --no-ext-diff --no-index  --patch-with-raw -z -- /dev/null some.txt
+    const args = [
+      'diff',
+      // 'HEAD',
+      '--no-ext-diff',
+      '--no-index',
+      '--patch-with-raw',
+      '-z',
+      '--no-color',
+      '--',
+      '/dev/null',
+      filepath,
+    ];
+    successExitCode = new Set([0, 1]);
+    result = await git(args, repositoryPath);
+  } else if (status === AppStatusEntry.Modified) {
+    const args = [
+      'diff',
+      // 'HEAD',
+      '--no-ext-diff',
+      '--patch-with-raw',
+      '-z',
+      '--no-color',
+      '--',
+      filepath,
+    ];
+    result = await git(args, repositoryPath);
+    successExitCode = new Set([0]);
+  }
+
+  if (!successExitCode.has(result.exitCode)) {
     // TODO
-    console.log('err', result.stderr);
+    console.log('err', result.exitCode, result.stderr);
     return;
   }
 
   const output = result.stdout;
   const components = output.split('\0');
-  const diffInfo = components[3].split('\n').slice(2, 4);
-  const diffLines = components[3].split('\n').slice(4, -1);
+  let diffInfo: string[];
+  let diffLines: string[];
+
+  if (status === AppStatusEntry.Added) {
+    diffInfo = components[3].split('\n').slice(3, 5);
+    diffLines = components[3].split('\n').slice(5, -1);
+  } else if (status === AppStatusEntry.Modified) {
+    diffInfo = components[3].split('\n').slice(2, 4);
+    diffLines = components[3].split('\n').slice(4, -1);
+  } else {
+    throw new Error(`unknown status: ${status}`);
+  }
 
   const diffHeaderRe = /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/;
 

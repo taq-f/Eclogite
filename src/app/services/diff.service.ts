@@ -5,11 +5,16 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import { getDiff } from '../lib/git/diff';
 import { FileDiff, Hunk } from '../models/diff';
+import { AppStatusEntry } from '../models/workingfile';
 
 @Injectable()
 export class DiffService {
-  getDiff(repositoryPath: string, filepath: string): Observable<FileDiff> {
-    return fromPromise(getDiff(repositoryPath, filepath));
+  getDiff(
+    repositoryPath: string,
+    filepath: string,
+    status: AppStatusEntry
+  ): Observable<FileDiff> {
+    return fromPromise(getDiff(repositoryPath, filepath, status));
     // const hunks: ReadonlyArray<Hunk> = [
     //   new Hunk({
     //     selectedState: 'all',

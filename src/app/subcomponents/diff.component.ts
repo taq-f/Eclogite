@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { HunkComponent } from './hunk.component';
-
+import { AppWorkingFileChange } from '../models/workingfile';
 import { FileDiff, Hunk } from '../models/diff';
 import { DiffService } from '../services/diff.service';
 
@@ -13,19 +13,21 @@ import { DiffService } from '../services/diff.service';
 })
 export class DiffComponent {
 
-  _filepath: string;
+  _workingfile: AppWorkingFileChange;
 
   @Input() repositoryPath: string;
 
   @Input()
-  set filepath(v: string) {
+  set workingfile(v: AppWorkingFileChange) {
     if (v) {
-      this._filepath = v;
+      this._workingfile = v;
       this.fileDiff = undefined;
       console.log('filepath change', v, this.repositoryPath);
       this.diffService.getDiff(
         this.repositoryPath,
-        this._filepath).subscribe(fileDiff => {
+        this._workingfile.path,
+        this._workingfile.state,
+      ).subscribe(fileDiff => {
           this.fileDiff = fileDiff;
         });
     }
