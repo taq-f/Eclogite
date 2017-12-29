@@ -1,0 +1,8 @@
+<div *ngIf="repository" class="content">
+  <div class="left-pane fancy-scroll">
+    <app-status [repositoryPath]="repository.path" (entrySelectChange)="onEntrySelectChange($event)"></app-status>
+  </div>
+  <div class="right-pane">
+    <app-diff [repositoryPath]="repository.path" [filepath]="filepath"></app-diff>
+  </div>
+</div>
