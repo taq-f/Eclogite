@@ -4,34 +4,34 @@ const packager = require('electron-packager')
 const config = require(path.join(__dirname, "..", "package.json"))
 
 const electronVersion = (str) => {
-	return str.startsWith ?
-		str.substring(1) :
-		str
+  return str.startsWith ?
+    str.substring(1) :
+    str
 }
 
 const options = {
-	dir: path.join(__dirname, "..", "dist"),
-	appVersion: config.version,
-	arch: 'x64',
-	asar: true,
-	electronVersion: electronVersion(config.devDependencies.electron),
-	icon: path.join(__dirname, "..", "resources", "app.ico"),
-	name: config.name,
-	out: path.join(__dirname, "..", "package"),
-	overwrite: true,
-	platform: process.platform,
-	win32metadata: {
-		FileDescription: config.description,
-		OriginalFilename: config.name,
-		ProductName: config.name,
-		InternalName: config.name
-	}
+  dir: path.join(__dirname, "..", "dist"),
+  appVersion: config.version,
+  arch: 'x64',
+  asar: false, // don't asar pack in order to exclude git executables.
+  electronVersion: electronVersion(config.devDependencies.electron),
+  icon: path.join(__dirname, "..", "resources", "app.ico"),
+  name: config.name,
+  out: path.join(__dirname, "..", "package"),
+  overwrite: true,
+  platform: process.platform,
+  win32metadata: {
+    FileDescription: config.description,
+    OriginalFilename: config.name,
+    ProductName: config.name,
+    InternalName: config.name
+  }
 }
 
 packager(options, (err, appPaths) => {
-	if (err) {
-		throw new Error(err)
-	}
+  if (err) {
+    throw new Error(err)
+  }
 
-	console.log(`packaging successfully finished. written in ${appPaths}`)
+  console.log(`packaging successfully finished. written in ${appPaths}`)
 })
