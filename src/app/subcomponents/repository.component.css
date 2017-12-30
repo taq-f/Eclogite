@@ -1,5 +1,4 @@
 .container {
-  height: calc(100vh - 40px);
   overflow: auto;
   padding-left: 10px;
   padding-right: 10px;
