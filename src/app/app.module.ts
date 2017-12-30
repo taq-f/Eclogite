@@ -12,6 +12,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppComponent } from './app.component';
 import { RepositoryComponent } from './subcomponents/repository.component';
+import { RepositoryListComponent } from './subcomponents/repository-list.component';
 import { WorkingfileComponent } from './subcomponents/workingfile.component';
 import { StatusComponent } from './subcomponents/status.component';
 import { ChangeEntryComponent } from './subcomponents/change-entry.component';
@@ -26,6 +27,7 @@ import { DiffService } from './services/diff.service';
   declarations: [
     AppComponent,
     RepositoryComponent,
+    RepositoryListComponent,
     WorkingfileComponent,
     StatusComponent,
     ChangeEntryComponent,

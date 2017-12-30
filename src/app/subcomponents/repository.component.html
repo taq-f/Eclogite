@@ -6,37 +6,22 @@
   <button mat-button (click)="chooseRepositoryPath()">choose...</button>
   <button mat-button color="accent" [disabled]="!repositoryPath" (click)="addRepository()">Open</button>
 
-  <h2>Recent</h2>
-  <mat-list dense>
-    <mat-list-item *ngFor="let r of recentlyOpenedRepositories">
-      <button mat-icon-button (click)="openRepository(r)">
-        <mat-icon>folder</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" (click)="deleteRepository(r)">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <h3 matLine>{{r.name}}</h3>
-      <p matLine>{{r.path}}</p>
-    </mat-list-item>
-    <mat-list-item *ngIf="!repositories || repositories.length === 0">
-      no item
-    </mat-list-item>
-  </mat-list>
-
-  <h2>All Repositories</h2>
-  <mat-list dense>
-    <mat-list-item *ngFor="let r of repositories">
-      <button mat-icon-button (click)="openRepository(r)">
-        <mat-icon>folder</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" (click)="deleteRepository(r)">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <h3 matLine>{{r.name}}</h3>
-      <p matLine>{{r.path}}</p>
-    </mat-list-item>
-    <mat-list-item *ngIf="!repositories || repositories.length === 0">
-      no item
-    </mat-list-item>
-  </mat-list>
+  <div class="list">
+    <div>
+      <h2>Recent</h2>
+      <app-repository-list
+        [repositories]="recentlyOpenedRepositories"
+        (openClick)="openRepository($event)"
+        (deleteClick)="deleteRepository($event)">
+      </app-repository-list>
+    </div>
+    <div>
+      <h2>All Repositories</h2>
+      <app-repository-list
+        [repositories]="repositories"
+        (openClick)="openRepository($event)"
+        (deleteClick)="deleteRepository($event)">
+      </app-repository-list>
+    </div>
+  </div>
 </div>

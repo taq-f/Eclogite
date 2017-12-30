@@ -1,0 +1,15 @@
+<mat-list dense>
+  <mat-list-item *ngFor="let r of repositories">
+    <button mat-icon-button color="primary" (click)="openClick.emit(r)">
+        <mat-icon>folder</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="deleteClick.emit(r)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <h3 matLine>{{r.name}}</h3>
+    <p matLine>{{r.path}}</p>
+  </mat-list-item>
+  <mat-list-item *ngIf="!repositories || repositories.length === 0">
+    no item
+  </mat-list-item>
+</mat-list>
