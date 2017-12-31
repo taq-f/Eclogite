@@ -4,8 +4,14 @@
   padding-right: 10px;
 }
 
-.list {
+.list-group {
   display: flex;
   flex-wrap:
   wrap; width: 100%;
+}
+
+.list {
+  flex-grow: 1;
+  padding-left: 20px;
+  padding-right: 20px;
 }
