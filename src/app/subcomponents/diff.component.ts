@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { HunkComponent } from './hunk.component';
@@ -22,26 +22,29 @@ export class DiffComponent {
     if (v) {
       this._workingfile = v;
       this.fileDiff = undefined;
-      console.log('filepath change', v, this.repositoryPath);
       this.diffService.getDiff(
         this.repositoryPath,
         this._workingfile.path,
         this._workingfile.state,
       ).subscribe(fileDiff => {
-          this.fileDiff = fileDiff;
-        });
+        this.fileDiff = fileDiff;
+      });
+    } else {
+      this._workingfile = undefined;
+      this.fileDiff = undefined;
     }
   }
 
   fileDiff: FileDiff;
 
+  @Output() applied = new EventEmitter<undefined>();
+
   constructor(private diffService: DiffService) { }
 
   addSelection(): void {
     const patch = this.fileDiff.getPatch();
-
-    // TODO Communicate with patch service and apply the patch just created.
-    //      Plus, need a FileDiff to hold all hunks and file information.
-    console.log(patch);
+    this.diffService.applyPatch(this.repositoryPath, patch).subscribe(() => {
+      this.applied.emit();
+    });
   }
 }

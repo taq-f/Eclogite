@@ -7,13 +7,10 @@ export async function getDiff(
   filepath: string,
   status: AppStatusEntry
 ): Promise<FileDiff> {
-  console.log(status);
-
   let result: IGitResult;
   let successExitCode: Set<number> | undefined;
 
   if (status === AppStatusEntry.Added) {
-    // git diff --no-ext-diff --no-index  --patch-with-raw -z -- /dev/null some.txt
     const args = [
       'diff',
       // 'HEAD',

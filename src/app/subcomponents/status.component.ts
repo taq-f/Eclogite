@@ -20,15 +20,15 @@ export class StatusComponent implements OnInit {
   /**
    * Changes entries that will be placed in unstaged changes.
    */
-  unstagedChanges: AppWorkingFileChange[] = [];
+  unstagedChanges: AppWorkingFileChange[];
   /**
    * Changes entries that will be placed in staged changes.
    */
-  stagedChanges: AppWorkingFileChange[] = [];
+  stagedChanges: AppWorkingFileChange[];
   /**
    * Changes entries that will be placed in conflicted changes.
    */
-  conflictedChanges: AppWorkingFileChange[] = [];
+  conflictedChanges: AppWorkingFileChange[];
 
   /**
    * A currently selected change entry.
@@ -46,10 +46,14 @@ export class StatusComponent implements OnInit {
   constructor(private statusService: StatusService) { }
 
   ngOnInit(): void {
+    this.getChanges();
+  }
+
+  getChanges() {
     this.statusService.getStatus(this._repositoryPath).subscribe(fileChanges => {
-      const unstaged = this.unstagedChanges;
-      const staged = this.stagedChanges;
-      const conflicted = this.conflictedChanges;
+      const unstaged: AppWorkingFileChange[] = [];
+      const staged: AppWorkingFileChange[] = [];
+      const conflicted: AppWorkingFileChange[] = [];
       for (const f of fileChanges) {
         if (f.indexState === 'unstaged') {
           unstaged.push(f);
@@ -59,6 +63,10 @@ export class StatusComponent implements OnInit {
           conflicted.push(f);
         }
       }
+
+      this.unstagedChanges = unstaged;
+      this.stagedChanges = staged;
+      this.conflictedChanges = conflicted;
     });
   }
 

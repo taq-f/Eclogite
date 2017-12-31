@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { StatusComponent } from './status.component';
 import { RepositoryService } from '../services/repository.service';
 import { AppWorkingFileChange } from '../models/workingfile';
 import { Repository } from '../models/repository';
@@ -11,6 +12,8 @@ import { Repository } from '../models/repository';
   styleUrls: ['./workingfile.component.css']
 })
 export class WorkingfileComponent implements OnInit {
+  @ViewChild(StatusComponent) statusComponent: StatusComponent;
+
   /**
    * The currently opened repository.
    */
@@ -47,5 +50,10 @@ export class WorkingfileComponent implements OnInit {
 
   onEntrySelectChange(v: AppWorkingFileChange): void {
     this.workingfile = v;
+  }
+
+  refresh(): void {
+    this.workingfile = undefined;
+    this.statusComponent.getChanges();
   }
 }

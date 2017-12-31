@@ -4,6 +4,7 @@ import { of } from 'rxjs/observable/of';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import { getDiff } from '../lib/git/diff';
+import { applyPatch } from '../lib/git/apply';
 import { FileDiff, Hunk } from '../models/diff';
 import { AppStatusEntry } from '../models/workingfile';
 
@@ -225,5 +226,9 @@ export class DiffService {
     //   ],
     //   hunks: hunks,
     // }));
+  }
+
+  applyPatch( repositoryPath: string, patch: string): Observable<undefined> {
+    return fromPromise(applyPatch(repositoryPath, patch));
   }
 }

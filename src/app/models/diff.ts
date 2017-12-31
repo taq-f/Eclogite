@@ -44,7 +44,7 @@ export class FileDiff implements IFileDiff {
       .map(h => h.format())
       .join('\n');
 
-    return [...this.diffInfo, patch].join('\n');
+    return [...this.diffInfo, patch].join('\n') + '\n';
   }
 }
 
