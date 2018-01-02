@@ -6,16 +6,15 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 import { getDiff } from '../lib/git/diff';
 import { applyPatch } from '../lib/git/apply';
 import { FileDiff, Hunk } from '../models/diff';
-import { AppStatusEntry } from '../models/workingfile';
+import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 
 @Injectable()
 export class DiffService {
   getDiff(
     repositoryPath: string,
-    filepath: string,
-    status: AppStatusEntry
+    fileChange: AppWorkingFileChange
   ): Observable<FileDiff> {
-    return fromPromise(getDiff(repositoryPath, filepath, status));
+    return fromPromise(getDiff(repositoryPath, fileChange));
     // const hunks: ReadonlyArray<Hunk> = [
     //   new Hunk({
     //     selectedState: 'all',
@@ -228,7 +227,7 @@ export class DiffService {
     // }));
   }
 
-  applyPatch( repositoryPath: string, patch: string): Observable<undefined> {
+  applyPatch(repositoryPath: string, patch: string): Observable<undefined> {
     return fromPromise(applyPatch(repositoryPath, patch));
   }
 }

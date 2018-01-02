@@ -1,12 +1,13 @@
 import { git, IGitResult } from './core';
 import { FileDiff, Hunk, HunkLine } from '../../models/diff';
-import { AppStatusEntry } from '../../models/workingfile';
+import { AppStatusEntry, AppWorkingFileChange } from '../../models/workingfile';
 
 export async function getDiff(
   repositoryPath: string,
-  filepath: string,
-  status: AppStatusEntry
+  fileChange: AppWorkingFileChange
 ): Promise<FileDiff> {
+  const filepath = fileChange.path;
+  const status = fileChange.state;
   let result: IGitResult;
   let successExitCode: Set<number> | undefined;
 

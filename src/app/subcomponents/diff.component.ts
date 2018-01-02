@@ -24,8 +24,7 @@ export class DiffComponent {
       this.fileDiff = undefined;
       this.diffService.getDiff(
         this.repositoryPath,
-        this._workingfile.path,
-        this._workingfile.state,
+        this._workingfile
       ).subscribe(fileDiff => {
         this.fileDiff = fileDiff;
       });
