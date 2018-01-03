@@ -41,6 +41,18 @@ export async function getDiff(
     ];
     result = await git(args, repositoryPath);
     successExitCode = new Set([0]);
+  } else if (status === AppStatusEntry.Deleted) {
+    const args = [
+      'diff',
+      '--no-ext-diff',
+      '--patch-with-raw',
+      '-z',
+      '--no-color',
+      '--',
+      filepath,
+    ];
+    result = await git(args, repositoryPath);
+    successExitCode = new Set([0]);
   }
 
   if (!successExitCode.has(result.exitCode)) {
@@ -60,6 +72,9 @@ export async function getDiff(
   } else if (status === AppStatusEntry.Modified) {
     diffInfo = components[3].split('\n').slice(2, 4);
     diffLines = components[3].split('\n').slice(4, -1);
+  } else if (status === AppStatusEntry.Deleted) {
+    diffInfo = components[3].split('\n').slice(3, 5);
+    diffLines = components[3].split('\n').slice(5, -1);
   } else {
     throw new Error(`unknown status: ${status}`);
   }

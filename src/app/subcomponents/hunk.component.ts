@@ -19,8 +19,13 @@ export class HunkComponent implements OnInit {
    */
   editable: boolean;
 
+  private uneditableStates = new Set([
+    AppStatusEntry.Added,
+    AppStatusEntry.Deleted,
+  ]);
+
   ngOnInit(): void {
-    this.editable = this.fileChange.state !== AppStatusEntry.Added;
+    this.editable = !this.uneditableStates.has(this.fileChange.state);
   }
 
   toggleHunkSelectState(hunk: Hunk) {
