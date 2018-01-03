@@ -1,6 +1,6 @@
 <div class="line header {{hunk.selectedState}}" (click)="toggleHunkSelectState(hunk)">
   <div class="add-operation">
-    <span class="icon"></span>
+    <span *ngIf="editable" class="icon"></span>
   </div>
   <div class="content">
     <pre>{{hunk.header.content}}</pre>
@@ -9,7 +9,7 @@
 
 <div *ngFor="let line of hunk.lines" class="line {{line.type}}" [class.selected]="line.selected" (click)="toggleSelected(line)">
   <div class="add-operation">
-    <span *ngIf="line.type !== 'unchanged'" class="icon"></span>
+    <span *ngIf="editable && line.type !== 'unchanged'" class="icon"></span>
   </div>
   <div class="line-no line-no-before">
     <span *ngIf="line.oldLineNo > -1">{{line.oldLineNo}}</span>

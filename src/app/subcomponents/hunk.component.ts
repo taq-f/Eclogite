@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 import { Hunk, HunkLine } from '../models/diff';
 
 @Component({
@@ -7,11 +8,26 @@ import { Hunk, HunkLine } from '../models/diff';
   templateUrl: './hunk.component.html',
   styleUrls: ['./hunk.component.css'],
 })
-export class HunkComponent {
+export class HunkComponent implements OnInit {
 
   @Input() hunk: Hunk;
+  @Input() fileChange: AppWorkingFileChange;
+
+  /**
+   * Whehter this hunk is editable. Supposed to be true when the file is a new
+   * file and not allowed to edit the hunk.
+   */
+  editable: boolean;
+
+  ngOnInit(): void {
+    this.editable = this.fileChange.state !== AppStatusEntry.Added;
+  }
 
   toggleHunkSelectState(hunk: Hunk) {
+    if (!this.editable) {
+      return;
+    }
+
     const lines = hunk.lines;
     switch (hunk.selectedState) {
       case 'all':
@@ -40,6 +56,10 @@ export class HunkComponent {
   }
 
   toggleSelected(line: HunkLine): void {
+    if (!this.editable) {
+      return;
+    }
+    
     line.selected = !line.selected;
     this.setHunkState(this.hunk);
   }
