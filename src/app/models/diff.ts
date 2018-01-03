@@ -25,6 +25,7 @@ interface IHunk {
    * Selected state of this hunk.
    */
   selectedState: SelectedState;
+  noNewlineWarning?: boolean;
 }
 
 export class FileDiff implements IFileDiff {
@@ -78,6 +79,7 @@ export interface HunkLine {
   newLineNo: number;
   content: string;
   selected?: boolean;
+  isNoNewLineWarning?: boolean;
 }
 
 /**
@@ -87,6 +89,7 @@ export class Hunk implements IHunk {
   header: HunkHeader;
   lines: ReadonlyArray<HunkLine>;
   selectedState: SelectedState;
+  noNewlineWarning: boolean;
 
   constructor(hunkBase: IHunk) {
     this.header = hunkBase.header;
@@ -113,8 +116,10 @@ export class Hunk implements IHunk {
     for (const line of this.lines) {
       if (line.type === 'unchanged') {
         // just add count and add the line to buffer.
-        oldLineCount++;
-        newLineCount++;
+        if (!line.isNoNewLineWarning) {
+          oldLineCount++;
+          newLineCount++;
+        }
         lineBuffer.push(line.content);
       } else if (line.type === 'minus') {
         if (line.selected) {

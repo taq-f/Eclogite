@@ -2,6 +2,8 @@ import { git, IGitResult } from './core';
 import { FileDiff, Hunk, HunkLine } from '../../models/diff';
 import { AppStatusEntry, AppWorkingFileChange } from '../../models/workingfile';
 
+const noNewlineWarning = 'No newline at end of file';
+
 export async function getDiff(
   repositoryPath: string,
   fileChange: AppWorkingFileChange
@@ -92,6 +94,12 @@ export async function getDiff(
       continue;
     }
 
+    // This is a warning that the file does not have a newline at the end of
+    // the file. So should not be rendered as a "line."
+    // TODO: better way to judge.
+    // continue;
+    const isNoNewlineWarning = line.indexOf(noNewlineWarning) > -1;
+
     if (line.startsWith('+')) {
       hunkLines.push({
         type: 'plus',
@@ -113,9 +121,10 @@ export async function getDiff(
     } else {
       hunkLines.push({
         type: 'unchanged',
-        oldLineNo: oldFileStartLineNo,
-        newLineNo: newFileStartLineNo,
+        oldLineNo: isNoNewlineWarning ? -1 : oldFileStartLineNo,
+        newLineNo: isNoNewlineWarning ? -1 : newFileStartLineNo,
         content: line,
+        isNoNewLineWarning: isNoNewlineWarning,
       });
       oldFileStartLineNo++;
       newFileStartLineNo++;
