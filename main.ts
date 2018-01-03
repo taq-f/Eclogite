@@ -28,8 +28,10 @@ function createWindow(): void {
     win.loadURL('http://localhost:4200');
   }
 
-  // Open the DevTools.
-  win.webContents.openDevTools({ mode: 'undocked' });
+  // Open the DevTools when debug mode.
+  if (!environment.production) {
+    win.webContents.openDevTools({ mode: 'undocked' });
+  }
 
   // Emitted when the window is closed.
   win.on('closed', () => {
