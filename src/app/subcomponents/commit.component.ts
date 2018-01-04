@@ -1,11 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { CommitService } from '../services/commit.service';
 
 @Component({
   selector: 'app-commit',
   templateUrl: './commit.component.html',
-  styleUrls: ['./commit.component.css']
+  styleUrls: ['./commit.component.css'],
+  animations: [
+    trigger('size', [
+      state('expand', style({ height: '*' })),
+      state('shrink', style({ height: '30px' })),
+      transition('expand <=> shrink', animate('200ms ease')),
+    ]),
+  ],
 })
 export class CommitComponent implements OnInit {
   @Input() repositoryPath: string;
@@ -35,6 +43,10 @@ export class CommitComponent implements OnInit {
    * Description of the commit.
    */
   description = '';
+
+  size = 'shrink';
+
+  editing: boolean;
 
   /**
    * Commit message constructed from user input.
@@ -75,5 +87,14 @@ export class CommitComponent implements OnInit {
       this.commitable = this.isCommitable();
       this.commitDone.emit();
     });
+  }
+
+  onMouseEnter(): void {
+    this.size = 'expand';
+  }
+  onMouseLeave(): void {
+    if (!this.editing && !this.summary) {
+      this.size = 'shrink';
+    }
   }
 }

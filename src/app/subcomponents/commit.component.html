@@ -1,9 +1,14 @@
-<div class="wrapper">
+<div class="wrapper" [@size]="size" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+  <div class="title">
+    <div>
+      # Commit
+    </div>
+  </div>
   <mat-form-field style="font-size: 12px; width: 100%;">
-    <input #summaryInput matInput placeholder="Summary" [value]="summary" (keyup)="updateSummary(summaryInput.value)">
+    <input #summaryInput matInput placeholder="Summary" [value]="summary" (focus)="editing = true" (blur)="editing = false" (keyup)="updateSummary(summaryInput.value)">
   </mat-form-field>
   <mat-form-field style="font-size: 12px; width: 100%;">
-    <textarea style="height: 80px;" matInput placeholder="Description" [(ngModel)]="description"></textarea>
+    <textarea style="height: 80px;" matInput placeholder="Description" (focus)="editing = true" (blur)="editing = false" [(ngModel)]="description"></textarea>
   </mat-form-field>
   <button mat-raised-button color="primary" [disabled]="!commitable" class="smaller" (click)="commit()">Commit</button>
 </div>
