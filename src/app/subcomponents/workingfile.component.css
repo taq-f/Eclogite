@@ -22,3 +22,7 @@
   border-bottom: 1px solid #E0E0E0;
   flex: 1;
 }
+
+.commit-wrapper {
+  background-color: #FAFAFA;
+}

@@ -20,15 +20,15 @@ export class StatusComponent implements OnInit {
   /**
    * Changes entries that will be placed in unstaged changes.
    */
-  unstagedChanges: AppWorkingFileChange[];
+  unstagedChanges: ReadonlyArray<AppWorkingFileChange> = [];
   /**
    * Changes entries that will be placed in staged changes.
    */
-  stagedChanges: AppWorkingFileChange[];
+  stagedChanges: ReadonlyArray<AppWorkingFileChange> = [];
   /**
    * Changes entries that will be placed in conflicted changes.
    */
-  conflictedChanges: AppWorkingFileChange[];
+  conflictedChanges: ReadonlyArray<AppWorkingFileChange> = [];
 
   /**
    * A currently selected change entry.
