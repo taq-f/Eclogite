@@ -4,7 +4,7 @@
       <app-status [repositoryPath]="repository.path" (entrySelectChange)="onEntrySelectChange($event)" (refreshed)="onStatusRefreshed($event)">
       </app-status>
     </div>
-    <app-commit [hasStaged]="hasStaged"></app-commit>
+    <app-commit [repositoryPath]="repository.path" [hasStaged]="hasStaged"></app-commit>
   </div>
   <div class="right-pane">
     <app-diff [repositoryPath]="repository.path" [workingfile]="workingfile" (applied)="refresh()"></app-diff>

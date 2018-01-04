@@ -1,9 +1,9 @@
 <div class="wrapper">
   <mat-form-field style="font-size: 12px; width: 100%;">
-    <input #summary matInput placeholder="Summary" value="" (keyup)="updateSummary(summary.value)">
+    <input #summaryInput matInput placeholder="Summary" value="" (keyup)="updateSummary(summaryInput.value)">
   </mat-form-field>
   <mat-form-field style="font-size: 12px; width: 100%;">
-    <textarea style="height: 80px;" matInput placeholder="Description"></textarea>
+    <textarea style="height: 80px;" matInput placeholder="Description" [(ngModel)]="description"></textarea>
   </mat-form-field>
-  <button mat-raised-button color="primary" [disabled]="!commitable" class="smaller">Commit</button>
+  <button mat-raised-button color="primary" [disabled]="!commitable" class="smaller" (click)="commit()">Commit</button>
 </div>

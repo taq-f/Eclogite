@@ -23,6 +23,7 @@ import { HunkComponent } from './subcomponents/hunk.component';
 import { StatusService } from './services/status.service';
 import { RepositoryService } from './services/repository.service';
 import { DiffService } from './services/diff.service';
+import { CommitService } from './services/commit.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { DiffService } from './services/diff.service';
   providers: [
     StatusService,
     RepositoryService,
-    DiffService
+    DiffService,
+    CommitService
   ],
   bootstrap: [AppComponent]
 })
