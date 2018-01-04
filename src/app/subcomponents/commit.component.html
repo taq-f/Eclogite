@@ -1,6 +1,6 @@
 <div class="wrapper">
   <mat-form-field style="font-size: 12px; width: 100%;">
-    <input #summaryInput matInput placeholder="Summary" value="" (keyup)="updateSummary(summaryInput.value)">
+    <input #summaryInput matInput placeholder="Summary" [value]="summary" (keyup)="updateSummary(summaryInput.value)">
   </mat-form-field>
   <mat-form-field style="font-size: 12px; width: 100%;">
     <textarea style="height: 80px;" matInput placeholder="Description" [(ngModel)]="description"></textarea>

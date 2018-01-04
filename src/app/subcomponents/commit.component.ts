@@ -27,12 +27,12 @@ export class CommitComponent implements OnInit {
   /**
    * Summary of the commit.
    */
-  summary: string;
+  summary = '';
 
   /**
    * Description of the commit.
    */
-  description: string;
+  description = '';
 
   /**
    * Commit message constructed from user input.
@@ -64,8 +64,9 @@ export class CommitComponent implements OnInit {
 
   commit(): void {
     this.commitService.commit(this.repositoryPath, this.message).subscribe(() => {
-      this.summary = undefined;
-      this.description = undefined;
+      this.summary = '';
+      this.description = '';
+      this.commitable = this.isCommitable();
     });
   }
 }
