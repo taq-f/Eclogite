@@ -13,10 +13,13 @@ export async function getDiff(
   let result: IGitResult;
   let successExitCode: Set<number> | undefined;
 
+  const extraArgs = fileChange.indexState === 'staged' ?
+    ['--cached'] : [];
+
   if (status === AppStatusEntry.Added) {
     const args = [
       'diff',
-      // 'HEAD',
+      ...extraArgs,
       '--no-ext-diff',
       '--no-index',
       '--patch-with-raw',
@@ -31,7 +34,7 @@ export async function getDiff(
   } else if (status === AppStatusEntry.Modified) {
     const args = [
       'diff',
-      // 'HEAD',
+      ...extraArgs,
       '--no-ext-diff',
       '--patch-with-raw',
       '-z',
@@ -44,6 +47,7 @@ export async function getDiff(
   } else if (status === AppStatusEntry.Deleted) {
     const args = [
       'diff',
+      ...extraArgs,
       '--no-ext-diff',
       '--patch-with-raw',
       '-z',
