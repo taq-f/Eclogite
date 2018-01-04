@@ -19,6 +19,8 @@ export class CommitComponent implements OnInit {
   }
   _hasStaged: boolean;
 
+  @Output() commitDone = new EventEmitter<undefined>();
+
   /**
    * Commit can be taken now?
    */
@@ -63,10 +65,15 @@ export class CommitComponent implements OnInit {
   }
 
   commit(): void {
+    // make the state uncommitable to prevent execute before the previous
+    // one.
+    this.commitable = false;
+
     this.commitService.commit(this.repositoryPath, this.message).subscribe(() => {
       this.summary = '';
       this.description = '';
       this.commitable = this.isCommitable();
+      this.commitDone.emit();
     });
   }
 }
