@@ -40,6 +40,12 @@ export class StatusComponent implements OnInit {
    */
   @Output() entrySelectChange = new EventEmitter<AppWorkingFileChange>();
 
+  @Output() refreshed = new EventEmitter<{
+    numOfUnstaged: number,
+    numOfStaged: number,
+    numOfConflicted: number,
+  }>();
+
   /**
    * This component requires StatusService to retrieve file change entries.
    */
@@ -67,6 +73,12 @@ export class StatusComponent implements OnInit {
       this.unstagedChanges = unstaged;
       this.stagedChanges = staged;
       this.conflictedChanges = conflicted;
+
+      this.refreshed.emit({
+        numOfUnstaged: unstaged.length,
+        numOfStaged: staged.length,
+        numOfConflicted: conflicted.length,
+      });
     });
   }
 

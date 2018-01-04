@@ -1,13 +1,22 @@
-import { Component } from '@angular/core';
-
-// import { StatusComponent } from './status.component';
-// import { RepositoryService } from '../services/repository.service';
-// import { AppWorkingFileChange } from '../models/workingfile';
-// import { Repository } from '../models/repository';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-commit',
   templateUrl: './commit.component.html',
   styleUrls: ['./commit.component.css']
 })
-export class CommitComponent { }
+export class CommitComponent {
+  @Input() set hasStaged(v: boolean) {
+    this._hasStaged = v;
+    this.commitable = this._hasStaged && !!this.summary;
+  }
+  _hasStaged: boolean;
+  commitable: boolean;
+
+  summary: string;
+
+  updateSummary(summary: string): void {
+    this.summary = summary;
+    this.commitable = this._hasStaged && !!this.summary;
+  }
+}

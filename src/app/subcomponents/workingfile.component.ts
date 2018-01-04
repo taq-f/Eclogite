@@ -24,6 +24,8 @@ export class WorkingfileComponent implements OnInit {
    */
   workingfile: AppWorkingFileChange;
 
+  hasStaged: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -50,6 +52,14 @@ export class WorkingfileComponent implements OnInit {
 
   onEntrySelectChange(v: AppWorkingFileChange): void {
     this.workingfile = v;
+  }
+
+  onStatusRefreshed(p: {
+    numOfUnstaged: number,
+    numOfStaged: number,
+    numOfConflicted: number,
+  }): void {
+    this.hasStaged = p.numOfStaged > 0;
   }
 
   refresh(): void {

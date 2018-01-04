@@ -1,9 +1,10 @@
 <div *ngIf="repository" class="content">
   <div class="left-pane">
     <div class="status-wrapper fancy-scroll">
-      <app-status [repositoryPath]="repository.path" (entrySelectChange)="onEntrySelectChange($event)"></app-status>
+      <app-status [repositoryPath]="repository.path" (entrySelectChange)="onEntrySelectChange($event)" (refreshed)="onStatusRefreshed($event)">
+      </app-status>
     </div>
-    <app-commit></app-commit>
+    <app-commit [hasStaged]="hasStaged"></app-commit>
   </div>
   <div class="right-pane">
     <app-diff [repositoryPath]="repository.path" [workingfile]="workingfile" (applied)="refresh()"></app-diff>

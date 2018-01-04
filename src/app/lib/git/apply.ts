@@ -1,7 +1,5 @@
 import { git, IGitResult } from './core';
 
-import { writeFileSync } from 'fs';
-
 export async function applyPatch(
   repositoryPath: string,
   patch: string
@@ -15,7 +13,7 @@ export async function applyPatch(
       '-',
     ],
     repositoryPath,
-    {stdin: patch}
+    { stdin: patch }
   );
 
   if (result.exitCode !== 0) {
