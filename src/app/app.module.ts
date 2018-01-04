@@ -16,6 +16,7 @@ import { RepositoryListComponent } from './subcomponents/repository-list.compone
 import { WorkingfileComponent } from './subcomponents/workingfile.component';
 import { StatusComponent } from './subcomponents/status.component';
 import { ChangeEntryComponent } from './subcomponents/change-entry.component';
+import { CommitComponent } from './subcomponents/commit.component';
 import { DiffComponent } from './subcomponents/diff.component';
 import { HunkComponent } from './subcomponents/hunk.component';
 
@@ -31,6 +32,7 @@ import { DiffService } from './services/diff.service';
     WorkingfileComponent,
     StatusComponent,
     ChangeEntryComponent,
+    CommitComponent,
     DiffComponent,
     HunkComponent
   ],

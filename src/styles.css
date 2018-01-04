@@ -35,3 +35,11 @@ body {
 .need-caution {
   color: #FF7043;
 }
+
+/* Overrides of Angular Material */
+
+button.smaller {
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+}
