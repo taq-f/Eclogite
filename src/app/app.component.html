@@ -1,15 +1,12 @@
 <div class="site">
-  <header>
-    <nav mat-tab-nav-bar>
-      <a mat-tab-link routerLink="/repository" routerLinkActive="active">
-        Repository
-      </a>
-      <a mat-tab-link routerLink="/workingfiles" routerLinkActive="active">
-        Files
-      </a>
-    </nav>
-  </header>
-
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link routerLink="/repository" routerLinkActive="active">
+      Repository
+    </a>
+    <a mat-tab-link routerLink="/workingfiles" routerLinkActive="active">
+      Files
+    </a>
+  </nav>
   <main class="content fancy-scroll">
     <router-outlet></router-outlet>
   </main>
