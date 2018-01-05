@@ -1,8 +1,6 @@
 <div class="wrapper" [@size]="size" (mouseenter)="toggleMouseoverState('enter')" (mouseleave)="toggleMouseoverState('leave')">
   <div class="title">
-    <div>
-      # Commit
-    </div>
+    # COMMIT
   </div>
   <mat-form-field style="font-size: 12px; width: 100%;">
     <input #summaryInput matInput placeholder="Summary" [value]="summary" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"

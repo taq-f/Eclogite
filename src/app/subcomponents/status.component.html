@@ -1,7 +1,7 @@
 <div class="wrapper">
   <ul class="changes">
     <li class="category">
-      # <span class="label" [class.unstaged]="unstagedChanges.length > 0">unstaged</span>
+      # <span class="label" [class.unstaged]="unstagedChanges.length > 0">UNSTAGED</span>
     </li>
     <li class="change" *ngFor="let change of unstagedChanges" (click)="selectChange(change)">
       <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
@@ -9,7 +9,7 @@
     <li class="no-item" *ngIf="unstagedChanges.length === 0"></li>
  
     <li class="category">
-      # <span class="label" [class.staged]="stagedChanges.length > 0">staged</span>
+      # <span class="label" [class.staged]="stagedChanges.length > 0">STAGED</span>
     </li>
     <li class="change" *ngFor="let change of stagedChanges" (click)="selectChange(change)">
       <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
@@ -17,7 +17,7 @@
     <li class="no-item" *ngIf="stagedChanges.length === 0"></li>
 
     <li class="category">
-      # <span class="label" [class.conflicted]="conflictedChanges.length > 0">conflicted!</span>
+      # <span class="label" [class.conflicted]="conflictedChanges.length > 0">CONFLICTED : (</span>
     </li>
     <li class="change" *ngFor="let change of conflictedChanges" (click)="selectChange(change)">
       <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
