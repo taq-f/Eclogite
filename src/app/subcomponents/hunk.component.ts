@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 import { Hunk, HunkLine } from '../models/diff';
@@ -7,6 +8,13 @@ import { Hunk, HunkLine } from '../models/diff';
   selector: 'app-hunk',
   templateUrl: './hunk.component.html',
   styleUrls: ['./hunk.component.css'],
+  animations: [
+    trigger('flyin', [
+      state('in', style({transform: 'translateX(0)'})),
+      state('void', style({transform: 'translateX(-100%)'})),
+      transition(':enter', animate('0.2s ease-in')),
+    ])
+  ]
 })
 export class HunkComponent implements OnInit {
 
