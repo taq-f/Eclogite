@@ -1,6 +1,6 @@
 <div class="container">
   <div class="file-opening">
-    <button mat-button color="primary" (click)="addSelection()">Add Selection</button>
+    <button mat-button class="smaller" color="primary" [disabled]="!_workingfile" (click)="apply()">Stage Selection</button>
     {{_workingfile && _workingfile.path}}
   </div>
   <div *ngIf="fileDiff" class="diff fancy-scroll">

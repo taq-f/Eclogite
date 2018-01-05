@@ -8,11 +8,8 @@
 .file-opening{
   border-bottom: 1px solid #E0E0E0;
   box-sizing: border-box;
-  height: 40px;
-  font-size: 14px;
-  line-height: 40px;
   overflow: hidden;
-  padding-left: 5px;
+  padding: 10px;
 }
 
 .hunk-container {
