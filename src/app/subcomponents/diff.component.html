@@ -1,7 +1,9 @@
 <div class="container">
   <div class="file-opening">
-    <button mat-button class="smaller" color="primary" [disabled]="!_workingfile" (click)="apply()">Stage Selection</button>
-    {{_workingfile && _workingfile.path}}
+    <div *ngIf="_workingfile">
+      <button mat-button class="smaller" color="primary" [disabled]="!_workingfile" (click)="apply()">Stage File</button>
+      {{_workingfile && _workingfile.path}}
+    </div>
   </div>
   <div *ngIf="fileDiff" class="diff fancy-scroll">
     <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
