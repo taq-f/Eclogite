@@ -39,8 +39,14 @@ export class FileDiff implements IFileDiff {
     this.hunks = fileDiff.hunks;
   }
 
-  getPatch(): string {
+  /**
+   * Construct patch string.
+   * 
+   * When hunks are specified, generate only of the hunks.
+   */
+  getPatch(hunk: Hunk = undefined): string {
     const patch = this.hunks
+      .filter(h => hunk ? h === hunk : true)
       .filter(h => h.selectedState !== 'none')
       .map(h => h.format())
       .join('\n');

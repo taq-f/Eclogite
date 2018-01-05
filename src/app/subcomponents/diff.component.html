@@ -5,7 +5,7 @@
   </div>
   <div *ngIf="fileDiff" class="diff fancy-scroll">
     <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
-      <app-hunk [hunk]="hunk" [fileChange]="_workingfile"></app-hunk>
+      <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (patch)="apply($event)"></app-hunk>
     </div>
   </div>
   <div *ngIf="!fileDiff" class="diff fancy-scroll">

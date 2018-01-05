@@ -74,6 +74,13 @@ export class StatusComponent implements OnInit {
       this.stagedChanges = staged;
       this.conflictedChanges = conflicted;
 
+      // If there is a selected file, look for the corresponding file
+      // and make it selected.
+      if (this.selectedChange) {
+        this.recoverSelected(this.selectedChange);
+        this.entrySelectChange.emit(this.selectedChange);
+      }
+
       this.refreshed.emit({
         numOfUnstaged: unstaged.length,
         numOfStaged: staged.length,
@@ -81,6 +88,28 @@ export class StatusComponent implements OnInit {
       });
     });
   }
+
+  recoverSelected(target: AppWorkingFileChange): void {
+    let search: ReadonlyArray<AppWorkingFileChange>;
+    switch (target.indexState) {
+      case 'unstaged':
+        search = this.unstagedChanges;
+        break;
+      case 'staged':
+        search = this.stagedChanges;
+        break;
+      default:
+        break;
+    }
+
+    const c = search.find(c => c.path === target.path);
+    if (c) {
+      this.selectedChange = c;
+      return;
+    }
+    this.selectedChange = undefined;
+  }
+
 
   /**
    * Select specified change entry.

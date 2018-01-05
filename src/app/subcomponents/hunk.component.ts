@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 import { Hunk, HunkLine } from '../models/diff';
@@ -12,6 +12,7 @@ export class HunkComponent implements OnInit {
 
   @Input() hunk: Hunk;
   @Input() fileChange: AppWorkingFileChange;
+  @Output() patch = new EventEmitter<Hunk>();
 
   /**
    * Whehter this hunk is editable. Supposed to be true when the file is a new

@@ -22,12 +22,7 @@ export class DiffComponent {
     if (v) {
       this._workingfile = v;
       this.fileDiff = undefined;
-      this.diffService.getDiff(
-        this.repositoryPath,
-        this._workingfile
-      ).subscribe(fileDiff => {
-        this.fileDiff = fileDiff;
-      });
+      this.getDiff();
     } else {
       this._workingfile = undefined;
       this.fileDiff = undefined;
@@ -40,8 +35,17 @@ export class DiffComponent {
 
   constructor(private diffService: DiffService) { }
 
-  addSelection(): void {
-    const patch = this.fileDiff.getPatch();
+  getDiff(): void {
+    this.diffService.getDiff(
+      this.repositoryPath,
+      this._workingfile
+    ).subscribe(fileDiff => {
+      this.fileDiff = fileDiff;
+    });
+  }
+
+  apply(hunk: Hunk = undefined): void {
+    const patch = this.fileDiff.getPatch(hunk);
     this.diffService.applyPatch(this.repositoryPath, patch).subscribe(() => {
       this.applied.emit();
     });
