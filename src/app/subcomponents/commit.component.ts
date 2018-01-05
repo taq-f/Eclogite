@@ -3,6 +3,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 import { CommitService } from '../services/commit.service';
 
+type MouseEventTrigger = 'enter' | 'leave';
+type InputFocusTrigger = 'focus' | 'blur';
+
 @Component({
   selector: 'app-commit',
   templateUrl: './commit.component.html',
@@ -46,7 +49,8 @@ export class CommitComponent implements OnInit {
 
   size = 'shrink';
 
-  editing: boolean;
+  isMouseOver: boolean;
+  isEditing: boolean;
 
   /**
    * Commit message constructed from user input.
@@ -77,7 +81,7 @@ export class CommitComponent implements OnInit {
   }
 
   commit(): void {
-    // make the state uncommitable to prevent execute before the previous
+    // Make the state uncommitable to prevent execute before the previous
     // one.
     this.commitable = false;
 
@@ -89,12 +93,37 @@ export class CommitComponent implements OnInit {
     });
   }
 
-  onMouseEnter(): void {
-    this.size = 'expand';
+  toggleMouseoverState(t: MouseEventTrigger): void {
+    if (t === 'enter') {
+      // Force open.
+      this.size = 'expand';
+      this.isMouseOver = true;
+    } else if (t === 'leave') {
+      // The commit area can be closed as long as its inputs are not focused
+      // nor no input has been made.
+      if (!this.summary && !this.isEditing) {
+        this.size = 'shrink';
+      }
+      this.isMouseOver = false;
+    } else {
+      throw new Error(`unknown trigger: ${t}`);
+    }
   }
-  onMouseLeave(): void {
-    if (!this.editing && !this.summary) {
-      this.size = 'shrink';
+
+  toggleInputFocusState(t: InputFocusTrigger): void {
+    if (t === 'focus') {
+      // Force open.
+      this.size = 'expand';
+      this.isEditing = true;
+    } else if (t === 'blur') {
+      // The commit area can be closed as long as the mouse is not on the area
+      // nor no input has been made.
+      if (!this.isMouseOver && !this.summary) {
+        this.size = 'shrink';
+      }
+      this.isEditing = false;
+    } else {
+      throw new Error(`unknown trigger: ${t}`);
     }
   }
 }
