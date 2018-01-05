@@ -15,7 +15,17 @@
   padding-left: 5px;
 }
 
+.hunk-container {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+}
+.hunk-container:last-child {
+  padding-bottom: 15px;
+}
+
 .diff {
+  background-color: #FAFAFA;
   flex: 1;
   position: relative;
 }

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { RepositoryComponent } from './subcomponents/repository.component';
@@ -66,7 +67,8 @@ import { CommitService } from './services/commit.service';
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule
   ],
   providers: [
     StatusService,

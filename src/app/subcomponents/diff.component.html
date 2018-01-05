@@ -4,7 +4,7 @@
     {{_workingfile && _workingfile.path}}
   </div>
   <div *ngIf="fileDiff" class="diff fancy-scroll">
-    <div *ngFor="let hunk of fileDiff.hunks">
+    <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
       <app-hunk [hunk]="hunk" [fileChange]="_workingfile"></app-hunk>
     </div>
   </div>

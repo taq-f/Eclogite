@@ -64,7 +64,7 @@ export class HunkComponent implements OnInit {
     if (!this.editable) {
       return;
     }
-    
+
     line.selected = !line.selected;
     this.setHunkState(this.hunk);
   }
