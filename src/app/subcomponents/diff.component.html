@@ -1,7 +1,7 @@
 <div class="container">
   <div class="file-opening">
     <button mat-button color="primary" (click)="addSelection()">Add Selection</button>
-    {{_filepath}}
+    {{_workingfile && _workingfile.path}}
   </div>
   <div *ngIf="fileDiff" class="diff fancy-scroll">
     <div *ngFor="let hunk of fileDiff.hunks">
