@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
-import { Hunk, HunkLine } from '../models/diff';
+import { Hunk, HunkLine, SelectedState } from '../models/diff';
 
 @Component({
   selector: 'app-hunk',
@@ -21,6 +21,7 @@ export class HunkComponent implements OnInit {
   @Input() hunk: Hunk;
   @Input() fileChange: AppWorkingFileChange;
   @Output() patch = new EventEmitter<Hunk>();
+  @Output() hunkStatusChange = new EventEmitter<SelectedState>();
 
   /**
    * Whehter this hunk is editable. Supposed to be true when the file is a new
@@ -78,8 +79,8 @@ export class HunkComponent implements OnInit {
     this.setHunkState(this.hunk);
   }
 
-  setHunkState(hunk: Hunk) {
-    hunk.selectedState = 'partial';
+  setHunkState(hunk: Hunk): void {
+    const currentState = hunk.selectedState;
 
     // set header state
     let allTrue = true;
@@ -103,6 +104,10 @@ export class HunkComponent implements OnInit {
       hunk.selectedState = 'none';
     } else {
       hunk.selectedState = 'partial';
+    }
+
+    if (currentState !== hunk.selectedState) {
+      this.hunkStatusChange.emit(hunk.selectedState);
     }
   }
 }

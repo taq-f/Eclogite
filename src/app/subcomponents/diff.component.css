@@ -8,6 +8,7 @@
 .file-opening{
   border-bottom: 1px solid #E0E0E0;
   box-sizing: border-box;
+  min-height: 50px;
   overflow: hidden;
   padding: 10px;
 }

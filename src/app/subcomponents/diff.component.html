@@ -1,13 +1,13 @@
 <div class="container">
   <div class="file-opening">
     <div *ngIf="_workingfile">
-      <button mat-button class="smaller" color="primary" [disabled]="!_workingfile" (click)="apply()">Stage File</button>
+      <button mat-button class="smaller" color="primary" [disabled]="!editable" (click)="apply()">Stage File</button>
       {{_workingfile && _workingfile.path}}
     </div>
   </div>
   <div *ngIf="fileDiff" class="diff fancy-scroll">
     <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
-      <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (patch)="apply($event)"></app-hunk>
+      <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (hunkStatusChange)="onHunkStatusChange()" (patch)="apply($event)"></app-hunk>
     </div>
   </div>
   <div *ngIf="!fileDiff" class="diff fancy-scroll">
