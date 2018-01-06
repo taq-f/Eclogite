@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-
+import { ConfigService } from '../services/config.service';
 import { CommitService } from '../services/commit.service';
 
 type MouseEventTrigger = 'enter' | 'leave';
@@ -65,10 +65,15 @@ export class CommitComponent implements OnInit {
     return this.summary + '\n\n' + this.description + '\n';
   }
 
-  constructor(private commitService: CommitService) { }
+  constructor(
+    private configService: ConfigService,
+    private commitService: CommitService) { }
 
   ngOnInit(): void {
     this.commitable = this.isCommitable();
+    this.configService.getUser(this.repositoryPath).subscribe(user => {
+      console.log(user);
+    });
   }
 
   updateSummary(v: string): void {

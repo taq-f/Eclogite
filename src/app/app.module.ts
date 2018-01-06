@@ -21,6 +21,7 @@ import { CommitComponent } from './subcomponents/commit.component';
 import { DiffComponent } from './subcomponents/diff.component';
 import { HunkComponent } from './subcomponents/hunk.component';
 
+import { ConfigService } from './services/config.service';
 import { StatusService } from './services/status.service';
 import { RepositoryService } from './services/repository.service';
 import { DiffService } from './services/diff.service';
@@ -71,6 +72,7 @@ import { CommitService } from './services/commit.service';
     MatCardModule
   ],
   providers: [
+    ConfigService,
     StatusService,
     RepositoryService,
     DiffService,
