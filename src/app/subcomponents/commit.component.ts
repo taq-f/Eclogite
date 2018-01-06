@@ -9,7 +9,7 @@ type InputFocusTrigger = 'focus' | 'blur';
 @Component({
   selector: 'app-commit',
   templateUrl: './commit.component.html',
-  styleUrls: ['./commit.component.css'],
+  styleUrls: ['./commit.component.sass'],
   animations: [
     trigger('size', [
       state('expand', style({ height: '*' })),
