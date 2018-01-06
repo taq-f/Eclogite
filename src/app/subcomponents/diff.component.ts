@@ -3,7 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 import { HunkComponent } from './hunk.component';
 import { AppWorkingFileChange } from '../models/workingfile';
-import { FileDiff, Hunk } from '../models/diff';
+import { FileDiff, Hunk, HunkLine, setHunkState } from '../models/diff';
 import { DiffService } from '../services/diff.service';
 
 @Component({
@@ -22,9 +22,20 @@ export class DiffComponent {
     if (v) {
       this._workingfile = v;
       this.getDiff();
+      if (v.indexState === 'unstaged') {
+        this.buttonText = 'Stage File';
+        this.buttonColor = 'primary';
+      } else if (v.indexState === 'staged') {
+        this.buttonText = 'Unstage File';
+        this.buttonColor = 'accent';
+      } else {
+        this.buttonText = undefined;
+        this.buttonColor = undefined;
+      }
     } else {
       this._workingfile = undefined;
       this.fileDiff = undefined;
+      this.buttonText = undefined;
     }
   }
 
@@ -45,6 +56,12 @@ export class DiffComponent {
    */
   editable = true;
 
+  /**
+   *
+   */
+  buttonText: string;
+  buttonColor: string;
+
   constructor(private diffService: DiffService) { }
 
   getDiff(): void {
@@ -59,16 +76,104 @@ export class DiffComponent {
   onHunkStatusChange(): void {
     const statuses = new Set(this.fileDiff.hunks.map(h => h.selectedState));
     if (statuses.size === 1 && statuses.has('none')) {
-      this.editable = false
+      this.editable = false;
     } else {
       this.editable = true;
     }
   }
 
-  apply(hunk: Hunk = undefined): void {
+  apply(hunk: Hunk | undefined): void {
+    if (this._workingfile.indexState === 'unstaged') {
+      this.applyPatch(hunk);
+    } else if (this._workingfile.indexState === 'staged') {
+      this.resetPatch(hunk);
+    }
+  }
+
+  private applyPatch(hunk: Hunk | undefined): void {
     const patch = this.fileDiff.getPatch(hunk);
     this.diffService.applyPatch(this.repositoryPath, patch).subscribe(() => {
       this.applied.emit();
     });
+  }
+
+  private resetPatch(hunk: Hunk | undefined): void {
+    const hunks: Hunk[] = [];
+    if (hunk) {
+      hunks.push(this.copyHunk(hunk));
+
+      const others = this.fileDiff.hunks.filter(h => h !== hunk);
+      for (const h of others) {
+        hunks.push(this.copyHunk(h, true));
+      }
+    } else {
+      for (const h of this.fileDiff.hunks) {
+        hunks.push(this.copyHunk(h));
+      }
+    }
+
+    const newFileDiff = new FileDiff({
+      path: this.fileDiff.path,
+      diffInfo: this.fileDiff.diffInfo,
+      hunks: hunks,
+    });
+
+    const states = new Set(newFileDiff.hunks.map(h => h.selectedState));
+    let patch: string;
+    if (states.size === 1 && states.has('none')) {
+      // no patch available
+    } else {
+      patch = newFileDiff.getPatch();
+    }
+
+    this.diffService.unstageFile(
+      this.repositoryPath,
+      this._workingfile.path
+    ).subscribe(() => {
+      if (patch) {
+        this.diffService.applyPatch(this.repositoryPath, patch).subscribe(() => {
+          this.applied.emit();
+        });
+      } else {
+        this.applied.emit();
+      }
+    });
+  }
+
+  private copyHunk(original: Hunk, selectAll = false): Hunk {
+    const newLines: HunkLine[] = [];
+    for (const line of original.lines) {
+      newLines.push(this.copyHunkLine(line, selectAll));
+    }
+
+    const newHunk = new Hunk({
+      header: original.header,
+      lines: newLines,
+      selectedState: 'all',
+    });
+    setHunkState(newHunk);
+    return newHunk;
+  }
+
+  private copyHunkLine(original: HunkLine, selectAll = false): HunkLine {
+    if (original.type === 'unchanged') {
+      return {
+        type: original.type,
+        oldLineNo: original.oldLineNo,
+        newLineNo: original.newLineNo,
+        content: original.content,
+        selected: original.selected,
+        isNoNewLineWarning: original.isNoNewLineWarning,
+      };
+    } else {
+      return {
+        type: original.type,
+        oldLineNo: original.oldLineNo,
+        newLineNo: original.newLineNo,
+        content: original.content,
+        selected: selectAll ? true : !original.selected,
+        isNoNewLineWarning: original.isNoNewLineWarning,
+      };
+    }
   }
 }

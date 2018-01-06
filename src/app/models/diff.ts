@@ -41,10 +41,10 @@ export class FileDiff implements IFileDiff {
 
   /**
    * Construct patch string.
-   * 
+   *
    * When hunks are specified, generate only of the hunks.
    */
-  getPatch(hunk: Hunk = undefined): string {
+  getPatch(hunk?: Hunk): string {
     const patch = this.hunks
       .filter(h => hunk ? h === hunk : true)
       .filter(h => h.selectedState !== 'none')
@@ -152,5 +152,30 @@ export class Hunk implements IHunk {
     const headerText = `@@ -${header.oldFileStartLineNo},${oldLineCount} +${header.newFileStartLineNo},${newLineCount} @@`;
 
     return [headerText, ...lineBuffer].join('\n');
+  }
+}
+
+export function setHunkState(hunk: Hunk): void {
+  let allTrue = true;
+  let allFalse = true;
+  const lines = hunk.lines;
+
+  lines.forEach(l => {
+    if (l.type === 'unchanged') {
+      return;
+    }
+    if (l.selected) {
+      allFalse = false;
+    } else {
+      allTrue = false;
+    }
+  });
+
+  if (allTrue) {
+    hunk.selectedState = 'all';
+  } else if (allFalse) {
+    hunk.selectedState = 'none';
+  } else {
+    hunk.selectedState = 'partial';
   }
 }

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
-import { Hunk, HunkLine, SelectedState } from '../models/diff';
+import { Hunk, HunkLine, SelectedState, setHunkState } from '../models/diff';
 
 @Component({
   selector: 'app-hunk',
@@ -10,8 +10,8 @@ import { Hunk, HunkLine, SelectedState } from '../models/diff';
   styleUrls: ['./hunk.component.css'],
   animations: [
     trigger('flyin', [
-      state('in', style({transform: 'translateX(0)'})),
-      state('void', style({transform: 'translateX(-100%)'})),
+      state('in', style({ transform: 'translateX(0)' })),
+      state('void', style({ transform: 'translateX(-100%)' })),
       transition(':enter', animate('0.2s ease-in')),
     ])
   ]
@@ -29,6 +29,12 @@ export class HunkComponent implements OnInit {
    */
   editable: boolean;
 
+  /**
+   *
+   */
+  buttonText: string;
+  buttonColor: string;
+
   private uneditableStates = new Set([
     AppStatusEntry.Added,
     AppStatusEntry.Deleted,
@@ -36,6 +42,17 @@ export class HunkComponent implements OnInit {
 
   ngOnInit(): void {
     this.editable = !this.uneditableStates.has(this.fileChange.state);
+
+    if (this.fileChange.indexState === 'unstaged') {
+      this.buttonText = 'Stage Hunk';
+      this.buttonColor = 'primary';
+    } else if (this.fileChange.indexState === 'staged') {
+      this.buttonText = 'Unstage Hunk';
+      this.buttonColor = 'accent';
+    } else {
+      this.buttonText = undefined;
+      this.buttonColor = undefined;
+    }
   }
 
   toggleHunkSelectState(hunk: Hunk) {
@@ -67,7 +84,11 @@ export class HunkComponent implements OnInit {
         break;
     }
 
-    this.setHunkState(hunk);
+    const currentState = hunk.selectedState;
+    setHunkState(hunk);
+    if (currentState !== hunk.selectedState) {
+      this.hunkStatusChange.emit(hunk.selectedState);
+    }
   }
 
   toggleSelected(line: HunkLine): void {
@@ -76,38 +97,11 @@ export class HunkComponent implements OnInit {
     }
 
     line.selected = !line.selected;
-    this.setHunkState(this.hunk);
-  }
 
-  setHunkState(hunk: Hunk): void {
-    const currentState = hunk.selectedState;
-
-    // set header state
-    let allTrue = true;
-    let allFalse = true;
-    const lines = this.hunk.lines;
-
-    lines.forEach(l => {
-      if (l.type === 'unchanged') {
-        return;
-      }
-      if (l.selected) {
-        allFalse = false;
-      } else {
-        allTrue = false;
-      }
-    });
-
-    if (allTrue) {
-      hunk.selectedState = 'all';
-    } else if (allFalse) {
-      hunk.selectedState = 'none';
-    } else {
-      hunk.selectedState = 'partial';
-    }
-
-    if (currentState !== hunk.selectedState) {
-      this.hunkStatusChange.emit(hunk.selectedState);
+    const currentState = this.hunk.selectedState;
+    setHunkState(this.hunk);
+    if (currentState !== this.hunk.selectedState) {
+      this.hunkStatusChange.emit(this.hunk.selectedState);
     }
   }
 }
