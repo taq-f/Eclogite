@@ -4,7 +4,7 @@ import { Repository } from '../models/repository';
 @Component({
   selector: 'app-repository-list',
   templateUrl: './repository-list.component.html',
-  styleUrls: ['./repository-list.component.sass'],
+  styleUrls: ['./repository-list.component.styl'],
 })
 export class RepositoryListComponent {
   @Input() repositories: ReadonlyArray<Repository>;

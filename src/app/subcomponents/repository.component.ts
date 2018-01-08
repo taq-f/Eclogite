@@ -14,7 +14,7 @@ import { Repository } from '../models/repository';
 @Component({
   selector: 'app-repository',
   templateUrl: './repository.component.html',
-  styleUrls: ['./repository.component.sass'],
+  styleUrls: ['./repository.component.styl'],
 })
 export class RepositoryComponent implements OnInit {
 
