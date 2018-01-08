@@ -1,110 +1,113 @@
 .line
-    display flex
-    font-size 11px
-    width 100%
-    line-height 23px
-    &.none
-        &.header
-            .icon
-                &::after
-                    content "check_box_outline_blank"
-                    font-family "Material Icons"
-                    color #FFF
-    &.partial
-        &.header
-            .icon
-                &::after
-                    content "indeterminate_check_box"
-                    font-family "Material Icons"
-                    color #FFF
-    &.all
-        &.header
-            .icon
-                &::after
-                    content "check_box"
-                    font-family "Material Icons"
-                    color #FFF
+  display flex
+  font-size 11px
+  width 100%
+  line-height 23px
+  &.none
+    &.header
+      .icon
+        &::after
+          content "check_box_outline_blank"
+          font-family "Material Icons"
+          color #FFF
+  &.partial
+    &.header
+      .icon
+        &::after
+          content "indeterminate_check_box"
+          font-family "Material Icons"
+          color #FFF
+  &.all
+    &.header
+      .icon
+        &::after
+          content "check_box"
+          font-family "Material Icons"
+          color #FFF
+  &:not(.header)
+    .icon
+      &::after
+        content "check_box_outline_blank"
+        font-family "Material Icons"
+        color #78909C
+  &.selected
     &:not(.header)
-        .icon
-            &::after
-                content "check_box_outline_blank"
-                font-family "Material Icons"
-                color #78909C
-    &.selected
-        &:not(.header)
-            .icon
-                &::after
-                    content "check_box"
-                    font-family "Material Icons"
-                    color #78909C
+      .icon
+        &::after
+          content "check_box"
+          font-family "Material Icons"
+          color #78909C
 
 .header
-    background-color #1E88E5
-    color #fff
-    border-top-left-radius 2px
-    border-top-right-radius 2px
+  background-color #1E88E5
+  color #fff
+  border-top-left-radius 2px
+  border-top-right-radius 2px
+
+  &.none
+    background-color #90CAF9
 
 .mat-card
-    padding 0
-    padding-bottom 24px
+  padding 0
+  padding-bottom 24px
 
 .mat-card-content
-    margin-bottom 0
+  margin-bottom 0
 
 .mat-card-actions
-    margin-left 0
-    margin-right 0
-    padding-left 8px
-    padding-right 8px
+  margin-left 0
+  margin-right 0
+  padding-left 8px
+  padding-right 8px
 
 .unchanged,
 .plus:not(.selected),
 .minus:not(.selected)
-    color #78909C
+  color #78909C
 
 .icon
-    font-size 15px
-    left 7px
-    position absolute
+  font-size 15px
+  left 7px
+  position absolute
 
 .unchanged
-    background-color #FFF
+  background-color #FFF
 
 .plus
-    background-color #E8F5E9
-    &.selected
-        background-color #C8E6C9
+  background-color #E8F5E9
+  &.selected
+    background-color #C8E6C9
 
 .minus
-    background-color #FFEBEE
-    &.selected
-        background-color #FFCDD2
+  background-color #FFEBEE
+  &.selected
+    background-color #FFCDD2
 
 .line.header,
 .line.plus,
 .line.minus
-    cursor pointer
+  cursor pointer
 
 .add-operation
-    flex 0 0 35px
-    position relative
+  flex 0 0 35px
+  position relative
 
 .line-no
-    flex 0 0 40px
-    padding-right 10px
-    text-align right
+  flex 0 0 40px
+  padding-right 10px
+  text-align right
 
 .devider
-    border-right 4px solid #E0E0E0
-    flex 0 0 0px
-    width 0
+  border-right 4px solid #E0E0E0
+  flex 0 0 0px
+  width 0
 
 .content
-    padding-left 10px
-    flex 1
+  padding-left 10px
+  flex 1
 
 pre
-    font-family Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback"
-    margin 0
-    white-space pre-wrap
-    word-break break-all
+  font-family Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback"
+  margin 0
+  white-space pre-wrap
+  word-break break-all
