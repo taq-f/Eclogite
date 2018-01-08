@@ -9,7 +9,7 @@ import { Repository } from '../models/repository';
 @Component({
   selector: 'app-workingfile',
   templateUrl: './workingfile.component.html',
-  styleUrls: ['./workingfile.component.css']
+  styleUrls: ['./workingfile.component.styl']
 })
 export class WorkingfileComponent implements OnInit {
   @ViewChild(StatusComponent) statusComponent: StatusComponent;

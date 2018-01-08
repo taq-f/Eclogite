@@ -1,0 +1,23 @@
+@import "../styles/layout"
+
+.content
+  display flex
+  height 100%
+
+.left-pane
+  border-right border-devider
+  box-sizing border-box
+  display flex
+  flex 0 0 250px /* fix width. TODO want it to be resizable */
+  flex-direction column
+  overflow hidden
+
+.right-pane
+  flex 1 /* Takes the rest of witdh */
+
+.status-wrapper
+  border-bottom border-devider
+  flex 1
+
+.commit-wrapper
+  // background-color bgcolor-secondary
