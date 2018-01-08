@@ -5,15 +5,18 @@
       {{_workingfile && _workingfile.path}}
     </div>
   </div>
-  <div *ngIf="fileDiff" class="diff fancy-scroll">
+  <div *ngIf="fileDiff; else noDiff" class="diff fancy-scroll">
     <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
       <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (hunkStatusChange)="onHunkStatusChange()" (patch)="apply($event)"></app-hunk>
     </div>
   </div>
+</div>
 
-  <div *ngIf="!fileDiff" class="no-diff fancy-scroll">
+<!-- When no diff is provided. -->
+<ng-template #noDiff>
+  <div class="no-diff">
     <div>
-      <img src="assets/app.png" style="opacity:0.5;" alt="" srcset="">
+      <img src="assets/app.png" style="opacity:0.5;">
     </div>
   </div>
-</div>
+</ng-template>
