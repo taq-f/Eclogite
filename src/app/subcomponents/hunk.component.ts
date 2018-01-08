@@ -7,7 +7,7 @@ import { Hunk, HunkLine, SelectedState, setHunkState } from '../models/diff';
 @Component({
   selector: 'app-hunk',
   templateUrl: './hunk.component.html',
-  styleUrls: ['./hunk.component.css'],
+  styleUrls: ['./hunk.component.styl'],
   animations: [
     trigger('flyin', [
       state('in', style({ transform: 'translateX(0)' })),

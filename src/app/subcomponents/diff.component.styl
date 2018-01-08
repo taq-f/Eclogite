@@ -1,0 +1,31 @@
+@import "../styles/layout"
+
+.container
+  display flex
+  flex-direction column
+  height 100%
+  width 100%
+
+.file-opening
+  border-bottom border-devider
+  box-sizing border-box
+  min-height 50px
+  overflow hidden
+  padding 10px
+
+.hunk-container
+  padding-left layout-spacing-normal
+  padding-right layout-spacing-normal
+  padding-top layout-spacing-normal
+  &:last-child
+    padding-bottom layout-spacing-normal
+
+.diff
+  background-color #FAFAFA
+  flex 1
+  position relative
+
+.no-diff
+  align-center()
+  background-color #FAFAFA
+  flex 1

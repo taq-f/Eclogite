@@ -10,8 +10,9 @@
       <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (hunkStatusChange)="onHunkStatusChange()" (patch)="apply($event)"></app-hunk>
     </div>
   </div>
-  <div *ngIf="!fileDiff" class="diff fancy-scroll">
-    <div class="center">
+
+  <div *ngIf="!fileDiff" class="no-diff fancy-scroll">
+    <div>
       <img src="assets/app.png" style="opacity:0.5;" alt="" srcset="">
     </div>
   </div>

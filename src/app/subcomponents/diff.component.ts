@@ -9,7 +9,7 @@ import { DiffService } from '../services/diff.service';
 @Component({
   selector: 'app-diff',
   templateUrl: './diff.component.html',
-  styleUrls: ['./diff.component.css'],
+  styleUrls: ['./diff.component.styl'],
 })
 export class DiffComponent {
 
