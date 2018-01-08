@@ -6,8 +6,7 @@ html, body {
 }
 
 body {
-  /* font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif; */
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
   color: rgba(0,0,0,.87);
 }
 

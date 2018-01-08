@@ -1,27 +1,31 @@
-<div class="wrapper">
-  <ul class="changes">
-    <li class="category">
+<ul class="changes">
+  <li class="category">
+    <div>
       # <span class="label" [class.unstaged]="unstagedChanges.length > 0">UNSTAGED</span>
-    </li>
-    <li class="change" *ngFor="let change of unstagedChanges" (click)="selectChange(change)">
-      <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
-    </li>
-    <li class="no-item" *ngIf="unstagedChanges.length === 0"></li>
- 
-    <li class="category">
-      # <span class="label" [class.staged]="stagedChanges.length > 0">STAGED</span>
-    </li>
-    <li class="change" *ngFor="let change of stagedChanges" (click)="selectChange(change)">
-      <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
-    </li>
-    <li class="no-item" *ngIf="stagedChanges.length === 0"></li>
+    </div>
+  </li>
+  <li class="change" *ngFor="let change of unstagedChanges" (click)="selectChange(change)">
+    <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+  </li>
+  <li class="no-item" *ngIf="unstagedChanges.length === 0"></li>
 
-    <li class="category">
+  <li class="category">
+    <div>
+      # <span class="label" [class.staged]="stagedChanges.length > 0">STAGED</span>
+    </div>
+  </li>
+  <li class="change" *ngFor="let change of stagedChanges" (click)="selectChange(change)">
+    <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+  </li>
+  <li class="no-item" *ngIf="stagedChanges.length === 0"></li>
+
+  <li class="category">
+    <div>
       # <span class="label" [class.conflicted]="conflictedChanges.length > 0">CONFLICTED : (</span>
-    </li>
-    <li class="change" *ngFor="let change of conflictedChanges" (click)="selectChange(change)">
-      <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
-    </li>
-    <li class="no-item" *ngIf="conflictedChanges.length === 0"></li>
-  </ul>
-</div>
+    </div>
+  </li>
+  <li class="change" *ngFor="let change of conflictedChanges" (click)="selectChange(change)">
+    <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+  </li>
+  <li class="no-item" *ngIf="conflictedChanges.length === 0"></li>
+</ul>
