@@ -1,15 +1,15 @@
 <div class="container fancy-scroll">
   <h2>Add Local Repository</h2>
-  <mat-form-field style="width: 400px;">
-    <input matInput placeholder="Repositoty path" [(ngModel)]="repositoryPath">
+  <mat-form-field class="input">
+    <input matInput placeholder="repositoty path" [(ngModel)]="repositoryPath">
   </mat-form-field>
-  <button mat-button (click)="chooseRepositoryPath()">choose...</button>
-  <button mat-button color="accent" [disabled]="!repositoryPath" (click)="addRepository()">Open</button>
+  <button mat-button (click)="chooseRepositoryPath()">Choose...</button>
+  <button mat-button color="accent" [disabled]="!repositoryPath" (click)="addRepository()">Add and Open</button>
 
   <h2>Repositories</h2>
-  <div class="list-group">
+  <div class="repositories">
     <div class="list">
-      <h2>Recent</h2>
+      <h3>Recent</h3>
       <app-repository-list
         [repositories]="recentlyOpenedRepositories"
         (openClick)="openRepository($event)"
@@ -17,7 +17,7 @@
       </app-repository-list>
     </div>
     <div class="list">
-      <h2>All</h2>
+      <h3>All</h3>
       <app-repository-list
         [repositories]="repositories"
         (openClick)="openRepository($event)"
