@@ -1,8 +1,10 @@
 import { git, IGitResult } from './core';
 
+import { Branch } from '../../models/branch';
+
 export async function branch(
   repositoryPath: string
-): Promise<string[]> {
+): Promise<ReadonlyArray<Branch>> {
   const result = await git(
     [
       'branch',
@@ -17,5 +19,8 @@ export async function branch(
     return;
   }
 
-  return result.stdout.split('\n');
+  return result.stdout
+    .split('\n')
+    .filter(v => v)
+    .map(l => ({ name: l }));
 }
