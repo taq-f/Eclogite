@@ -20,12 +20,14 @@ import { ChangeEntryComponent } from './subcomponents/change-entry.component';
 import { CommitComponent } from './subcomponents/commit.component';
 import { DiffComponent } from './subcomponents/diff.component';
 import { HunkComponent } from './subcomponents/hunk.component';
+import { BranchComponent } from './subcomponents/branch.component';
 
 import { ConfigService } from './services/config.service';
 import { StatusService } from './services/status.service';
 import { RepositoryService } from './services/repository.service';
 import { DiffService } from './services/diff.service';
 import { CommitService } from './services/commit.service';
+import { BranchService } from './services/branch.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { CommitService } from './services/commit.service';
     ChangeEntryComponent,
     CommitComponent,
     DiffComponent,
-    HunkComponent
+    HunkComponent,
+    BranchComponent
   ],
   entryComponents: [],
   imports: [
@@ -59,6 +62,10 @@ import { CommitService } from './services/commit.service';
         path: 'repository',
         component: RepositoryComponent,
       },
+      {
+        path: 'branch',
+        component: BranchComponent,
+      },
     ]),
     BrowserModule,
     FormsModule,
@@ -76,7 +83,8 @@ import { CommitService } from './services/commit.service';
     StatusService,
     RepositoryService,
     DiffService,
-    CommitService
+    CommitService,
+    BranchService
   ],
   bootstrap: [AppComponent]
 })
