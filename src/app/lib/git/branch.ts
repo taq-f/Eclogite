@@ -22,5 +22,17 @@ export async function branch(
   return result.stdout
     .split('\n')
     .filter(v => v)
-    .map(l => ({ name: l }));
+    .map(v => {
+      if (v.startsWith('*')) {
+        return {
+          name: v.substring(2),
+          current: true,
+        };
+      } else {
+        return {
+          name: v,
+          current: false,
+        };
+      }
+    });
 }
