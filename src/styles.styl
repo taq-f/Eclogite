@@ -11,16 +11,16 @@ body
 /* Customize scroll bar without much stress because all I need to care is Chrome. */
 .fancy-scroll
   overflow auto
-.fancy-scroll-webkit-scrollbar
-  width 10px
-  height 10px
-  background-color #fff
-  border-radius 10px
-.fancy-scroll-webkit-scrollbar-track
-  border-radius 10px
-.fancy-scroll-webkit-scrollbar-thumb
-  background-color #E0E0E0
-  border-radius 10px
+  &::-webkit-scrollbar
+    width 10px
+    height 10px
+    background-color #fff
+    border-radius 10px
+  &::-webkit-scrollbar-track
+    border-radius 10px
+  &::-webkit-scrollbar-thumb
+    background-color #E0E0E0
+    border-radius 10px
 
 .clickable
   cursor pointer
