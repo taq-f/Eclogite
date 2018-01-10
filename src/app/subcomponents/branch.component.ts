@@ -27,9 +27,7 @@ export class BranchComponent implements OnInit {
       this.repositoryService.saveLastOpenRepository(id).subscribe(() => {
         this.repositoryService.getRepository(id).subscribe(repository => {
           this.repository = repository;
-          this.branchService.branches(repository.path).subscribe(branches => {
-            this.branches = branches
-          });
+          this.getBranch();
         });
       });
     } else {
@@ -38,10 +36,14 @@ export class BranchComponent implements OnInit {
           this.router.navigate(['/repository']);
         }
         this.repository = repository;
-        this.branchService.branches(repository.path).subscribe(branches => {
-          this.branches = branches
-        });
+        this.getBranch();
       });
     }
+  }
+
+  getBranch(): void {
+    this.branchService.branches(this.repository.path).subscribe(branches => {
+      this.branches = branches
+    });
   }
 }

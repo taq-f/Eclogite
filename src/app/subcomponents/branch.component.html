@@ -1,11 +1,12 @@
 <div class="container">
-  <ul class="branch-list">
-    <li class="list-item" *ngFor="let branch of branches">
-      <div class="branch">
-        <div>
-          {{branch.name}}
-        </div>
+  <div class="branch-list">
+    <div class="branch clickable" [class.current]="branch.current" *ngFor="let branch of branches">
+      <div class="branch-name">
+        {{branch.name}}
       </div>
-    </li>
-  </ul>
+      <div class="buttons">
+        <!-- <button mat-button color="primary" class="smaller">ABC</button> -->
+      </div>
+    </div>
+  </div>
 </div>

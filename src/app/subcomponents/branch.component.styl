@@ -1,26 +1,50 @@
 @import "../styles/font"
 @import "../styles/layout"
 
+hover-bgcolor = #E0E0E0
+
 .container
   display flex
   justify-content center
 
 .branch-list
-  margin 0
-  padding 0
+  display flex
+  flex-direction column
+  flex-grow 1
+  margin-bottom layout-spacing-normal
+  margin-top layout-spacing-normal
+  max-width 350px
 
-.title
-  align-items center
+.branch
+  align-center-vertical()
   display flex
   font-size font-size-normal
   height 50px
-  padding 0 layout-spacing-small
+  padding-right layout-spacing-small
+  padding-left layout-spacing-small
 
-.list-item
-  list-style none
+  &:hover
+    background-color hover-bgcolor
 
-.branch
-  align-items center
-  display flex
-  font-size font-size-normal
-  height 40px
+  &.current
+    font-weight bold
+
+  // Display order.
+  order: 2
+  &.current
+    order: 1
+
+
+.branch-name
+  flex 1
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+
+.chip
+  margin-left layout-spacing-small
+
+.buttons
+  flex 0 0 120px
+  text-align right
