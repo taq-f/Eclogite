@@ -22,6 +22,8 @@ import { DiffComponent } from './subcomponents/diff.component';
 import { HunkComponent } from './subcomponents/hunk.component';
 import { BranchComponent } from './subcomponents/branch.component';
 
+import { LoggerService } from './services/logger.service';
+import { ConsoleLoggerService } from './services/consolelogger.service';
 import { ConfigService } from './services/config.service';
 import { StatusService } from './services/status.service';
 import { RepositoryService } from './services/repository.service';
@@ -79,6 +81,7 @@ import { BranchService } from './services/branch.service';
     MatCardModule
   ],
   providers: [
+    { provide: LoggerService, useClass: ConsoleLoggerService },
     ConfigService,
     StatusService,
     RepositoryService,
