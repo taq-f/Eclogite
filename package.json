@@ -23,7 +23,7 @@
   },
   "private": true,
   "dependencies": {
-    "dugite": "^1.53.0",
+    "dugite": "1.53.0",
     "js-sha256": "^0.9.0"
   },
   "devDependencies": {
