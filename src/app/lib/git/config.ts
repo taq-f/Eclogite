@@ -30,5 +30,5 @@ export async function getUser(
   return {
     name: data.find(d => d.key === 'user.name').value,
     email: data.find(d => d.key === 'user.email').value,
-  }
+  };
 }
