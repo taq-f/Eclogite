@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatMenuTrigger } from '@angular/material';
 import { LoggerService } from '../services/logger.service';
 import { BranchService } from '../services/branch.service';
 import { RepositoryService } from '../services/repository.service';
@@ -13,6 +13,7 @@ import { Repository } from '../models/repository';
   styleUrls: ['./branch.component.styl'],
 })
 export class BranchComponent implements OnInit {
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   branches: ReadonlyArray<Branch>;
   isCheckingOutBranch: boolean;
 
@@ -26,21 +27,7 @@ export class BranchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('repositoryId');
-    if (id) {
-      this.repositoryService.saveLastOpenRepository(id).subscribe(() => {
-        this.repositoryService.getRepository(id).subscribe(repository => {
-          this.getBranch();
-        });
-      });
-    } else {
-      this.repositoryService.getLastOpenRepository(true).subscribe(repository => {
-        if (!repository) {
-          this.router.navigate(['/repository']);
-        }
-        this.getBranch();
-      });
-    }
+    this.getBranch();
   }
 
   getBranch(): void {
@@ -68,12 +55,3 @@ export class BranchComponent implements OnInit {
     });
   }
 }
-
-@Component({
-  selector: 'app-snack-bar-checkout-complete',
-  template: `aaa`,
-  styles: [
-    `.example-pizza-party { color: hotpink; }`
-  ],
-})
-export class CheckoutCompleteComponent { }

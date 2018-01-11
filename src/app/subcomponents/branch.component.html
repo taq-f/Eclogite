@@ -1,11 +1,7 @@
-<div class="container">
+<div class="container fancy-scroll">
   <div class="branch-list">
-    <div class="branch" [class.current]="branch.current" *ngFor="let branch of branches">
-      <div class="checkout">
-        <!-- <span *ngIf="!branch.current" class="secondary-text">checkout</span> -->
-        <button *ngIf="!branch.current" mat-button class="smaller" [disabled]="isCheckingOutBranch" (click)="checkout(branch)">Checkout</button>
-      </div>
-      <div class="branch-name">
+    <div class="branch clickable" [class.current]="branch.current" *ngFor="let branch of branches">
+      <div class="branch-name" (click)="checkout(branch)">
         {{branch.name}}
       </div>
       <div class="buttons">
