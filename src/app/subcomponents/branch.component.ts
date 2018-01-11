@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar, MatMenuTrigger } from '@angular/material';
 import { LoggerService } from '../services/logger.service';
 import { BranchService } from '../services/branch.service';
 import { RepositoryService } from '../services/repository.service';
@@ -12,52 +13,45 @@ import { Repository } from '../models/repository';
   styleUrls: ['./branch.component.styl'],
 })
 export class BranchComponent implements OnInit {
-  repository: Repository;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   branches: ReadonlyArray<Branch>;
+  isCheckingOutBranch: boolean;
 
   constructor(
     private logger: LoggerService,
-    private branchService: BranchService,
     private route: ActivatedRoute,
     private router: Router,
+    private snackBar: MatSnackBar,
+    private branchService: BranchService,
     private repositoryService: RepositoryService
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('repositoryId');
-    if (id) {
-      this.repositoryService.saveLastOpenRepository(id).subscribe(() => {
-        this.repositoryService.getRepository(id).subscribe(repository => {
-          this.repository = repository;
-          this.getBranch();
-        });
-      });
-    } else {
-      this.repositoryService.getLastOpenRepository(true).subscribe(repository => {
-        if (!repository) {
-          this.router.navigate(['/repository']);
-        }
-        this.repository = repository;
-        this.getBranch();
-      });
-    }
+    this.getBranch();
   }
 
   getBranch(): void {
-    this.branchService.branches(this.repository.path).subscribe(branches => {
-      this.logger.info(branches);
+    this.branchService.branches().subscribe(branches => {
+      this.logger.info('branches to be listed', branches);
       this.branches = branches;
     });
   }
 
   checkout(branch: Branch): void {
-    this.logger.info('switch to branch', branch);
-    this.branchService.checkout(
-      this.repository.path,
-      branch.name
-    ).subscribe(() => {
-      this.logger.info('switch done');
+    if (this.isCheckingOutBranch) {
+      this.logger.warn('Checkout a branch is in progress.');
+      return;
+    }
+
+    this.logger.info('Switch to branch', branch);
+    this.isCheckingOutBranch = true;
+
+    this.branchService.checkout(branch.name).subscribe(() => {
       this.getBranch();
+      this.snackBar.open(`Switch to ${branch.name}`, undefined, {
+        duration: 700,
+      });
+      this.isCheckingOutBranch = false;
     });
   }
 }

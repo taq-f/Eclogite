@@ -2,49 +2,53 @@
 @import "../styles/layout"
 
 hover-bgcolor = #E0E0E0
+branch-height = 50px
 
 .container
   display flex
+  height 100%
   justify-content center
 
 .branch-list
   display flex
   flex-direction column
   flex-grow 1
-  margin-bottom layout-spacing-normal
-  margin-top layout-spacing-normal
-  max-width 350px
 
 .branch
   align-center-vertical()
   display flex
+  flex 0 0 branch-height
   font-size font-size-normal
-  height 50px
   padding-right layout-spacing-small
   padding-left layout-spacing-small
 
   &:hover
     background-color hover-bgcolor
+    transition background-color 150ms 0s ease-out
 
+    .buttons
+      opacity 1
+  
   &.current
     font-weight bold
+
+  &.disabled
+    color font-color-secondary-text
+    cursor default
 
   // Display order.
   order: 2
   &.current
     order: 1
 
-
 .branch-name
   flex 1
+  height branch-height
+  line-height branch-height
   overflow hidden
   text-overflow ellipsis
   white-space nowrap
 
-
-.chip
-  margin-left layout-spacing-small
-
 .buttons
-  flex 0 0 120px
-  text-align right
+  opacity 0
+  transition opacity 150ms 0s ease-out
