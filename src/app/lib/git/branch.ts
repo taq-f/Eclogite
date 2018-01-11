@@ -25,14 +25,36 @@ export async function branch(
     .map(v => {
       if (v.startsWith('*')) {
         return {
-          name: v.substring(2),
+          name: v.substring(2).trim(),
           current: true,
         };
       } else {
         return {
-          name: v,
+          name: v.trim(),
           current: false,
         };
       }
     });
+}
+
+export async function checkout(
+  repositoryPath: string,
+  toBranch: string,
+): Promise<undefined> {
+  const result = await git(
+    [
+      'checkout',
+      '-q',
+      toBranch,
+    ],
+    repositoryPath,
+  );
+
+  if (result.exitCode !== 0) {
+    // TODO
+    console.log('err', result.stderr);
+    return;
+  }
+
+  return;
 }

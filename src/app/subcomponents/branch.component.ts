@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoggerService } from '../services/logger.service';
 import { BranchService } from '../services/branch.service';
 import { RepositoryService } from '../services/repository.service';
 import { Branch } from '../models/branch';
@@ -12,14 +13,15 @@ import { Repository } from '../models/repository';
 })
 export class BranchComponent implements OnInit {
   repository: Repository;
-	branches: ReadonlyArray<Branch>;
+  branches: ReadonlyArray<Branch>;
 
   constructor(
+    private logger: LoggerService,
     private branchService: BranchService,
     private route: ActivatedRoute,
     private router: Router,
     private repositoryService: RepositoryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('repositoryId');
@@ -43,7 +45,19 @@ export class BranchComponent implements OnInit {
 
   getBranch(): void {
     this.branchService.branches(this.repository.path).subscribe(branches => {
-      this.branches = branches
+      this.logger.info(branches);
+      this.branches = branches;
+    });
+  }
+
+  checkout(branch: Branch): void {
+    this.logger.info('switch to branch', branch);
+    this.branchService.checkout(
+      this.repository.path,
+      branch.name
+    ).subscribe(() => {
+      this.logger.info('switch done');
+      this.getBranch();
     });
   }
 }
