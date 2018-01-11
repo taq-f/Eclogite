@@ -13,7 +13,7 @@ hover-bgcolor = #E0E0E0
   flex-grow 1
   margin-bottom layout-spacing-normal
   margin-top layout-spacing-normal
-  max-width 350px
+  max-width 400px
 
 .branch
   align-center-vertical()
@@ -24,16 +24,32 @@ hover-bgcolor = #E0E0E0
   padding-left layout-spacing-small
 
   &:hover
-    background-color hover-bgcolor
+    // background-color hover-bgcolor
+    transition background-color 150ms 0s ease-out
 
+    .checkout
+      opacity 1
+    .buttons
+      opacity 1
+  
   &.current
     font-weight bold
+
+  &.disabled
+    color font-color-secondary-text
+    cursor default
 
   // Display order.
   order: 2
   &.current
     order: 1
 
+.checkout
+  flex 0 0 100px
+  margin-right layout-spacing-small
+  opacity 0.5
+  text-align right
+  // transition opacity 150ms 0s ease-out
 
 .branch-name
   flex 1
@@ -41,10 +57,7 @@ hover-bgcolor = #E0E0E0
   text-overflow ellipsis
   white-space nowrap
 
-
-.chip
-  margin-left layout-spacing-small
-
 .buttons
-  flex 0 0 120px
+  opacity 0.5
+  flex 0 0 100px
   text-align right

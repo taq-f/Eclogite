@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { RepositoryComponent } from './subcomponents/repository.component';
@@ -78,7 +80,9 @@ import { BranchService } from './services/branch.service';
     MatInputModule,
     MatListModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule,
+    MatMenuModule
   ],
   providers: [
     { provide: LoggerService, useClass: ConsoleLoggerService },

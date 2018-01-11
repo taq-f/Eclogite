@@ -1,4 +1,5 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css'
+@import "~@angular/material/prebuilt-themes/indigo-pink.css"
+@import "app/styles/font"
 
 html, body
   margin 0
@@ -28,9 +29,17 @@ body
 .need-caution
   color #FF7043
 
+.secondary-text
+  color font-color-secondary-text
+
 /* Overrides of Angular Material */
 
 button.smaller
   height 30px
   line-height 30px
-  font-size 12px
+  font-size font-size-small
+
+button.mat-menu-item.smaller
+  height 30px
+  line-height 30px
+  font-size font-size-normal
