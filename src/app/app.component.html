@@ -1,6 +1,7 @@
 <div class="site">
   <nav mat-tab-nav-bar>
-    <a mat-tab-link routerLink="/repository" routerLinkActive="active">
+    <a mat-tab-link (click)="showRepositories()">
+    <!-- <a mat-tab-link routerLink="/repository" routerLinkActive="active"> -->
       Repository
     </a>
     <a mat-tab-link routerLink="/workingfiles" routerLinkActive="active">
@@ -10,6 +11,7 @@
       Branch
     </a>
   </nav>
+
   <main class="content fancy-scroll">
     <router-outlet></router-outlet>
   </main>

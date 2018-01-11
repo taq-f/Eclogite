@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { LoggerService } from './services/logger.service';
+import { RepositoryComponent } from './subcomponents/repository.component';
 import { BranchComponent } from './subcomponents/branch.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.styl']
 })
 export class AppComponent {
 
@@ -15,11 +16,17 @@ export class AppComponent {
     private dialog: MatDialog
   ) {}
 
+  showRepositories(): void {
+    this.dialog.open(RepositoryComponent, {
+      maxWidth: '90%',
+      height: '100%',
+    });
+  }
+
   showBranches(): void {
-    this.logger.info('Show branches as dialog.');
     this.dialog.open(BranchComponent, {
-      width: '500px',
-      height: '80%',
+      maxWidth: '90%',
+      height: '100%',
     });
   }
 }
