@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(
     private logger: LoggerService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   showRepositories(): void {
     this.dialog.open(RepositoryComponent, {
@@ -26,6 +26,7 @@ export class AppComponent {
   showBranches(): void {
     this.dialog.open(BranchComponent, {
       maxWidth: '90%',
+      minWidth: '380px',
       height: '100%',
     });
   }
