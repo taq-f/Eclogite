@@ -7,6 +7,6 @@
     <app-commit [hasStaged]="hasStaged" (commitDone)="refresh()"></app-commit>
   </div>
   <div class="right-pane">
-    <app-diff [repositoryPath]="repository.path" [workingfile]="workingfile" (applied)="refresh()"></app-diff>
+    <app-diff [workingfile]="workingfile" (applied)="refresh()"></app-diff>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/concatMap';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import { AppStatusEntry, WorkingFileChange, AppWorkingFileChange } from '../models/workingfile';

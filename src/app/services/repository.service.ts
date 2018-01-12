@@ -20,7 +20,9 @@ export class RepositoryService {
 
   setCurrentRepository(repository: Repository): void {
     this.logger.info('Repository change request:', repository.name);
-    this.currentRepository.next(repository);
+    this.saveLastOpenRepository(repository.id).subscribe(() => {
+      this.currentRepository.next(repository);
+    });
   }
 
   addRepository(repository: Repository): Observable<string> {

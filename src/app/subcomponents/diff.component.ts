@@ -15,8 +15,6 @@ export class DiffComponent {
 
   _workingfile: AppWorkingFileChange;
 
-  @Input() repositoryPath: string;
-
   @Input()
   set workingfile(v: AppWorkingFileChange) {
     if (v) {
@@ -66,7 +64,6 @@ export class DiffComponent {
 
   getDiff(): void {
     this.diffService.getDiff(
-      this.repositoryPath,
       this._workingfile
     ).subscribe(fileDiff => {
       this.fileDiff = fileDiff;
@@ -92,7 +89,7 @@ export class DiffComponent {
 
   private applyPatch(hunk: Hunk | undefined): void {
     const patch = this.fileDiff.getPatch(hunk);
-    this.diffService.applyPatch(this.repositoryPath, patch).subscribe(() => {
+    this.diffService.applyPatch(patch).subscribe(() => {
       this.applied.emit();
     });
   }
@@ -127,11 +124,10 @@ export class DiffComponent {
     }
 
     this.diffService.unstageFile(
-      this.repositoryPath,
       this._workingfile.path
     ).subscribe(() => {
       if (patch) {
-        this.diffService.applyPatch(this.repositoryPath, patch).subscribe(() => {
+        this.diffService.applyPatch(patch).subscribe(() => {
           this.applied.emit();
         });
       } else {

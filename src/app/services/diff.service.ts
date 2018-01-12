@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
+import { RepositoryService } from './repository.service';
 import { getDiff } from '../lib/git/diff';
 import { applyPatch, unstage } from '../lib/git/apply';
 import { FileDiff, Hunk } from '../models/diff';
@@ -10,18 +11,32 @@ import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 
 @Injectable()
 export class DiffService {
+  constructor(private repositoryService: RepositoryService) { }
+
   getDiff(
-    repositoryPath: string,
-    fileChange: AppWorkingFileChange
+    fileChange: AppWorkingFileChange,
+    repositoryPath?: string
   ): Observable<FileDiff> {
-    return fromPromise(getDiff(repositoryPath, fileChange));
+    if (repositoryPath) {
+      return fromPromise(getDiff(repositoryPath, fileChange));
+    }
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(getDiff(r.path, fileChange)));
   }
 
-  applyPatch(repositoryPath: string, patch: string): Observable<undefined> {
-    return fromPromise(applyPatch(repositoryPath, patch));
+  applyPatch(patch: string, repositoryPath?: string): Observable<undefined> {
+    if (repositoryPath) {
+      return fromPromise(applyPatch(repositoryPath, patch));
+    }
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(applyPatch(r.path, patch)));
   }
 
-  unstageFile(repositoryPath: string, path: string): Observable<undefined> {
-    return fromPromise(unstage(repositoryPath, path));
+  unstageFile(path: string, repositoryPath?: string): Observable<undefined> {
+    if (repositoryPath) {
+      return fromPromise(unstage(repositoryPath, path));
+    }
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(unstage(r.path, path)));
   }
 }
