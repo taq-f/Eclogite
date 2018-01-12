@@ -46,7 +46,10 @@ import { BranchService } from './services/branch.service';
     HunkComponent,
     BranchComponent
   ],
-  entryComponents: [],
+  entryComponents: [
+    RepositoryComponent,
+    BranchComponent
+  ],
   imports: [
     RouterModule.forRoot([
       {
@@ -57,18 +60,6 @@ import { BranchService } from './services/branch.service';
       {
         path: 'workingfiles',
         component: WorkingfileComponent,
-      },
-      {
-        path: 'workingfiles/:repositoryId',
-        component: WorkingfileComponent,
-      },
-      {
-        path: 'repository',
-        component: RepositoryComponent,
-      },
-      {
-        path: 'branch',
-        component: BranchComponent,
       },
     ]),
     BrowserModule,
