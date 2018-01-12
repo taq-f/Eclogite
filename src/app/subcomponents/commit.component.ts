@@ -19,7 +19,6 @@ type InputFocusTrigger = 'focus' | 'blur';
   ],
 })
 export class CommitComponent implements OnInit {
-  @Input() repositoryPath: string;
   /**
    * Whether one or more files has been staged. This component need to know it
    * in order to judge the user can commit or not.
@@ -71,7 +70,7 @@ export class CommitComponent implements OnInit {
 
   ngOnInit(): void {
     this.commitable = this.isCommitable();
-    this.configService.getUser(this.repositoryPath).subscribe(user => {
+    this.configService.getUser().subscribe(user => {
       console.log(user);
     });
   }
@@ -90,7 +89,7 @@ export class CommitComponent implements OnInit {
     // one.
     this.commitable = false;
 
-    this.commitService.commit(this.repositoryPath, this.message).subscribe(() => {
+    this.commitService.commit(this.message).subscribe(() => {
       this.summary = '';
       this.description = '';
       this.commitable = this.isCommitable();
