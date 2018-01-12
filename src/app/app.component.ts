@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { LoggerService } from './services/logger.service';
 import { RepositoryComponent } from './subcomponents/repository.component';
 import { BranchComponent } from './subcomponents/branch.component';
