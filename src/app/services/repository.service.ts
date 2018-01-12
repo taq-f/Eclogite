@@ -67,7 +67,7 @@ export class RepositoryService {
     return of(undefined);
   }
 
-  getLastOpenRepository(updateOpen = false): Observable<Repository> {
+  getLastOpenRepository(): Observable<Repository> {
     const id = localStorage.getItem('lastOpenRepositoryId');
     if (!id) {
       return of(undefined);
@@ -78,10 +78,6 @@ export class RepositoryService {
       }
       const list = JSON.parse(data) as SavedRepository[];
       const saved = list.find(r => r.id === id);
-      if (updateOpen) {
-        saved.lastOpen = Date.now();
-        localStorage.setItem('repositories', JSON.stringify(list));
-      }
       return of(saved.repository);
     }
   }

@@ -41,7 +41,7 @@ export class WorkingfileComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.repositoryService.getLastOpenRepository(true).subscribe(repository => {
+    this.repositoryService.getLastOpenRepository().subscribe(repository => {
       this.repository = repository;
     });
   }
