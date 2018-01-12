@@ -1,20 +1,31 @@
+@import "../styles/font"
 @import "../styles/layout"
 
 header-color = #616161
 
 h2, h3
-  color header-color
+  color font-color-secondary-text
   font-weight normal
+
+h2
+  font-size font-size-xlarge
+
+h3
+  font-size font-size-large
 
 .container
   height 100%
 
-.repositories
-  display flex
-  flex-wrap wrap
-
 .list
   flex-grow 1
 
-.input
-  width 400px
+.line
+  align-items center
+  display flex
+  flex-wrap wrap
+
+  div:not(:first-child)
+    margin-left layout-spacing-small
+
+.take-rest
+  flex 1
