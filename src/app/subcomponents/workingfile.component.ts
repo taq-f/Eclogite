@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { StatusComponent } from './status.component';
 import { RepositoryService } from '../services/repository.service';
+import { LoggerService } from '../services/logger.service';
 import { AppWorkingFileChange } from '../models/workingfile';
 import { Repository } from '../models/repository';
 
@@ -11,8 +12,10 @@ import { Repository } from '../models/repository';
   templateUrl: './workingfile.component.html',
   styleUrls: ['./workingfile.component.styl']
 })
-export class WorkingfileComponent implements OnInit {
+export class WorkingfileComponent implements OnDestroy, OnInit {
   @ViewChild(StatusComponent) statusComponent: StatusComponent;
+
+  repositoryChangeSubscription: Subscription;
 
   /**
    * The currently opened repository.
@@ -27,27 +30,24 @@ export class WorkingfileComponent implements OnInit {
   hasStaged: boolean;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
+    private logger: LoggerService,
     private repositoryService: RepositoryService
-  ) { }
+  ) {
+    this.repositoryChangeSubscription = repositoryService.currentRepository$
+      .subscribe(r => {
+        this.logger.info('WorkingfileComponent detects repository change:', r.name);
+        this.repository = r;
+      });
+  }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('repositoryId');
-    if (id) {
-      this.repositoryService.saveLastOpenRepository(id).subscribe(() => {
-        this.repositoryService.getRepository(id).subscribe(repository => {
-          this.repository = repository;
-        });
-      });
-    } else {
-      this.repositoryService.getLastOpenRepository(true).subscribe(repository => {
-        if (!repository) {
-          this.router.navigate(['/repository']);
-        }
-        this.repository = repository;
-      });
-    }
+    this.repositoryService.getLastOpenRepository(true).subscribe(repository => {
+      this.repository = repository;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.repositoryChangeSubscription.unsubscribe();
   }
 
   onEntrySelectChange(v: AppWorkingFileChange): void {

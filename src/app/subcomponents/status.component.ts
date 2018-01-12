@@ -1,20 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 
 import { AppStatusEntry, AppWorkingFileChange, IndexState } from '../models/workingfile';
+import { LoggerService } from '../services/logger.service';
 import { StatusService } from '../services/status.service';
+import { Repository } from '../models/repository';
 
 @Component({
   selector: 'app-status',
   templateUrl: './status.component.html',
   styleUrls: ['./status.component.styl']
 })
-export class StatusComponent implements OnInit {
+export class StatusComponent {
 
-  _repositoryPath: string;
+  _repository: Repository;
 
   @Input()
-  set repositoryPath(v: string) {
-    this._repositoryPath = v;
+  set repository(r: Repository) {
+    this.logger.info('Status component detects repository change:', r.name);
+    this._repository = r;
+    this.getChanges();
   }
 
   /**
@@ -49,14 +53,12 @@ export class StatusComponent implements OnInit {
   /**
    * This component requires StatusService to retrieve file change entries.
    */
-  constructor(private statusService: StatusService) { }
-
-  ngOnInit(): void {
-    this.getChanges();
-  }
+  constructor(
+    private logger: LoggerService,
+    private statusService: StatusService) { }
 
   getChanges() {
-    this.statusService.getStatus(this._repositoryPath).subscribe(fileChanges => {
+    this.statusService.getStatus(this._repository.path).subscribe(fileChanges => {
       const unstaged: AppWorkingFileChange[] = [];
       const staged: AppWorkingFileChange[] = [];
       const conflicted: AppWorkingFileChange[] = [];

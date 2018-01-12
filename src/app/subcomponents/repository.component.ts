@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
@@ -23,6 +24,7 @@ export class RepositoryComponent implements OnInit {
   repositoryPath: string;
 
   constructor(
+    private dialogRef: MatDialogRef<RepositoryComponent>,
     private router: Router,
     private repositoryService: RepositoryService) { }
 
@@ -84,9 +86,8 @@ export class RepositoryComponent implements OnInit {
    * Select and open a repository.
    */
   openRepository(repository: Repository): void {
-    Observable.of(0).delay(400).subscribe(x => {
-      this.router.navigate([`/workingfiles/${repository.id}`]);
-    });
+    this.repositoryService.setCurrentRepository(repository);
+    this.dialogRef.close();
   }
 
   /**

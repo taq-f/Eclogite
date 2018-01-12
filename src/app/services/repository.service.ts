@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
+import { LoggerService } from './logger.service';
 import { Repository } from '../models/repository';
 
 interface SavedRepository {
@@ -11,6 +13,15 @@ interface SavedRepository {
 
 @Injectable()
 export class RepositoryService {
+  private currentRepository = new Subject<Repository>();
+  currentRepository$ = this.currentRepository.asObservable();
+
+  constructor(private logger: LoggerService) { }
+
+  setCurrentRepository(repository: Repository): void {
+    this.logger.info('Repository change request:', repository.name);
+    this.currentRepository.next(repository);
+  }
 
   addRepository(repository: Repository): Observable<string> {
     const data = localStorage.getItem('repositories');

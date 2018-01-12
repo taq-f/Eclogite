@@ -1,7 +1,7 @@
 <div *ngIf="repository" class="content">
   <div class="left-pane">
     <div class="status-wrapper fancy-scroll">
-      <app-status [repositoryPath]="repository.path" (entrySelectChange)="onEntrySelectChange($event)" (refreshed)="onStatusRefreshed($event)">
+      <app-status [repository]="repository" (entrySelectChange)="onEntrySelectChange($event)" (refreshed)="onStatusRefreshed($event)">
       </app-status>
     </div>
     <app-commit [hasStaged]="hasStaged" (commitDone)="refresh()"></app-commit>
