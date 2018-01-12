@@ -112,7 +112,6 @@ export class StatusComponent {
     this.selectedChange = undefined;
   }
 
-
   /**
    * Select specified change entry.
    */
