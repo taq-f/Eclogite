@@ -1,16 +1,5 @@
 <div class="site">
-  <nav mat-tab-nav-bar>
-    <a mat-tab-link (click)="showRepositories()">
-      Repository
-    </a>
-    <a mat-tab-link (click)="showBranches()">
-      Branch
-    </a>
-    <a mat-tab-link routerLink="/workingfiles" routerLinkActive="active">
-      Files
-    </a>
-  </nav>
-
+  <app-nav></app-nav>
   <main class="content">
     <router-outlet></router-outlet>
   </main>

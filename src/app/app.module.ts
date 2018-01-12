@@ -14,6 +14,7 @@ import { MatSnackBarModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { NavComponent } from './subcomponents/nav.component';
 import { RepositoryComponent } from './subcomponents/repository.component';
 import { RepositoryListComponent } from './subcomponents/repository-list.component';
 import { WorkingfileComponent } from './subcomponents/workingfile.component';
@@ -36,6 +37,7 @@ import { BranchService } from './services/branch.service';
 @NgModule({
   declarations: [
     AppComponent,
+    NavComponent,
     RepositoryComponent,
     RepositoryListComponent,
     WorkingfileComponent,

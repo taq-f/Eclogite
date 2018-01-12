@@ -1,0 +1,38 @@
+<div class="nav">
+  <div class="nav-component clickable" (click)="showRepositories()">
+    <div class="label">
+      <span *ngIf="repository">{{repository.name}}</span>
+      <span *ngIf="!repository">Repository</span>
+    </div>
+    <div class="expand">
+      <i class="material-icons">expand_more</i>
+    </div>
+  </div>
+  <div class="nav-component" [class.clickable]="repository" (click)="showBranches()">
+    <div class="label">
+      Branch
+    </div>
+    <div class="expand">
+      <i *ngIf="repository" class="material-icons">expand_more</i>
+    </div>
+  </div>
+  <div class="nav-component clickable">
+    <div class="label">
+      Files
+    </div>
+  </div>
+  <div class="nav-component clickable">
+    <div class="label">
+      History
+    </div>
+  </div>
+  <div class="nav-component settings clickable">
+    <div class="label">
+      <i class="material-icons">settings</i>
+    </div>
+  </div>
+</div>
+
+  <!-- <a mat-tab-link routerLink="/workingfiles" routerLinkActive="active">
+    Files
+  </a> -->

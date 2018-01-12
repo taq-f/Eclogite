@@ -10,24 +10,7 @@ import { BranchComponent } from './subcomponents/branch.component';
   styleUrls: ['./app.component.styl']
 })
 export class AppComponent {
-
   constructor(
     private logger: LoggerService,
-    private dialog: MatDialog
-  ) { }
-
-  showRepositories(): void {
-    this.dialog.open(RepositoryComponent, {
-      maxWidth: '90%',
-      height: '100%',
-    });
-  }
-
-  showBranches(): void {
-    this.dialog.open(BranchComponent, {
-      maxWidth: '90%',
-      minWidth: '380px',
-      height: '100%',
-    });
-  }
+    private dialog: MatDialog) { }
 }

@@ -1,0 +1,33 @@
+@import "../styles/font"
+@import "../styles/layout"
+
+.nav
+  background-color bgcolor-secondary
+  border-bottom border-devider
+  display flex
+  font-size font-size-normal
+  height 40px
+  overflow hidden
+  position relative
+  width 100%
+
+.nav-component
+  align-items center
+  border-right border-devider
+  display flex
+  flex 1
+  height 100%
+  text-align center
+  padding-left layout-spacing-small
+  padding-right layout-spacing-small
+
+  .label
+    flex 1
+  i
+    color font-color-secondary-text
+    font-size 20px
+    line-height 2
+
+  &.settings
+    flex 0.5
+
