@@ -14,9 +14,9 @@ export class CommitService {
 
   commit(message: string, repositoryPath?: string): Observable<undefined> {
     if (repositoryPath) {
-      return fromPromise(commit(message, repositoryPath));
+      return fromPromise(commit(repositoryPath, message));
     }
     return this.repositoryService.getLastOpenRepository()
-      .concatMap(r => fromPromise(commit(message, r.path)));
+      .concatMap(r => fromPromise(commit(r.path, message)));
   }
 }
