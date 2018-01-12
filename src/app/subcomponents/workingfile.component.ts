@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
+import { RepositoryComponent } from './repository.component';
 import { StatusComponent } from './status.component';
 import { RepositoryService } from '../services/repository.service';
 import { LoggerService } from '../services/logger.service';
@@ -31,6 +33,7 @@ export class WorkingfileComponent implements OnDestroy, OnInit {
 
   constructor(
     private logger: LoggerService,
+    private dialog: MatDialog,
     private repositoryService: RepositoryService
   ) {
     this.repositoryChangeSubscription = repositoryService.currentRepository$
@@ -65,5 +68,12 @@ export class WorkingfileComponent implements OnDestroy, OnInit {
   refresh(): void {
     this.workingfile = undefined;
     this.statusComponent.getChanges();
+  }
+
+  openRepositoryDialog(): void {
+    this.dialog.open(RepositoryComponent, {
+      maxWidth: '90%',
+      height: '100%',
+    });
   }
 }

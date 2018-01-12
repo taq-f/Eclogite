@@ -1,4 +1,4 @@
-<div *ngIf="repository" class="content">
+<div *ngIf="repository; else noRepository" class="content">
   <div class="left-pane">
     <div class="status-wrapper fancy-scroll">
       <app-status [repository]="repository" (entrySelectChange)="onEntrySelectChange($event)" (refreshed)="onStatusRefreshed($event)">
@@ -10,3 +10,17 @@
     <app-diff [workingfile]="workingfile" (applied)="refresh()"></app-diff>
   </div>
 </div>
+
+<ng-template #noRepository>
+  <div class="no-repository fancy-scroll">
+    <div>
+      <div class="message">
+        To begin,
+        <a href="#" (click)="$event.preventDefault(); openRepositoryDialog()">select a repository</a> ; )
+      </div>
+      <div>
+        <img src="assets/app.png" style="opacity:0.3;">
+      </div>
+    </div>
+  </div>
+</ng-template>
