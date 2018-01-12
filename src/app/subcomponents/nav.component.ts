@@ -8,6 +8,8 @@ import { RepositoryComponent } from '../subcomponents/repository.component';
 import { BranchComponent } from '../subcomponents/branch.component';
 import { Repository } from '../models/repository';
 
+import { ErrorDialogComponent } from '../subcomponents/error-dialog.component';
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -51,6 +53,17 @@ export class NavComponent implements OnInit {
       maxWidth: '90%',
       minWidth: '380px',
       height: '100%',
+    });
+  }
+
+  showError(): void {
+    const errorMessage = `error: Your local changes to the following files would be overwritten by checkout:
+  modified_work.txt
+  patchtest.txt
+Please commit your changes or stash them before you switch branches.
+Aborting`;
+    this.dialog.open(ErrorDialogComponent, {
+      data: { text: errorMessage, }
     });
   }
 }

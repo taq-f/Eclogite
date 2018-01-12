@@ -24,6 +24,7 @@ import { CommitComponent } from './subcomponents/commit.component';
 import { DiffComponent } from './subcomponents/diff.component';
 import { HunkComponent } from './subcomponents/hunk.component';
 import { BranchComponent } from './subcomponents/branch.component';
+import { ErrorDialogComponent } from './subcomponents/error-dialog.component';
 
 import { LoggerService } from './services/logger.service';
 import { ConsoleLoggerService } from './services/consolelogger.service';
@@ -46,11 +47,13 @@ import { BranchService } from './services/branch.service';
     CommitComponent,
     DiffComponent,
     HunkComponent,
-    BranchComponent
+    BranchComponent,
+    ErrorDialogComponent
   ],
   entryComponents: [
     RepositoryComponent,
-    BranchComponent
+    BranchComponent,
+    ErrorDialogComponent
   ],
   imports: [
     RouterModule.forRoot([
