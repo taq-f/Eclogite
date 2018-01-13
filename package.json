@@ -9,19 +9,19 @@
     "serve:ng": "webpack-dev-server --port=4200 --config webpack.config.dev.js",
     "lint": "ng lint",
     "e2e": "protractor ./protractor.conf.js",
-    "prebuild": "trash dist && node script/generate-env.js production",
+    "prebuild": "trash dist",
     "build": "npm-run-all build:*",
     "build:webpack": "webpack --config webpack.config.prod.js",
-    "prebuild:electron": "tsc main.ts --outDir dist && copyfiles package.json dist",
+    "prebuild:electron": "tsc main.ts --outDir dist && copyfiles package.json dist && node script/copy-env.js",
     "build:electron": "cd dist && npm install --production & cd .. && node script/package.js",
-    "postbuild": "node script/generate-env.js",
     "pree2e": "webdriver-manager update --standalone false --gecko false --quiet",
-    "preserve:electron": "node script/generate-env.js && tsc main.ts",
+    "preserve:electron": "tsc main.ts",
     "serve:electron": "electron .",
     "test": "karma start ./karma.conf.js"
   },
   "private": true,
   "dependencies": {
+    "dotenv": "^4.0.0",
     "dugite": "1.53.0",
     "js-sha256": "^0.9.0"
   },

@@ -1,35 +1,30 @@
 import { app, BrowserWindow } from 'electron';
-import { environment } from './env';
 import * as path from "path";
 import * as url from "url";
+
+import * as dotenv from "dotenv";
+
+const development = dotenv.config().parsed.ECLOGITE_DEVELOPMENT !== '0';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow;
 
 function createWindow(): void {
-  // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600 });
 
-  // and load the index.html of the app.
-  // win.loadURL(url.format({
-  //   pathname: path.join(__dirname, 'index.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
-
-  if (environment.production) {
+  if (development) {
+    win.loadURL('http://localhost:4200');
+  } else {
     win.loadURL(url.format({
       pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
       slashes: true
     }));
-  } else {
-    win.loadURL('http://localhost:4200');
   }
 
   // Open the DevTools when debug mode.
-  if (!environment.production) {
+  if (development) {
     win.webContents.openDevTools({ mode: 'undocked' });
   }
 
