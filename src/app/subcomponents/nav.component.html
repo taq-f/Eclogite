@@ -1,8 +1,7 @@
 <div class="nav">
   <div class="nav-component" (click)="showRepositories()">
     <div class="label">
-      <span *ngIf="repository">{{repository.name}}</span>
-      <span *ngIf="!repository">Repository</span>
+      <span>{{repository ? repository.name : 'Repository'}}</span>
     </div>
     <div class="expand">
       <i class="material-icons">expand_more</i>
@@ -10,7 +9,7 @@
   </div>
   <div class="nav-component" [class.disabled]="!repository" (click)="showBranches()">
     <div class="label">
-      Branch
+      <span>{{branch ? branch.name : 'Branch'}}</span>
     </div>
     <div class="expand">
       <i *ngIf="repository" class="material-icons">expand_more</i>

@@ -2,7 +2,7 @@ import { git, IGitResult } from './core';
 
 import { Branch } from '../../models/branch';
 
-export async function branch(
+export async function getBranches(
   repositoryPath: string
 ): Promise<ReadonlyArray<Branch>> {
   const result = await git(

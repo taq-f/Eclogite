@@ -61,6 +61,7 @@ export class BranchComponent implements OnInit {
     this.isCheckingOutBranch = true;
 
     this.branchService.checkout(branch).subscribe(b => {
+      this.branchService.setCurrentBranch(branch);
       this.getBranch();
       this.snackBar.open(`Switch to ${b.name}`, undefined, {
         duration: 800,
