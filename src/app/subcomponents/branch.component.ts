@@ -17,6 +17,8 @@ export class BranchComponent implements OnInit {
   branches: ReadonlyArray<Branch>;
   isCheckingOutBranch: boolean;
 
+  newBranchName = '';
+
   constructor(
     private logger: LoggerService,
     private route: ActivatedRoute,
@@ -49,9 +51,22 @@ export class BranchComponent implements OnInit {
     this.branchService.checkout(branch.name).subscribe(() => {
       this.getBranch();
       this.snackBar.open(`Switch to ${branch.name}`, undefined, {
-        duration: 700,
+        duration: 800,
       });
       this.isCheckingOutBranch = false;
+    });
+  }
+
+  createBranch(): void {
+    this.logger.info('Create branch', this.newBranchName);
+
+    const branchName = this.newBranchName;
+    this.branchService.createBranch(branchName).subscribe(() => {
+      this.snackBar.open(`Branch created: ${branchName}`, undefined, {
+        duration: 800,
+      });
+      this.newBranchName = '';
+      this.getBranch();
     });
   }
 }

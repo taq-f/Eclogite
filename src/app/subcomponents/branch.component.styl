@@ -2,12 +2,19 @@
 @import "../styles/layout"
 
 hover-bgcolor = #E0E0E0
-branch-height = 50px
+branch-height = 40px
 
 .container
-  display flex
   height 100%
-  justify-content center
+
+.new-branch
+  display flex
+  .new-branch-name
+    flex 1
+  .create-branch
+    button
+      margin-left layout-spacing-small
+      margin-top 5px
 
 .branch-list
   display flex

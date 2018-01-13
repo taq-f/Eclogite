@@ -1,4 +1,15 @@
 <div class="container fancy-scroll">
+  <div class="new-branch">
+    <div class="new-branch-name">
+      <mat-form-field style="font-size: 12px; width: 100%">
+        <input matInput placeholder="New Branch Name" [(ngModel)]="newBranchName">
+      </mat-form-field>
+    </div>
+    <div class="create-branch">
+      <button mat-button color="primary" [disabled]="!newBranchName" class="smaller" (click)="createBranch()">Create Branch</button>
+    </div>
+  </div>
+
   <div class="branch-list">
     <div class="branch clickable" [class.current]="branch.current" *ngFor="let branch of branches">
       <div class="branch-name" (click)="checkout(branch)">
