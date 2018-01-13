@@ -1,7 +1,6 @@
 import { git, IGitResult } from './core';
 
 import { Branch } from '../../models/branch';
-import { Promise } from 'q';
 
 export async function branch(
   repositoryPath: string
@@ -40,30 +39,28 @@ export async function branch(
 
 export async function checkout(
   repositoryPath: string,
-  toBranch: string,
-): Promise<undefined> {
+  toBranch: Branch,
+): Promise<Branch> {
   const result = await git(
     [
       'checkout',
       '-q',
-      toBranch,
+      toBranch.name,
     ],
     repositoryPath,
   );
 
   if (result.exitCode !== 0) {
-    // TODO
-    console.log('err', result.stderr);
-    return;
+    return Promise.reject(result.stderr);
   }
 
-  return;
+  return toBranch;
 }
 
 export async function createBranch(
   repositoryPath: string,
   branchName: string
-): Promise<undefined> {
+): Promise<Branch> {
   const result = await git(
     [
       'checkout',
@@ -74,10 +71,8 @@ export async function createBranch(
   );
 
   if (result.exitCode !== 0) {
-    // TODO
-    console.log('err', result.stderr);
-    return;
+    return Promise.reject(result.stderr);
   }
 
-  return;
+  return { name: branchName, current: true };
 }

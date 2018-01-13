@@ -55,15 +55,4 @@ export class NavComponent implements OnInit {
       height: '100%',
     });
   }
-
-  showError(): void {
-    const errorMessage = `error: Your local changes to the following files would be overwritten by checkout:
-  modified_work.txt
-  patchtest.txt
-Please commit your changes or stash them before you switch branches.
-Aborting`;
-    this.dialog.open(ErrorDialogComponent, {
-      data: { text: errorMessage, }
-    });
-  }
 }

@@ -27,6 +27,7 @@ import { BranchComponent } from './subcomponents/branch.component';
 import { ErrorDialogComponent } from './subcomponents/error-dialog.component';
 
 import { LoggerService } from './services/logger.service';
+import { ErrorService } from './services/error.service';
 import { ConsoleLoggerService } from './services/consolelogger.service';
 import { ConfigService } from './services/config.service';
 import { StatusService } from './services/status.service';
@@ -82,6 +83,7 @@ import { BranchService } from './services/branch.service';
   ],
   providers: [
     { provide: LoggerService, useClass: ConsoleLoggerService },
+    ErrorService,
     ConfigService,
     StatusService,
     RepositoryService,

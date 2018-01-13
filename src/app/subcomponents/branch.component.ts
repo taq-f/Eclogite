@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatMenuTrigger } from '@angular/material';
 import { LoggerService } from '../services/logger.service';
 import { BranchService } from '../services/branch.service';
@@ -21,8 +20,6 @@ export class BranchComponent implements OnInit {
 
   constructor(
     private logger: LoggerService,
-    private route: ActivatedRoute,
-    private router: Router,
     private snackBar: MatSnackBar,
     private branchService: BranchService,
     private repositoryService: RepositoryService
@@ -48,25 +45,25 @@ export class BranchComponent implements OnInit {
     this.logger.info('Switch to branch', branch);
     this.isCheckingOutBranch = true;
 
-    this.branchService.checkout(branch.name).subscribe(() => {
+    this.branchService.checkout(branch).subscribe(b => {
       this.getBranch();
-      this.snackBar.open(`Switch to ${branch.name}`, undefined, {
+      this.snackBar.open(`Switch to ${b.name}`, undefined, {
         duration: 800,
       });
       this.isCheckingOutBranch = false;
-    });
+    }, error => this.isCheckingOutBranch = false);
   }
 
   createBranch(): void {
+    const branchName = this.newBranchName;
     this.logger.info('Create branch', this.newBranchName);
 
-    const branchName = this.newBranchName;
-    this.branchService.createBranch(branchName).subscribe(() => {
-      this.snackBar.open(`Branch created: ${branchName}`, undefined, {
+    this.branchService.createBranch(branchName).subscribe(branch => {
+      this.snackBar.open(`Branch created: ${branch.name}`, undefined, {
         duration: 800,
       });
       this.newBranchName = '';
       this.getBranch();
-    });
+    }, error => { });
   }
 }
