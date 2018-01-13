@@ -2,6 +2,25 @@ import { git, IGitResult } from './core';
 
 import { Branch } from '../../models/branch';
 
+export async function getCurrentBranch(
+  repositoryPath: string
+): Promise<Branch> {
+  const result = await git(
+    [
+      'rev-parse',
+      '--abbrev-ref',
+      'HEAD',
+    ],
+    repositoryPath,
+  );
+
+  if (result.exitCode !== 0) {
+    return Promise.reject(result.stderr);
+  }
+
+  return { name: result.stdout, current: true };
+}
+
 export async function getBranches(
   repositoryPath: string
 ): Promise<ReadonlyArray<Branch>> {

@@ -47,6 +47,9 @@ export class NavComponent implements OnInit {
     this.repositoryService.getLastOpenRepository().subscribe(r => {
       this.repository = r;
     });
+    this.branchService.getCurrentBranch().subscribe(b => {
+      this.branch = b;
+    });
   }
 
   showRepositories(): void {
