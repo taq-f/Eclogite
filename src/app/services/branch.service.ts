@@ -4,7 +4,7 @@ import { of } from 'rxjs/observable/of';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import 'rxjs/add/operator/concatMap';
 import { RepositoryService } from './repository.service';
-import { branch, checkout } from '../lib/git/branch';
+import { branch, checkout, createBranch } from '../lib/git/branch';
 import { Branch } from '../models/branch';
 
 @Injectable()
@@ -33,5 +33,13 @@ export class BranchService {
     }
     return this.repositoryService.getLastOpenRepository()
       .concatMap(r => fromPromise(checkout(r.path, branchName)));
+  }
+
+  createBranch(branchName: string, repositoryPath?: string): Observable<undefined> {
+    if (repositoryPath) {
+      return fromPromise(createBranch(repositoryPath, branchName));
+    }
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(createBranch(r.path, branchName)));
   }
 }
