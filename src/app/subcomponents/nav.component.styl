@@ -1,8 +1,8 @@
 @import "../styles/font"
+@import "../styles/color"
 @import "../styles/layout"
 
 .nav
-  background-color bgcolor-secondary
   border-bottom border-devider
   display flex
   font-size font-size-normal
@@ -13,13 +13,22 @@
 
 .nav-component
   align-items center
-  border-right border-devider
+  cursor pointer
   display flex
   flex 1
   height 100%
-  text-align center
   padding-left layout-spacing-small
   padding-right layout-spacing-small
+  text-align center
+  transition background-color 150ms 0s ease-out
+
+  &:not(.disabled):hover
+    background-color bgcolor-hover
+
+  &.disabled
+    color font-color-secondary-text
+    cursor default
+
 
   .label
     flex 1
