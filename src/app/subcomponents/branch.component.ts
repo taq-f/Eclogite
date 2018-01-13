@@ -12,10 +12,19 @@ import { Repository } from '../models/repository';
   styleUrls: ['./branch.component.styl'],
 })
 export class BranchComponent implements OnInit {
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+  /**
+   * List of existing branches.
+   */
   branches: ReadonlyArray<Branch>;
+
+  /**
+   * Checking out a branch is in progress.
+   */
   isCheckingOutBranch: boolean;
 
+  /**
+   * A new branch name that the user specifies.
+   */
   newBranchName = '';
 
   constructor(
@@ -29,6 +38,9 @@ export class BranchComponent implements OnInit {
     this.getBranch();
   }
 
+  /**
+   * Get and load existing branches.
+   */
   getBranch(): void {
     this.branchService.branches().subscribe(branches => {
       this.logger.info('branches to be listed', branches);
@@ -36,6 +48,9 @@ export class BranchComponent implements OnInit {
     });
   }
 
+  /**
+   * Switch branches.
+   */
   checkout(branch: Branch): void {
     if (this.isCheckingOutBranch) {
       this.logger.warn('Checkout a branch is in progress.');
@@ -51,9 +66,14 @@ export class BranchComponent implements OnInit {
         duration: 800,
       });
       this.isCheckingOutBranch = false;
-    }, error => this.isCheckingOutBranch = false);
+    }, error => {
+      this.isCheckingOutBranch = false;
+    });
   }
 
+  /**
+   * Create a branch.
+   */
   createBranch(): void {
     const branchName = this.newBranchName;
     this.logger.info('Create branch', this.newBranchName);
