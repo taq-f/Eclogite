@@ -1,5 +1,8 @@
 <div class="nav">
   <div class="nav-component" (click)="showRepositories()">
+    <div class="subtitle">
+      Repository
+    </div>
     <div class="label">
       <span>{{repository ? repository.name : 'Repository'}}</span>
     </div>
@@ -8,6 +11,9 @@
     </div>
   </div>
   <div class="nav-component" [class.disabled]="!repository" (click)="showBranches()">
+    <div class="subtitle">
+      Branch
+    </div>
     <div class="label">
       <span>{{branch ? branch.name : 'Branch'}}</span>
     </div>
