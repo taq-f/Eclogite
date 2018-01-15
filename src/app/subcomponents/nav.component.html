@@ -1,6 +1,6 @@
 <div class="nav">
   <div class="nav-component" (click)="showRepositories()">
-    <div class="subtitle">
+    <div class="title">
       Repository
     </div>
     <div class="label">
@@ -11,8 +11,11 @@
     </div>
   </div>
   <div class="nav-component" [class.disabled]="!repository" (click)="showBranches()">
-    <div class="subtitle">
+    <div class="title">
       Branch
+    </div>
+    <div *ngIf="status && status.upstream" class="additional-info">
+      {{status.upstream.name}} +{{status.ahead}} -{{status.behind}}
     </div>
     <div class="label">
       <span>{{branch ? branch.name : 'Branch'}}</span>

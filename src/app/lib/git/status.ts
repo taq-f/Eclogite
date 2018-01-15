@@ -1,3 +1,6 @@
+import { dirname, basename } from 'path';
+import { git } from './core';
+import { Status } from '../../models/status';
 import {
   AppStatusEntry,
   AppWorkingFileChange,
@@ -6,16 +9,15 @@ import {
   FileEntry,
   WorkingFileChange
 } from '../../models/workingfile';
-
-import { dirname, basename } from 'path';
-import { git } from './core';
+import { Branch } from '../../models/branch';
 
 /**
  * Retrieve the status of the repository.
  */
 export async function getStatus(
   repositoryPath: string
-): Promise<ReadonlyArray<AppWorkingFileChange>> {
+// ): Promise<ReadonlyArray<AppWorkingFileChange>> {
+): Promise<Status> {
   const result = await git(
     ['status', '--untracked-files=all', '--branch', '--porcelain=2', '-z'],
     repositoryPath,
@@ -26,6 +28,8 @@ export async function getStatus(
     console.log('err', result.stderr);
     return;
   }
+
+  const { upstream, ahead, behind } = parseHeader(result.stdout);
 
   // Prepare three types of changes, which should be categorized separatly.
   const entries: AppWorkingFileChange[] = [];
@@ -88,8 +92,45 @@ export async function getStatus(
     }
   }
 
-  return entries;
+  return {
+    upstream,
+    ahead,
+    behind,
+    changes: entries,
+  };
 }
+
+/**
+ * 
+ */
+function parseHeader(output: string): {
+  upstream?: Branch,
+  ahead?: number,
+  behind?: number,
+} {
+  let upstream: Branch;
+  let ahead: number;
+  let behind: number;
+
+  for (const field of output.split('\0')) {
+    if (!isHeader(field)) {
+      continue;
+    }
+    const value = field.substr(2);
+    if (value.startsWith('branch.upstream')) {
+      upstream = { name: value.split(' ')[1], current: false };
+    } else if (value.startsWith('branch.ab')) {
+      const aheadBehind = value.split(' ')
+        .slice(1, 3)
+        .map(v => Number(v.substr(1)));
+      ahead = aheadBehind[0];
+      behind = aheadBehind[1];
+    }
+  }
+
+  return { upstream, ahead, behind };
+}
+
 
 /**
  * Parse "status" output into status entries.
@@ -102,7 +143,7 @@ function parseStatus(output: string): ReadonlyArray<WorkingFileChange> {
 
   while ((field = fields.shift())) {
     if (isHeader(field)) {
-      // TODO ignore headers now
+      // ignore headers now
       continue;
     }
 
@@ -150,7 +191,7 @@ function toAppStatusEntry(entry: GitStatusEntry): AppStatusEntry {
 }
 
 /**
- * Headers must start with "#" and branch information follow.
+ * Headers must start with "#" and branch information follows.
  */
 function isHeader(field: string): boolean {
   return field.startsWith('# ') && field.length > 2;

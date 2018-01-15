@@ -58,7 +58,8 @@ export class StatusComponent {
     private statusService: StatusService) { }
 
   getChanges() {
-    this.statusService.getStatus(this._repository.path).subscribe(fileChanges => {
+    this.statusService.getStatus(this._repository.path).subscribe(status => {
+      const fileChanges = status.changes;
       const unstaged: AppWorkingFileChange[] = [];
       const staged: AppWorkingFileChange[] = [];
       const conflicted: AppWorkingFileChange[] = [];
