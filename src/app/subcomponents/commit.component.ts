@@ -71,7 +71,7 @@ export class CommitComponent implements OnInit {
   ngOnInit(): void {
     this.commitable = this.isCommitable();
     this.configService.getUser().subscribe(user => {
-      console.log(user);
+      // console.log(user);
     });
   }
 
