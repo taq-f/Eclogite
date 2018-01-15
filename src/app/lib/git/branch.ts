@@ -1,9 +1,10 @@
 import { git, IGitResult } from './core';
 
 import { Branch } from '../../models/branch';
+import { Repository } from '../../models/repository';
 
 export async function getCurrentBranch(
-  repositoryPath: string
+  repository: Repository
 ): Promise<Branch> {
   const result = await git(
     [
@@ -11,7 +12,7 @@ export async function getCurrentBranch(
       '--abbrev-ref',
       'HEAD',
     ],
-    repositoryPath,
+    repository.path,
   );
 
   if (result.exitCode !== 0) {

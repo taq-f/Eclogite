@@ -10,6 +10,7 @@ import { LoggerService } from './logger.service';
 import { RepositoryService } from './repository.service';
 import { ErrorService } from './error.service';
 import { getCurrentBranch, getBranches, checkout, createBranch } from '../lib/git/branch';
+import { Repository } from '../models/repository';
 import { Branch } from '../models/branch';
 
 @Injectable()
@@ -30,13 +31,13 @@ export class BranchService {
     this.currentBranch.next(branch);
   }
 
-  getCurrentBranch(repositoryPath?: string): Observable<Branch> {
-    if (repositoryPath) {
-      return fromPromise(getCurrentBranch(repositoryPath));
+  getCurrentBranch(repository?: Repository): Observable<Branch> {
+    if (repository) {
+      return fromPromise(getCurrentBranch(repository));
     }
 
     return this.repositoryService.getLastOpenRepository()
-      .concatMap(r => fromPromise(getCurrentBranch(r.path)));
+      .concatMap(r => fromPromise(getCurrentBranch(r)));
   }
 
   /**

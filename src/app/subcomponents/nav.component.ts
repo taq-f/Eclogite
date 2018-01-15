@@ -34,6 +34,10 @@ export class NavComponent implements OnInit {
       .subscribe(r => {
         this.logger.info('Nav component detects repository change:', r.name);
         this.repository = r;
+        // Repository change must cause current branch change.
+        this.branchService.getCurrentBranch(r).subscribe(b => {
+          this.branch = b;
+        });
       });
 
     this.branchChangeSubscription = branchService.currentBranch$
