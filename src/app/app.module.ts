@@ -36,6 +36,8 @@ import { DiffService } from './services/diff.service';
 import { CommitService } from './services/commit.service';
 import { BranchService } from './services/branch.service';
 
+import { DragDirective } from './directives/drag.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +51,8 @@ import { BranchService } from './services/branch.service';
     DiffComponent,
     HunkComponent,
     BranchComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    DragDirective
   ],
   entryComponents: [
     RepositoryComponent,
