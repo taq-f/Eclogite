@@ -2,7 +2,7 @@
   <div class="file-opening">
     <div *ngIf="_workingfile">
       <button mat-button class="smaller" [color]="buttonColor" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
-      {{_workingfile && _workingfile.path}}
+      <span class="filepath">{{_workingfile && _workingfile.path}}</span>
     </div>
   </div>
   <div *ngIf="fileDiff; else noDiff" class="diff fancy-scroll">
