@@ -1,10 +1,12 @@
 <div *ngIf="repository; else noRepository" class="content">
-  <div class="left-pane">
+  <div class="left-pane" #leftPane>
     <div class="status-wrapper fancy-scroll">
       <app-status [repository]="repository" (entrySelectChange)="onEntrySelectChange($event)" (refreshed)="onStatusRefreshed($event)">
       </app-status>
     </div>
     <app-commit [hasStaged]="hasStaged" (commitDone)="refresh()"></app-commit>
+
+    <div class="resizer" appDrag (dragging)="resizeLeftPane($event)"></div>
   </div>
   <div class="right-pane">
     <app-diff [workingfile]="workingfile" (applied)="refresh()"></app-diff>

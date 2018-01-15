@@ -9,9 +9,18 @@
   border-right border-devider
   box-sizing border-box
   display flex
-  flex 0 0 250px /* fix width. TODO want it to be resizable */
   flex-direction column
   overflow hidden
+
+  position relative
+
+.resizer
+  cursor w-resize
+  height 100%
+  position absolute
+  right 0
+  width 3px
+  // background-color blue
 
 .right-pane
   flex 1 /* Takes the rest of witdh */

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -14,8 +14,10 @@ import { Repository } from '../models/repository';
   templateUrl: './workingfile.component.html',
   styleUrls: ['./workingfile.component.styl']
 })
-export class WorkingfileComponent implements OnDestroy, OnInit {
+export class WorkingfileComponent implements OnDestroy, OnInit, AfterViewInit {
   @ViewChild(StatusComponent) statusComponent: StatusComponent;
+  @ViewChild('leftPane') leftPane: ElementRef;
+  leftPaneWidth = 250;
 
   repositoryChangeSubscription: Subscription;
 
@@ -49,6 +51,10 @@ export class WorkingfileComponent implements OnDestroy, OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.leftPane.nativeElement.style.flex = `0 0 ${this.leftPaneWidth}px`;
+  }
+
   ngOnDestroy(): void {
     this.repositoryChangeSubscription.unsubscribe();
   }
@@ -75,5 +81,10 @@ export class WorkingfileComponent implements OnDestroy, OnInit {
       maxWidth: '90%',
       height: '100%',
     });
+  }
+
+  resizeLeftPane(e: { x: number }) {
+    this.leftPaneWidth = this.leftPaneWidth + e.x;
+    this.leftPane.nativeElement.style.flex = `0 0 ${this.leftPaneWidth}px`;
   }
 }
