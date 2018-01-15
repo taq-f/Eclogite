@@ -10,8 +10,6 @@ import { RepositoryComponent } from '../subcomponents/repository.component';
 import { BranchComponent } from '../subcomponents/branch.component';
 import { Repository } from '../models/repository';
 import { Branch } from '../models/branch';
-
-import { ErrorDialogComponent } from '../subcomponents/error-dialog.component';
 import { Status } from '../models/status';
 
 @Component({
