@@ -23,14 +23,14 @@ export async function getCurrentBranch(
 }
 
 export async function getBranches(
-  repositoryPath: string
+  repository: Repository
 ): Promise<ReadonlyArray<Branch>> {
   const result = await git(
     [
       'branch',
       '--no-color',
     ],
-    repositoryPath,
+    repository.path,
   );
 
   if (result.exitCode !== 0) {
@@ -58,7 +58,7 @@ export async function getBranches(
 }
 
 export async function checkout(
-  repositoryPath: string,
+  repository: Repository,
   toBranch: Branch,
 ): Promise<Branch> {
   const result = await git(
@@ -67,7 +67,7 @@ export async function checkout(
       '-q',
       toBranch.name,
     ],
-    repositoryPath,
+    repository.path,
   );
 
   if (result.exitCode !== 0) {
@@ -78,7 +78,7 @@ export async function checkout(
 }
 
 export async function createBranch(
-  repositoryPath: string,
+  repository: Repository,
   branchName: string
 ): Promise<Branch> {
   const result = await git(
@@ -87,7 +87,7 @@ export async function createBranch(
       '-b',
       branchName,
     ],
-    repositoryPath,
+    repository.path,
   );
 
   if (result.exitCode !== 0) {

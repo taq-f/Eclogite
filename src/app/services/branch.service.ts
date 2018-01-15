@@ -44,22 +44,22 @@ export class BranchService {
    * Get a list of branches of the given repository. If repository is not
    * speficied, get a list of branches of the repository opened most recently.
    */
-  branches(repositoryPath?: string): Observable<ReadonlyArray<Branch>> {
-    if (repositoryPath) {
-      return fromPromise(getBranches(repositoryPath));
+  getBranches(repository?: Repository): Observable<ReadonlyArray<Branch>> {
+    if (repository) {
+      return fromPromise(getBranches(repository));
     }
 
     return this.repositoryService.getLastOpenRepository()
-      .concatMap(r => fromPromise(getBranches(r.path)));
+      .concatMap(r => fromPromise(getBranches(r)));
   }
 
   /**
    * Switch to the given branch. If repository is not specified, the repository
    * opened most recently will be used.
    */
-  checkout(toBranch: Branch, repositoryPath?: string): Observable<Branch> {
-    if (repositoryPath) {
-      return fromPromise(checkout(repositoryPath, toBranch))
+  checkout(toBranch: Branch, repository?: Repository): Observable<Branch> {
+    if (repository) {
+      return fromPromise(checkout(repository, toBranch))
         .catch(error => {
           this.errorService.showGitError(error);
           return Observable.throw(error);
@@ -67,7 +67,7 @@ export class BranchService {
     }
 
     return this.repositoryService.getLastOpenRepository()
-      .concatMap(r => fromPromise(checkout(r.path, toBranch)))
+      .concatMap(r => fromPromise(checkout(r, toBranch)))
       .catch(error => {
         this.errorService.showGitError(error);
         return Observable.throw(error);
@@ -77,9 +77,9 @@ export class BranchService {
   /**
    *
    */
-  createBranch(branchName: string, repositoryPath?: string): Observable<Branch> {
-    if (repositoryPath) {
-      return fromPromise(createBranch(repositoryPath, branchName))
+  createBranch(branchName: string, repository?: Repository): Observable<Branch> {
+    if (repository) {
+      return fromPromise(createBranch(repository, branchName))
         .catch(error => {
           this.errorService.showGitError(error);
           return Observable.throw(error);
@@ -87,7 +87,7 @@ export class BranchService {
     }
 
     return this.repositoryService.getLastOpenRepository()
-      .concatMap(r => fromPromise(createBranch(r.path, branchName)))
+      .concatMap(r => fromPromise(createBranch(r, branchName)))
       .catch(error => {
         this.errorService.showGitError(error);
         return Observable.throw(error);

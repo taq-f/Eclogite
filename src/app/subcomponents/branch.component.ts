@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar, MatMenuTrigger } from '@angular/material';
 import { LoggerService } from '../services/logger.service';
 import { BranchService } from '../services/branch.service';
-import { RepositoryService } from '../services/repository.service';
 import { Branch } from '../models/branch';
 import { Repository } from '../models/repository';
 
@@ -30,8 +29,7 @@ export class BranchComponent implements OnInit {
   constructor(
     private logger: LoggerService,
     private snackBar: MatSnackBar,
-    private branchService: BranchService,
-    private repositoryService: RepositoryService
+    private branchService: BranchService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +40,7 @@ export class BranchComponent implements OnInit {
    * Get and load existing branches.
    */
   getBranch(): void {
-    this.branchService.branches().subscribe(branches => {
+    this.branchService.getBranches().subscribe(branches => {
       this.logger.info('branches to be listed', branches);
       this.branches = branches;
     });
@@ -80,6 +78,7 @@ export class BranchComponent implements OnInit {
     this.logger.info('Create branch', this.newBranchName);
 
     this.branchService.createBranch(branchName).subscribe(branch => {
+      this.branchService.setCurrentBranch(branch);
       this.snackBar.open(`Branch created: ${branch.name}`, undefined, {
         duration: 800,
       });
