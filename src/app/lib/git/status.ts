@@ -7,7 +7,7 @@ import {
   WorkingFileChange
 } from '../../models/workingfile';
 
-import { dirname, basename, sep } from 'path';
+import { dirname, basename } from 'path';
 import { git } from './core';
 
 /**
@@ -182,8 +182,8 @@ function getTypeMarker(field: string): EntryTypeMarker {
   }
 }
 
-function splitPath(p: string): {path: string, dir: string, filename: string, sep: string} {
-  return { path: p, dir: dirname(p), filename: basename(p), sep: sep };
+function splitPath(p: string): { path: string, dir: string, filename: string, sep: string } {
+  return { path: p, dir: dirname(p), filename: basename(p), sep: '/' };
 }
 
 /**
