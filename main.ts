@@ -27,7 +27,6 @@ function readPackage(): Promise<Package> {
         reject(error);
       }
     });
-    resolve({ version: '0.0.0' });
   });
 }
 
@@ -65,12 +64,12 @@ function setMenu() {
       submenu: [
         {
           label: 'Reload',
-          accelerator: 'Ctrl+R',
+          accelerator: 'CmdOrCtrl+R',
           click: (item, focusedWindow) => focusedWindow.reload(),
         },
         {
           label: 'Toggle Developer Tools',
-          accelerator: 'Ctrl+Shift+I',
+          accelerator: 'CmdOrCtrl+Shift+I',
           click: (item, focusedWindow) => {
             if (focusedWindow.webContents.isDevToolsOpened()) {
               focusedWindow.webContents.closeDevTools();
