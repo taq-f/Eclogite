@@ -1,8 +1,8 @@
 import { app, BrowserWindow } from 'electron';
-import * as path from "path";
-import * as url from "url";
+import * as path from 'path';
+import * as url from 'url';
 
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 
 const development = dotenv.config().parsed.ECLOGITE_DEVELOPMENT !== '0';
 
