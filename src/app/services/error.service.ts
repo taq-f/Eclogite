@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { LoggerService } from '../services/logger.service';
-import { ErrorDialogComponent } from '../subcomponents/error-dialog.component';
+import { LoggerService } from './logger.service';
+import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
 
 @Injectable()
 export class ErrorService {

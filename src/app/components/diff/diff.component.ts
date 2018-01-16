@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-
-import { HunkComponent } from './hunk.component';
-import { AppWorkingFileChange } from '../models/workingfile';
-import { FileDiff, Hunk, HunkLine, setHunkState } from '../models/diff';
-import { DiffService } from '../services/diff.service';
+import { MatDialog } from '@angular/material';
+import { HunkComponent } from '../hunk/hunk.component';
+import { AppWorkingFileChange } from '../../models/workingfile';
+import { FileDiff, Hunk, HunkLine, setHunkState } from '../../models/diff';
+import { DiffService } from '../../services/diff.service';
+import { LoggerService } from '../../services/logger.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.compoment';
 
 @Component({
   selector: 'app-diff',
@@ -60,7 +62,10 @@ export class DiffComponent {
   buttonText: string;
   buttonColor: string;
 
-  constructor(private diffService: DiffService) { }
+  constructor(
+    private logger: LoggerService,
+    private dialog: MatDialog,
+    private diffService: DiffService) { }
 
   getDiff(): void {
     this.diffService.getDiff(
@@ -85,6 +90,18 @@ export class DiffComponent {
     } else if (this._workingfile.indexState === 'staged') {
       this.resetPatch(hunk);
     }
+  }
+
+  discardChanges(file: AppWorkingFileChange): void {
+    this.dialog.open(ConfirmationDialogComponent, {
+      data: { text: `Are you sure you want to discard all changes to ${file.path}?` }
+    }).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.diffService.discardChanges(file).subscribe(() => {
+          this.logger.info(`Changes of ${file.path} discarded.`);
+        });
+      }
+    });
   }
 
   private applyPatch(hunk: Hunk | undefined): void {

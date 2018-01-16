@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
-import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
-import { StatusService } from '../services/status.service';
+import { AppStatusEntry, AppWorkingFileChange } from '../../models/workingfile';
+import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-change-entry',
@@ -15,11 +15,11 @@ import { StatusService } from '../services/status.service';
       transition('unselected <=> selected', animate('200ms ease')),
     ]),
     trigger('flyin', [
-      state('in', style({transform: 'translateX(0)'})),
-      state('void', style({transform: 'translateX(-100%)'})),
+      state('in', style({ transform: 'translateX(0)' })),
+      state('void', style({ transform: 'translateX(-100%)' })),
       transition(':enter', animate('0.2s ease-in')),
     ])
-   ]
+  ]
 })
 export class ChangeEntryComponent {
   @Input() change: AppWorkingFileChange;

@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-
-import { AppStatusEntry, AppWorkingFileChange, IndexState } from '../models/workingfile';
-import { LoggerService } from '../services/logger.service';
-import { StatusService } from '../services/status.service';
-import { Repository } from '../models/repository';
+import { AppStatusEntry, AppWorkingFileChange, IndexState } from '../../models/workingfile';
+import { LoggerService } from '../../services/logger.service';
+import { StatusService } from '../../services/status.service';
+import { Repository } from '../../models/repository';
 
 @Component({
   selector: 'app-status',

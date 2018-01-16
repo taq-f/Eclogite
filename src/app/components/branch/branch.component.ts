@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar, MatMenuTrigger } from '@angular/material';
-import { LoggerService } from '../services/logger.service';
-import { BranchService } from '../services/branch.service';
-import { Branch } from '../models/branch';
-import { Repository } from '../models/repository';
+import { LoggerService } from '../../services/logger.service';
+import { BranchService } from '../../services/branch.service';
+import { Branch } from '../../models/branch';
+import { Repository } from '../../models/repository';
 
 @Component({
   selector: 'app-branch',

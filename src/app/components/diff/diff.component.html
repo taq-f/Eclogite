@@ -2,6 +2,7 @@
   <div class="file-opening">
     <div *ngIf="_workingfile">
       <button mat-button class="smaller" [color]="buttonColor" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
+      <button mat-button class="smaller" color="warn" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
       <span class="filepath">{{_workingfile && _workingfile.path}}</span>
     </div>
   </div>

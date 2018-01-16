@@ -1,0 +1,10 @@
+<mat-dialog-content>
+  <div class="content">
+    {{text}}
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close class="smaller">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" class="smaller">OK</button>
+</mat-dialog-actions>

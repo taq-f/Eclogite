@@ -1,4 +1,6 @@
 import { git, IGitResult } from './core';
+import { Repository } from '../../models/repository';
+import { AppWorkingFileChange } from '../../models/workingfile';
 
 export async function applyPatch(
   repositoryPath: string,
@@ -40,6 +42,29 @@ export async function unstage(
 
   if (result.exitCode !== 0) {
     // TODO
+    console.log('err', result.stderr);
+    return;
+  }
+
+  return undefined;
+}
+
+export async function discardChange(
+  repository: Repository,
+  file: AppWorkingFileChange
+): Promise<undefined> {
+  // Changes in modified and delete files can be discarded by checkout.
+  const result = await git(
+    [
+      'checkout',
+      '--',
+      file.path,
+    ],
+    repository.path,
+  );
+
+  if (result.exitCode !== 0) {
+    // TODOa
     console.log('err', result.stderr);
     return;
   }

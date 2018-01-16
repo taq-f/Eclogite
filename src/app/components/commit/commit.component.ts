@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { ConfigService } from '../services/config.service';
-import { CommitService } from '../services/commit.service';
+import { ConfigService } from '../../services/config.service';
+import { CommitService } from '../../services/commit.service';
 
 type MouseEventTrigger = 'enter' | 'leave';
 type InputFocusTrigger = 'focus' | 'blur';

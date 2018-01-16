@@ -2,17 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
-import { LoggerService } from '../services/logger.service';
-import { RepositoryService } from '../services/repository.service';
-import { BranchService } from '../services/branch.service';
-import { StatusService } from '../services/status.service';
-import { RepositoryComponent } from '../subcomponents/repository.component';
-import { BranchComponent } from '../subcomponents/branch.component';
-import { Repository } from '../models/repository';
-import { Branch } from '../models/branch';
-
-import { ErrorDialogComponent } from '../subcomponents/error-dialog.component';
-import { Status } from '../models/status';
+import { LoggerService } from '../../services/logger.service';
+import { RepositoryService } from '../../services/repository.service';
+import { BranchService } from '../../services/branch.service';
+import { StatusService } from '../../services/status.service';
+import { RepositoryComponent } from '../repository/repository.component';
+import { BranchComponent } from '../branch/branch.component';
+import { Repository } from '../../models/repository';
+import { Branch } from '../../models/branch';
+import { Status } from '../../models/status';
 
 @Component({
   selector: 'app-nav',
@@ -50,7 +48,7 @@ export class NavComponent implements OnInit {
         this.logger.info('Nav component detects branch change:', b.name);
         this.branch = b;
       })
-    
+
     this.statusChangeSubscription = statusService.statusChange$
       .subscribe(s => {
         this.logger.info('Nav component detects status change:', s);

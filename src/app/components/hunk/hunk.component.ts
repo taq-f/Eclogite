@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
-import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
-import { Hunk, HunkLine, SelectedState, setHunkState } from '../models/diff';
+import { AppStatusEntry, AppWorkingFileChange } from '../../models/workingfile';
+import { Hunk, HunkLine, SelectedState, setHunkState } from '../../models/diff';
 
 @Component({
   selector: 'app-hunk',

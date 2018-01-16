@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { RepositoryService } from './repository.service';
 import { getDiff } from '../lib/git/diff';
-import { applyPatch, unstage } from '../lib/git/apply';
+import { applyPatch, unstage, discardChange } from '../lib/git/apply';
 import { FileDiff, Hunk } from '../models/diff';
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
+import { Repository } from '../models/repository';
 
 @Injectable()
 export class DiffService {
@@ -38,5 +39,13 @@ export class DiffService {
     }
     return this.repositoryService.getLastOpenRepository()
       .concatMap(r => fromPromise(unstage(r.path, path)));
+  }
+
+  discardChanges(file: AppWorkingFileChange, repository?: Repository): Observable<undefined> {
+    if (repository) {
+      return fromPromise(discardChange(repository, file));
+    }
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(discardChange(r, file)));
   }
 }

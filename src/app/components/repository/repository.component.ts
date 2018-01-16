@@ -7,9 +7,8 @@ import 'rxjs/add/operator/delay';
 import { remote } from 'electron';
 import { sha256 } from 'js-sha256';
 import { basename } from 'path';
-
-import { RepositoryService } from '../services/repository.service';
-import { Repository } from '../models/repository';
+import { RepositoryService } from '../../services/repository.service';
+import { Repository } from '../../models/repository';
 
 
 @Component({

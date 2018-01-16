@@ -2,12 +2,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ElementRef } fr
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-import { RepositoryComponent } from './repository.component';
-import { StatusComponent } from './status.component';
-import { RepositoryService } from '../services/repository.service';
-import { LoggerService } from '../services/logger.service';
-import { AppWorkingFileChange } from '../models/workingfile';
-import { Repository } from '../models/repository';
+import { RepositoryComponent } from '../repository/repository.component';
+import { StatusComponent } from '../status/status.component';
+import { RepositoryService } from '../../services/repository.service';
+import { LoggerService } from '../../services/logger.service';
+import { AppWorkingFileChange } from '../../models/workingfile';
+import { Repository } from '../../models/repository';
 
 @Component({
   selector: 'app-workingfile',

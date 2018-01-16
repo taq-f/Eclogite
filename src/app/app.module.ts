@@ -13,19 +13,19 @@ import { MatCardModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material';
 
-import { AppComponent } from './app.component';
-import { NavComponent } from './subcomponents/nav.component';
-import { RepositoryComponent } from './subcomponents/repository.component';
-import { RepositoryListComponent } from './subcomponents/repository-list.component';
-import { WorkingfileComponent } from './subcomponents/workingfile.component';
-import { StatusComponent } from './subcomponents/status.component';
-import { ChangeEntryComponent } from './subcomponents/change-entry.component';
-import { CommitComponent } from './subcomponents/commit.component';
-import { DiffComponent } from './subcomponents/diff.component';
-import { HunkComponent } from './subcomponents/hunk.component';
-import { BranchComponent } from './subcomponents/branch.component';
-import { ErrorDialogComponent } from './subcomponents/error-dialog.component';
-
+import { AppComponent } from './components/app.component';
+import { NavComponent } from './components/nav/nav.component';
+import { RepositoryComponent } from './components/repository/repository.component';
+import { RepositoryListComponent } from './components/repository-list/repository-list.component';
+import { WorkingfileComponent } from './components/workingfile/workingfile.component';
+import { StatusComponent } from './components/status/status.component';
+import { ChangeEntryComponent } from './components/change-entry/change-entry.component';
+import { CommitComponent } from './components/commit/commit.component';
+import { DiffComponent } from './components/diff/diff.component';
+import { HunkComponent } from './components/hunk/hunk.component';
+import { BranchComponent } from './components/branch/branch.component';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.compoment';
 import { LoggerService } from './services/logger.service';
 import { ErrorService } from './services/error.service';
 import { ConsoleLoggerService } from './services/consolelogger.service';
@@ -52,12 +52,14 @@ import { DragDirective } from './directives/drag.directive';
     HunkComponent,
     BranchComponent,
     ErrorDialogComponent,
+    ConfirmationDialogComponent,
     DragDirective
   ],
   entryComponents: [
     RepositoryComponent,
     BranchComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     RouterModule.forRoot([
