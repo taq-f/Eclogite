@@ -18,7 +18,7 @@ const options = {
   },
   electronVersion: electronVersion(config.devDependencies.electron),
   icon: path.join(__dirname, "..", "resources", "app.ico"),
-  name: config.name,
+  name: config.name[0].toUpperCase() + config.name.slice(1),
   out: path.join(__dirname, "..", "package"),
   overwrite: true,
   platform: process.platform,
