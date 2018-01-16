@@ -83,4 +83,8 @@ export class NavComponent implements OnInit {
       height: '100%',
     });
   }
+
+  refresh(): void {
+    this.logger.info("refresh");
+  }
 }

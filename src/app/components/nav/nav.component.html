@@ -24,17 +24,22 @@
       <i *ngIf="repository" class="material-icons">expand_more</i>
     </div>
   </div>
-  <div class="nav-component">
+  <div class="nav-component icon files">
     <div class="label">
-      Files
+      <i class="material-icons">folder</i>
     </div>
   </div>
-  <div class="nav-component">
+  <div class="nav-component icon history">
     <div class="label">
-      History
+      <i class="material-icons">history</i>
     </div>
   </div>
-  <div class="nav-component settings">
+  <div class="nav-component icon refresh" (click)="refresh()">
+    <div class="label">
+      <i class="material-icons">refresh</i>
+    </div>
+  </div>
+  <div class="nav-component icon settings">
     <div class="label">
       <i class="material-icons">settings</i>
     </div>
