@@ -8,5 +8,5 @@ try {
   );
 } catch (error) {
   console.log('.env copy failed', error);
-  exit(1);
+  process.exit(1);
 }

@@ -1,14 +1,35 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, dialog, Menu, MenuItemConstructorOptions } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-
+import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 
-const development = dotenv.config().parsed.ECLOGITE_DEVELOPMENT !== '0';
+const development = dotenv.config().parsed && dotenv.config().parsed.ECLOGITE_DEVELOPMENT !== '0';
+
+interface Package {
+  version: string;
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow;
+
+function readPackage(): Promise<Package> {
+  return new Promise<Package>((resolve, reject) => {
+    fs.readFile('package.json', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      try {
+        resolve(JSON.parse(data.toString()));
+      } catch (error) {
+        reject(error);
+      }
+    });
+    resolve({ version: '0.0.0' });
+  });
+}
 
 function createWindow(): void {
   win = new BrowserWindow({ width: 800, height: 600 });
@@ -37,10 +58,65 @@ function createWindow(): void {
   });
 }
 
+function setMenu() {
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Reload',
+          accelerator: 'Ctrl+R',
+          click: (item, focusedWindow) => focusedWindow.reload(),
+        },
+        {
+          label: 'Toggle Developer Tools',
+          accelerator: 'Ctrl+Shift+I',
+          click: (item, focusedWindow) => {
+            if (focusedWindow.webContents.isDevToolsOpened()) {
+              focusedWindow.webContents.closeDevTools();
+            } else {
+              focusedWindow.webContents.openDevTools();
+            }
+          },
+        },
+      ],
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'About',
+          click: async (item, focusedWindow) => {
+            const p = await readPackage();
+            dialog.showMessageBox(
+              focusedWindow,
+              {
+                type: 'info',
+                buttons: ['OK'],
+                title: 'About Eclogite',
+                message: `Version: ${p.version}`,
+              },
+              (a, b) => {
+                console.log(a, b);
+              }
+            );
+          },
+        },
+      ],
+    },
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow();
+  setMenu();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
