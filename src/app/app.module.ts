@@ -25,7 +25,7 @@ import { DiffComponent } from './components/diff/diff.component';
 import { HunkComponent } from './components/hunk/hunk.component';
 import { BranchComponent } from './components/branch/branch.component';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
-import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.compoment';
+import { DiscardChangeConfirmationDialogComponent } from './components/discard-change-confirmation-dialog/discard-change-confirmation-dialog.compoment';
 import { LoggerService } from './services/logger.service';
 import { ErrorService } from './services/error.service';
 import { ConsoleLoggerService } from './services/consolelogger.service';
@@ -52,14 +52,14 @@ import { DragDirective } from './directives/drag.directive';
     HunkComponent,
     BranchComponent,
     ErrorDialogComponent,
-    ConfirmationDialogComponent,
+    DiscardChangeConfirmationDialogComponent,
     DragDirective
   ],
   entryComponents: [
     RepositoryComponent,
     BranchComponent,
     ErrorDialogComponent,
-    ConfirmationDialogComponent
+    DiscardChangeConfirmationDialogComponent
   ],
   imports: [
     RouterModule.forRoot([

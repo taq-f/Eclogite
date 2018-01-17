@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <div class="content">
+    Are you sure you want to discard all changes to:
+    <ul>
+      <li *ngFor="let file of files">{{file.path}}</li>
+    </ul>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div class="dialog-action">
+    <button mat-button mat-dialog-close class="smaller">Cancel</button>
+    <button mat-button [mat-dialog-close]="true" class="smaller" color="primary">OK</button>
+  </div>
+</mat-dialog-actions>
