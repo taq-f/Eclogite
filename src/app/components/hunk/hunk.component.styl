@@ -15,6 +15,23 @@ icon-size = 15px
   padding-left 8px
   padding-right 8px
 
+// Overlay background to colorize modified lines.
+.diff-background
+  bottom 0
+  left 0
+  opacity 0.1
+  position absolute
+  right 0
+  top 0
+  transition opacity 100ms 0s ease-out
+  z-index 0
+  &.plus
+    background-color #4CAF50
+  &.minus
+    background-color #F44336
+  &.selected
+    opacity 0.3
+
 .check
   flex 0 0 35px
   .material-icons
@@ -36,6 +53,7 @@ icon-size = 15px
   &.none
     opacity 0.6
 
+  // Checkbox override in header
   .check
     .material-icons
       margin-top 3px
@@ -43,22 +61,6 @@ icon-size = 15px
 
 .line
   position relative
-
-  .diff-background
-    bottom 0
-    left 0
-    opacity 0.2
-    position absolute
-    right 0
-    top 0
-    transition opacity 100ms 0s ease-out
-    z-index 0
-    &.plus
-      background-color #4CAF50
-    &.minus
-      background-color #F44336
-    &.selected
-      opacity 0.4
 
   .line-components
     display flex
