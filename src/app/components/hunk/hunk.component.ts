@@ -35,6 +35,18 @@ export class HunkComponent implements OnInit {
   buttonText: string;
   buttonColor: string;
 
+  get headerCheckIconName(): string {
+    switch (this.hunk.selectedState) {
+      case 'all':
+        return 'check_box';
+      case 'partial':
+        return 'indeterminate_check_box';
+      case 'none':
+        return 'check_box_outline_blank';
+    }
+    return undefined;
+  }
+
   private uneditableStates = new Set([
     AppStatusEntry.Added,
     AppStatusEntry.Deleted,

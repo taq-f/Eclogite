@@ -1,112 +1,87 @@
-.line
-  display flex
-  font-size 11px
-  width 100%
-  line-height 23px
-  &.none
-    &.header
-      .icon
-        &::after
-          content "check_box_outline_blank"
-          font-family "Material Icons"
-          color #FFF
-  &.partial
-    &.header
-      .icon
-        &::after
-          content "indeterminate_check_box"
-          font-family "Material Icons"
-          color #FFF
-  &.all
-    &.header
-      .icon
-        &::after
-          content "check_box"
-          font-family "Material Icons"
-          color #FFF
-  &:not(.header)
-    .icon
-      &::after
-        content "check_box_outline_blank"
-        font-family "Material Icons"
-        color #78909C
-  &.selected
-    &:not(.header)
-      .icon
-        &::after
-          content "check_box"
-          font-family "Material Icons"
-          color #78909C
+@import "../../styles/font"
+@import "../../styles/layout"
 
-.header
-  background-color #1E88E5
-  color #fff
-  border-top-left-radius 2px
-  border-top-right-radius 2px
+icon-size = 15px
 
-  &.none
-    background-color #90CAF9
-
+// Material Design Card component customize
 .mat-card
   padding 0
   padding-bottom 24px
-
 .mat-card-content
   margin-bottom 0
-
 .mat-card-actions
   margin-left 0
   margin-right 0
   padding-left 8px
   padding-right 8px
 
-.unchanged,
-.plus:not(.selected),
-.minus:not(.selected)
-  color #78909C
-
-.icon
-  font-size 15px
-  left 7px
-  position absolute
-
-.unchanged
-  background-color #FFF
-
-.plus
-  background-color #E8F5E9
-  &.selected
-    background-color #C8E6C9
-
-.minus
-  background-color #FFEBEE
-  &.selected
-    background-color #FFCDD2
-
-.line.header,
-.line.plus,
-.line.minus
-  cursor pointer
-
-.add-operation
+.check
   flex 0 0 35px
+  .material-icons
+    color font-color-secondary-text
+    font-size icon-size
+    margin-top 4px
+    text-align center
+    width 35px
+
+.header
+  align-items center
+  background-color #1E88E5
+  border-top-left-radius 2px
+  border-top-right-radius 2px
+  color #fff
+  display flex
+  font-size font-size-small
+  height 25px
+  &.none
+    opacity 0.6
+
+  .check
+    .material-icons
+      margin-top 3px
+      color #fff
+
+.line
   position relative
 
-.line-no
-  flex 0 0 40px
-  padding-right 10px
-  text-align right
+  .diff-background
+    bottom 0
+    left 0
+    opacity 0.2
+    position absolute
+    right 0
+    top 0
+    transition opacity 100ms 0s ease-out
+    z-index 0
+    &.plus
+      background-color #4CAF50
+    &.minus
+      background-color #F44336
+    &.selected
+      opacity 0.4
 
-.devider
-  border-right 4px solid #E0E0E0
-  flex 0 0 0px
-  width 0
+  .line-components
+    display flex
+    font-size 11px
+    line-height 23px
+    margin 0
+    white-space pre-wrap
+    word-break break-all
 
-.content
-  padding-left 10px
-  flex 1
+    span
+      display inline-block
+      z-index 1
 
-pre
-  margin 0
-  white-space pre-wrap
-  word-break break-all
+  .line-no
+    color font-color-secondary-text
+    flex 0 0 30px
+    margin-right layout-spacing-small
+    text-align right
+
+  .devider
+    border-right 4px solid #E0E0E0
+    flex 0 0 0px
+
+  .content
+    margin-left layout-spacing-small
+    margin-right layout-spacing-small
