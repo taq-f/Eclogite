@@ -4,7 +4,7 @@ import * as url from 'url';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 
-const development = dotenv.config().parsed && dotenv.config().parsed.ECLOGITE_DEVELOPMENT !== '0';
+const development = dotenv.config({ path: path.join(__dirname, '.env') }).parsed.ECLOGITE_DEVELOPMENT !== '0';
 
 interface Package {
   version: string;
