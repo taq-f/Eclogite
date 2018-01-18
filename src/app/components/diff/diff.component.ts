@@ -99,6 +99,7 @@ export class DiffComponent {
       if (result) {
         this.diffService.discardChanges(file).subscribe(() => {
           this.logger.info(`Changes of ${file.path} discarded.`);
+          this.applied.emit();
         });
       }
     });
