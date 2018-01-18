@@ -16,7 +16,8 @@ let win: BrowserWindow;
 
 function readPackage(): Promise<Package> {
   return new Promise<Package>((resolve, reject) => {
-    fs.readFile('package.json', (err, data) => {
+    const p = path.join(__dirname, 'package.json');
+    fs.readFile(p, (err, data) => {
       if (err) {
         reject(err);
         return;
