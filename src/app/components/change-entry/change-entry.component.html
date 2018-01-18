@@ -1,11 +1,8 @@
 <div class="wrapper" [@select]="selectState" [@flyin]="'in'">
   <div class="change-entry">
     <div class="path">
-      <div class="dir" *ngIf="change.dir !== '.'">{{change.dir}}</div>
-      <div class="sep" *ngIf="change.dir !== '.'">{{change.sep}}</div>
-      <div class="filename">{{change.filename}}</div>
+      <app-filepath [file]="change"></app-filepath>
     </div>
-
     <div class="status-icon {{toIconText(change.state)}}">
       <i class="icon material-icons">{{toIconText(change.state)}}</i>
     </div>

@@ -20,6 +20,7 @@ import { RepositoryListComponent } from './components/repository-list/repository
 import { WorkingfileComponent } from './components/workingfile/workingfile.component';
 import { StatusComponent } from './components/status/status.component';
 import { ChangeEntryComponent } from './components/change-entry/change-entry.component';
+import { FilepathComponent } from './components/filepath/filepath.component';
 import { CommitComponent } from './components/commit/commit.component';
 import { DiffComponent } from './components/diff/diff.component';
 import { HunkComponent } from './components/hunk/hunk.component';
@@ -47,6 +48,7 @@ import { DragDirective } from './directives/drag.directive';
     WorkingfileComponent,
     StatusComponent,
     ChangeEntryComponent,
+    FilepathComponent,
     CommitComponent,
     DiffComponent,
     HunkComponent,

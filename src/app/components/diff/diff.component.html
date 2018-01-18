@@ -1,10 +1,7 @@
 <div class="container">
-  <div class="file-opening">
-    <div *ngIf="_workingfile">
-      <button mat-button class="smaller" [color]="buttonColor" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
-      <button mat-button class="smaller" color="warn" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
-      <span class="filepath">{{_workingfile && _workingfile.path}}</span>
-    </div>
+  <div *ngIf="_workingfile" class="file-opening">
+    <button mat-button class="smaller" [color]="buttonColor" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
+    <button mat-button class="smaller" color="warn" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
   </div>
   <div *ngIf="fileDiff; else noDiff" class="diff fancy-scroll">
     <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
