@@ -38,6 +38,7 @@ import { CommitService } from './services/commit.service';
 import { BranchService } from './services/branch.service';
 
 import { DragDirective } from './directives/drag.directive';
+import { RightClickDirective } from './directives/right-click.directive';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DragDirective } from './directives/drag.directive';
     BranchComponent,
     ErrorDialogComponent,
     DiscardChangeConfirmationDialogComponent,
-    DragDirective
+    DragDirective,
+    RightClickDirective,
   ],
   entryComponents: [
     RepositoryComponent,
