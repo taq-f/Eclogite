@@ -1,7 +1,6 @@
 import { Directive, EventEmitter, HostListener, Input, Output, ElementRef, OnInit } from '@angular/core';
-import { remote, Menu, MenuItem } from 'electron';
-
-export type ContextMenuOptions = ReadonlyArray<Electron.MenuItemConstructorOptions>;
+import { remote } from 'electron';
+import { ContextMenuOptions } from '../models/context';
 
 @Directive({
   selector: '[appRightClick]'
