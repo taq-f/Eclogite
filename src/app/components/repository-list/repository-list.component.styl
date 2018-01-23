@@ -5,34 +5,23 @@
 list-item-height = 60px
 repository-name-height = list-item-height / 2
 
-.list-item
-  display flex
-  height list-item-height
-  padding-left layout-spacing-normal
-  transition background-color 100ms 0s ease-out
+.card
+  margin-bottom layout-spacing-normal
+  &:last-child
+    margin-bottom 0
 
-  &:hover
-    background-color bgcolor-hover
-
-.repository-info
-  flex 1
-  overflow hidden
-  text-overflow ellipsis
-  white-space nowrap
+.icons
+  align-center-vertical()
+  flex 0 0 60px
 
 .repository-name
-  display flex
-  align-items center
-  font-size font-size-normal
-  height repository-name-height
+  font-size font-size-large
 
 .repository-path
   color font-color-secondary-text
   font-size font-size-small
-  height repository-name-height
 
 .action
-  font-size 18px
-  margin-left layout-spacing-small
+  margin-right layout-spacing-small
   &.open
     color font-color-secondary-text
