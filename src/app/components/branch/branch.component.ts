@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { MatSnackBar, MatMenuTrigger } from '@angular/material';
 import { LoggerService } from '../../services/logger.service';
 import { BranchService } from '../../services/branch.service';
 import { Branch } from '../../models/branch';
 import { Repository } from '../../models/repository';
+import { NewBranchComponent } from '../new-branch/new-branch.component';
 
 @Component({
   selector: 'app-branch',
@@ -28,12 +30,36 @@ export class BranchComponent implements OnInit {
 
   constructor(
     private logger: LoggerService,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private branchService: BranchService
   ) { }
 
   ngOnInit(): void {
     this.getBranch();
+  }
+
+  /**
+   * Open a dialog to create a new branch.
+   */
+  openNewBranchDialog(): void {
+    this.branchService.getCurrentBranch().subscribe(b => {
+      const dialogRef = this.dialog.open(
+        NewBranchComponent,
+        {
+          width: '350px',
+          data: {
+            branch: b
+          }
+        }
+      );
+      dialogRef.afterClosed().subscribe(cancel => {
+        if (cancel) {
+          return;
+        }
+        this.getBranch();
+      });
+    });
   }
 
   /**
@@ -68,22 +94,5 @@ export class BranchComponent implements OnInit {
     }, error => {
       this.isCheckingOutBranch = false;
     });
-  }
-
-  /**
-   * Create a branch.
-   */
-  createBranch(): void {
-    const branchName = this.newBranchName;
-    this.logger.info('Create branch', this.newBranchName);
-
-    this.branchService.createBranch(branchName).subscribe(branch => {
-      this.branchService.setCurrentBranch(branch);
-      this.snackBar.open(`Branch created: ${branch.name}`, undefined, {
-        duration: 800,
-      });
-      this.newBranchName = '';
-      this.getBranch();
-    }, error => { });
   }
 }

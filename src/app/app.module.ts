@@ -25,6 +25,7 @@ import { CommitComponent } from './components/commit/commit.component';
 import { DiffComponent } from './components/diff/diff.component';
 import { HunkComponent } from './components/hunk/hunk.component';
 import { BranchComponent } from './components/branch/branch.component';
+import { NewBranchComponent } from './components/new-branch/new-branch.component';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { DiscardChangeConfirmationDialogComponent } from './components/discard-change-confirmation-dialog/discard-change-confirmation-dialog.compoment';
 import { LoggerService } from './services/logger.service';
@@ -54,16 +55,16 @@ import { RightClickDirective } from './directives/right-click.directive';
     DiffComponent,
     HunkComponent,
     BranchComponent,
+    NewBranchComponent,
     ErrorDialogComponent,
     DiscardChangeConfirmationDialogComponent,
     DragDirective,
     RightClickDirective,
   ],
   entryComponents: [
-    RepositoryComponent,
-    BranchComponent,
     ErrorDialogComponent,
-    DiscardChangeConfirmationDialogComponent
+    DiscardChangeConfirmationDialogComponent,
+    NewBranchComponent
   ],
   imports: [
     RouterModule.forRoot([
@@ -75,6 +76,10 @@ import { RightClickDirective } from './directives/right-click.directive';
       {
         path: 'repository',
         component: RepositoryComponent,
+      },
+      {
+        path: 'branch',
+        component: BranchComponent,
       },
       {
         path: 'workingfiles',
