@@ -12,6 +12,6 @@
 <mat-dialog-actions>
   <div class="dialog-action">
     <button mat-button class="smaller" [mat-dialog-close]="true">Cancel</button>
-    <button mat-button color="primary" class="smaller" (click)="createBranch()">Create Branch</button>
+    <button mat-button color="primary" [disabled]="!newBranchName" class="smaller" (click)="createBranch()">Create Branch</button>
   </div>
 </mat-dialog-actions>
