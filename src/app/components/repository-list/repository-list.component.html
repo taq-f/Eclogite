@@ -1,6 +1,6 @@
 <mat-card class="card" *ngFor="let r of repositories">
   <mat-card-content>
-    <div class="columns">
+    <div class="columns info">
       <div class="icons">
         <i class="action clickable open material-icons" (click)="openClick.emit(r)">folder</i>
         <i class="action clickable delete need-caution material-icons" (click)="deleteClick.emit(r)">delete</i>

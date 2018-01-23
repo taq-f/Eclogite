@@ -1,26 +1,28 @@
-<div class="container">
-  <h2>Local Repository</h2>
-  <div class="line">
-    <div class="take-rest">
-      <mat-form-field style="width: 100%">
-        <input matInput placeholder="repositoty path" [(ngModel)]="repositoryPath">
-      </mat-form-field>
+<div class="container center-h">
+  <div class="content">
+    <h2>Local Repository</h2>
+    <div class="line">
+      <div class="take-rest">
+        <mat-form-field class="smaller" style="width: 100%">
+          <input matInput placeholder="repositoty path" [(ngModel)]="repositoryPath">
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button class="smaller" (click)="chooseRepositoryPath()">Choose...</button>
+      </div>
+      <div>
+        <button mat-button class="smaller" color="accent" [disabled]="!repositoryPath" (click)="addRepository()">Add and Open</button>
+      </div>
     </div>
-    <div>
-      <button mat-button class="smaller" (click)="chooseRepositoryPath()">Choose...</button>
-    </div>
-    <div>
-      <button mat-button class="smaller" color="accent" [disabled]="!repositoryPath" (click)="addRepository()">Add and Open</button>
-    </div>
+
+    <h2>Repositories</h2>
+
+    <h3>Recent</h3>
+    <app-repository-list [repositories]="recentlyOpenedRepositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
+    </app-repository-list>
+
+    <h3>All</h3>
+    <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
+    </app-repository-list>
   </div>
-
-  <h2>Repositories</h2>
-
-  <h3>Recent</h3>
-  <app-repository-list [repositories]="recentlyOpenedRepositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-  </app-repository-list>
-
-  <h3>All</h3>
-  <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-  </app-repository-list>
 </div>
