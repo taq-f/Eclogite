@@ -15,14 +15,12 @@
   </div>
 
   <h2>Repositories</h2>
-  <div class="list">
-    <h3>Recent</h3>
-    <app-repository-list [repositories]="recentlyOpenedRepositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-    </app-repository-list>
-  </div>
-  <div class="list">
-    <h3>All</h3>
-    <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-    </app-repository-list>
-  </div>
+
+  <h3>Recent</h3>
+  <app-repository-list [repositories]="recentlyOpenedRepositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
+  </app-repository-list>
+
+  <h3>All</h3>
+  <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
+  </app-repository-list>
 </div>

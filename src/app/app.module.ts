@@ -73,6 +73,10 @@ import { RightClickDirective } from './directives/right-click.directive';
         pathMatch: 'full',
       },
       {
+        path: 'repository',
+        component: RepositoryComponent,
+      },
+      {
         path: 'workingfiles',
         component: WorkingfileComponent,
       },
