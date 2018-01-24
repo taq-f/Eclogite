@@ -13,7 +13,7 @@ type InputFocusTrigger = 'focus' | 'blur';
   animations: [
     trigger('size', [
       state('expand', style({ height: '*' })),
-      state('shrink', style({ height: '30px' })),
+      state('shrink', style({ height: '50px' })),
       transition('expand <=> shrink', animate('200ms ease')),
     ]),
   ],
