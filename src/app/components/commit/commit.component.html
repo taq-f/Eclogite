@@ -2,13 +2,13 @@
   <div class="category">
     # COMMIT
   </div>
-  <mat-form-field style="font-size: 12px; width: 100%;">
-    <input #summaryInput matInput placeholder="Summary" [value]="summary" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"
+  <div class="row">
+    <input #summaryInput placeholder="Summary" class="input is-small" [value]="summary" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"
       (keyup)="updateSummary(summaryInput.value)">
-  </mat-form-field>
-  <mat-form-field style="font-size: 12px; width: 100%;">
-    <textarea style="height: 80px;" matInput placeholder="Description" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"
+  </div>
+  <div class="row">
+    <textarea class="textarea is-small" style="height: 80px;" matInput placeholder="Description" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"
       [(ngModel)]="description"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="primary" [disabled]="!commitable" class="smaller" (click)="commit()">Commit</button>
+  </div>
+  <button color="primary" [disabled]="!commitable" class="button is-small is-primary" (click)="commit()">Commit</button>
 </div>
