@@ -3,15 +3,13 @@
     <h2>Local Repository</h2>
     <div class="line">
       <div class="take-rest">
-        <mat-form-field class="smaller" style="width: 100%">
-          <input matInput placeholder="repositoty path" [(ngModel)]="repositoryPath">
-        </mat-form-field>
+        <input class="input" placeholder="repositoty path" [(ngModel)]="repositoryPath">
       </div>
       <div>
-        <button mat-button class="smaller" (click)="chooseRepositoryPath()">Choose...</button>
+        <button class="button is-light" (click)="chooseRepositoryPath()">Choose...</button>
       </div>
       <div>
-        <button mat-button class="smaller" color="accent" [disabled]="!repositoryPath" (click)="addRepository()">Add and Open</button>
+        <button class="button is-primary" [disabled]="!repositoryPath" (click)="addRepository()">Add and Open</button>
       </div>
     </div>
 
