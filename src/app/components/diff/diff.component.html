@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngIf="_workingfile" class="action">
-    <button class="button is-primary" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
+    <button class="button" [class.is-success]="_workingfile.indexState === 'unstaged'" [class.is-danger]="_workingfile.indexState === 'staged'" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
     <button class="button is-warning" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
   </div>
   <div *ngIf="fileDiff; else noDiff" class="diff fancy-scroll">
