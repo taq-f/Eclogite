@@ -1,7 +1,7 @@
 <div class="container">
-  <div *ngIf="_workingfile" class="file-opening">
-    <button mat-button class="smaller" [color]="buttonColor" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
-    <button mat-button class="smaller" color="warn" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
+  <div *ngIf="_workingfile" class="action">
+    <button class="button is-primary" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
+    <button class="button is-warning" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
   </div>
   <div *ngIf="fileDiff; else noDiff" class="diff fancy-scroll">
     <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
@@ -13,8 +13,6 @@
 <!-- When no diff is provided. -->
 <ng-template #noDiff>
   <div class="no-diff">
-    <div>
-      <img src="assets/app.png" style="opacity:0.3;">
-    </div>
+    <img src="assets/app.png" style="opacity:0.3;">
   </div>
 </ng-template>

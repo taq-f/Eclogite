@@ -1,5 +1,5 @@
-<mat-card [@flyin]="'in'">
-  <mat-card-content>
+<div class="card">
+  <div class="card-content">
     <div class="header {{hunk.selectedState}}" (click)="toggleHunkSelectState(hunk)">
       <div class="check">
         <span *ngIf="editable">
@@ -18,6 +18,40 @@
         <div class="diff-background {{line.type}}" [class.selected]="line.selected"></div>
         <!-- Line elements -->
         <pre class="line-components">
+            <span class="check" style="line-height:1;"><i *ngIf="editable && line.type !== 'unchanged'" class="material-icons">{{line.selected ? 'check_box' : 'check_box_outline_blank'}}</i></span>
+            <span class="line-no line-no-before"><span *ngIf="line.oldLineNo > -1">{{line.oldLineNo}}</span></span>
+            <span class="line-no line-no-after"><span *ngIf="line.newLineNo > -1">{{line.newLineNo}}</span></span>
+            <span class="devider"></span>
+            <span class="content">{{line.content}}</span>
+          </pre>
+      </div>
+    </div>
+  </div>
+
+  <footer class="card-footer">
+    <a href="#" class="card-footer-item">Stage Hunk</a>
+  </footer>
+</div>
+
+
+
+<!-- <mat-card [@flyin]="'in'">
+  <mat-card-content>
+    <div class="header {{hunk.selectedState}}" (click)="toggleHunkSelectState(hunk)">
+      <div class="check">
+        <span *ngIf="editable">
+          <i class="material-icons">{{headerCheckIconName}}</i>
+        </span>
+      </div>
+      <div class="content">
+        <pre>{{hunk.header.content}}</pre>
+      </div>
+    </div>
+
+    <div class="lines">
+      <div *ngFor="let line of hunk.lines" class="line {{line.type}}" [class.selected]="line.selected" (click)="toggleSelected(line)">
+        <div class="diff-background {{line.type}}" [class.selected]="line.selected"></div>
+        <pre class="line-components">
           <span class="check" style="line-height:1;"><i *ngIf="editable && line.type !== 'unchanged'" class="material-icons">{{line.selected ? 'check_box' : 'check_box_outline_blank'}}</i></span>
           <span class="line-no line-no-before"><span *ngIf="line.oldLineNo > -1">{{line.oldLineNo}}</span></span>
           <span class="line-no line-no-after"><span *ngIf="line.newLineNo > -1">{{line.newLineNo}}</span></span>
@@ -32,4 +66,4 @@
   <mat-card-actions>
     <button mat-button class="smaller" [color]="buttonColor" (click)="patch.emit(hunk)" [disabled]="hunk.selectedState === 'none'">{{buttonText}}</button>
   </mat-card-actions>
-</mat-card>
+</mat-card> -->

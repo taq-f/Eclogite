@@ -6,20 +6,20 @@
   flex-direction column
   height 100%
 
-.file-opening
+.action
   border-bottom border-devider
   box-sizing border-box
-  display flex
-  align-items center
-  min-height 50px
   padding layout-spacing-small
 
+  *:not(:first-child)
+    margin-left layout-spacing-small
+
 .hunk-container
-  margin-left layout-spacing-normal
-  margin-right layout-spacing-normal
-  margin-top layout-spacing-normal
+  margin-left layout-spacing-small
+  margin-right layout-spacing-small
+  margin-top layout-spacing-small
   &:last-child
-    margin-bottom layout-spacing-normal
+    margin-bottom layout-spacing-small
 
 .diff
   flex 1
