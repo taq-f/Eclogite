@@ -98,7 +98,7 @@ export class RepositoryService {
     }
   }
 
-  getRecentlyOpenedRepositories(howMany = 5): Observable<ReadonlyArray<Repository>> {
+  getRecentlyOpenedRepositories(howMany = 3): Observable<ReadonlyArray<Repository>> {
     const data = localStorage.getItem('repositories');
     if (!data) {
       return of([]);
