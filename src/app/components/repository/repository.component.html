@@ -16,13 +16,19 @@
     </div>
 
     <h2>Repositories</h2>
-
-    <h3>Recent</h3>
-    <app-repository-list [repositories]="recentlyOpenedRepositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-    </app-repository-list>
-
-    <h3>All</h3>
-    <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-    </app-repository-list>
+    <mat-tab-group>
+      <mat-tab label="Recent">
+        <div class="tab-content">
+          <app-repository-list [repositories]="recentlyOpenedRepositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
+          </app-repository-list>
+        </div>
+      </mat-tab>
+      <mat-tab label="All">
+        <div class="tab-content">
+          <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
+          </app-repository-list>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

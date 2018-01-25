@@ -1,18 +1,20 @@
-<mat-card class="card" *ngFor="let r of repositories">
-  <mat-card-content>
-    <div class="columns info">
-      <div class="icons">
-        <i class="action clickable open material-icons" (click)="openClick.emit(r)">folder</i>
-        <i class="action clickable delete need-caution material-icons" (click)="deleteClick.emit(r)">delete</i>
-      </div>
-      <div class="column">
-        <div>
-          {{r.name}}
-        </div>
-        <div class="repository-path">
+<div class="repository-container">
+  <div class="repository" *ngFor="let r of repositories">
+    <mat-card>
+      <mat-card-header>
+        {{r.name}}
+      </mat-card-header>
+      <mat-card-content>
+        <p class="repository-path">
           {{r.path}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="dialog-action">
+          <i class="action clickable open material-icons" (click)="openClick.emit(r)">folder</i>
+          <i class="action clickable delete need-caution material-icons" (click)="deleteClick.emit(r)">delete</i>
         </div>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
