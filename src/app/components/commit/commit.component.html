@@ -3,12 +3,12 @@
     # COMMIT
   </div>
   <div class="row">
-    <input #summaryInput placeholder="Summary" class="input is-small" [value]="summary" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"
-      (keyup)="updateSummary(summaryInput.value)">
+    <input #summaryInput placeholder="Summary" class="input is-small is-primary" [value]="summary" (focus)="toggleInputFocusState('focus')"
+      (blur)="toggleInputFocusState('blur')" (keyup)="updateSummary(summaryInput.value)">
   </div>
   <div class="row">
-    <textarea class="textarea is-small" style="height: 80px;" matInput placeholder="Description" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"
-      [(ngModel)]="description"></textarea>
+    <textarea class="textarea is-small" style="height: 80px;" placeholder="Description" (focus)="toggleInputFocusState('focus')"
+      (blur)="toggleInputFocusState('blur')" [(ngModel)]="description"></textarea>
   </div>
   <button color="primary" [disabled]="!commitable" class="button is-small is-primary" (click)="commit()">Commit</button>
 </div>

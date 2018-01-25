@@ -1,8 +1,9 @@
 <div class="hunks-container">
-  <!-- <div *ngIf="_workingfile" class="action">
-    <button class="button" [class.is-success]="_workingfile.indexState === 'unstaged'" [class.is-danger]="_workingfile.indexState === 'staged'" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
+  <div *ngIf="_workingfile" class="action">
+    <button class="button" [class.is-success]="_workingfile.indexState === 'unstaged'" [class.is-danger]="_workingfile.indexState === 'staged'"
+      [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
     <button class="button is-warning" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
-  </div> -->
+  </div>
   <div *ngIf="fileDiff; else noDiff" class="diff fancy-scroll">
     <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
       <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (hunkStatusChange)="onHunkStatusChange()" (patch)="apply($event)"></app-hunk>

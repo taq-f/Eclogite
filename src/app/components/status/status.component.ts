@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material';
 import { AppStatusEntry, AppWorkingFileChange, IndexState } from '../../models/workingfile';
 import { LoggerService } from '../../services/logger.service';
 import { StatusService } from '../../services/status.service';
@@ -19,6 +20,8 @@ export class StatusComponent {
     this._repository = r;
     this.getChanges();
   }
+
+  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
 
   /**
    * Changes entries that will be placed in unstaged changes.
@@ -89,6 +92,12 @@ export class StatusComponent {
         numOfConflicted: conflicted.length,
       });
     });
+  }
+
+  openMenu(change: AppWorkingFileChange): void {
+    this.selectChange(change);
+    console.log(this.selectedChange);
+    this.menuTrigger.openMenu();
   }
 
   recoverSelected(target: AppWorkingFileChange): void {

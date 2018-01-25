@@ -1,6 +1,7 @@
 <div class="changes">
   <div class="category">
-    #&nbsp;<span class="index-state" [class.unstaged]="unstagedChanges.length > 0">UNSTAGED</span>
+    #&nbsp;
+    <span class="index-state" [class.unstaged]="unstagedChanges.length > 0">UNSTAGED</span>
   </div>
   <div class="change" *ngFor="let change of unstagedChanges" (click)="selectChange(change)">
     <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
@@ -8,7 +9,8 @@
   <div class="no-item" *ngIf="unstagedChanges.length === 0"></div>
 
   <div class="category">
-    #&nbsp;<span class="index-state" [class.staged]="stagedChanges.length > 0">STAGED</span>
+    #&nbsp;
+    <span class="index-state" [class.staged]="stagedChanges.length > 0">STAGED</span>
   </div>
   <div class="change" *ngFor="let change of stagedChanges" (click)="selectChange(change)">
     <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
@@ -16,10 +18,26 @@
   <div class="no-item" *ngIf="stagedChanges.length === 0"></div>
 
   <div class="category">
-    #&nbsp;<span class="index-state" [class.conflicted]="conflictedChanges.length > 0">CONFLICTED : (</span>
+    #&nbsp;
+    <span class="index-state" [class.conflicted]="conflictedChanges.length > 0">CONFLICTED : (</span>
   </div>
   <div class="change" *ngFor="let change of conflictedChanges" (click)="selectChange(change)">
     <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
   </div>
   <div class="no-item" *ngIf="conflictedChanges.length === 0"></div>
 </div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>dialpad</mat-icon>
+    <span>Redial</span>
+  </button>
+  <button mat-menu-item disabled>
+    <mat-icon>voicemail</mat-icon>
+    <span>Check voicemail</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>notifications_off</mat-icon>
+    <span>Disable alerts</span>
+  </button>
+</mat-menu>
