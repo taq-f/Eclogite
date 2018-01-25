@@ -1,8 +1,5 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-html {
-  overflow-y: auto;
-}
+@import "app/styles/_variables";
 
 html, body {
   margin: 0;
@@ -15,9 +12,7 @@ body {
 }
 
 pre {
-  background-color: transparent;
   font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
-  padding: 0 !important;
 }
 
 /* Customize scroll bar without much stress because all I need to care is Chrome. */
@@ -65,15 +60,15 @@ pre {
 button.smaller {
   height: 30px;
   line-height: 30px;
-  font-size: 12px;
+  font-size: var(--font-size-small);
 }
 
 button.mat-menu-item.smaller {
   height: 30px;
   line-height: 30px;
-  font-size: 14px;
+  font-size: var(--font-size-normal);
 }
 
 mat-form-field.smaller {
-  font-size: 14px;
+  font-size: var(--font-size-normal);
 }

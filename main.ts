@@ -1,8 +1,9 @@
-import { app, BrowserWindow, dialog, Menu, MenuItemConstructorOptions } from 'electron';
+import { app, BrowserWindow, dialog, Menu, MenuItemConstructorOptions, net } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
+import * as request from 'request';
 
 const development = dotenv.config({ path: path.join(__dirname, '.env') }).parsed.ECLOGITE_DEVELOPMENT !== '0';
 
@@ -100,6 +101,35 @@ function setMenu() {
                 console.log(a, b);
               }
             );
+          },
+        },
+        {
+          label: 'Issue HTTP Request via net module of Electron',
+          click: (item, focusedWindow) => {
+            const req = net.request('https://github.com/electron/electron/blob/v1.8.1/docs/api/net.md');
+            req.on('response', response => {
+              console.log(`STATUS: ${response.statusCode}`);
+              console.log(`HEADERS: ${JSON.stringify(response.headers)}`);
+              response.on('data', chunk => {
+                // console.log(`BODY: ${chunk}`);
+              });
+              response.on('end', () => {
+                console.log('No more data in response.');
+              });
+            });
+            req.end();
+          },
+        },
+        {
+          label: 'Issue HTTP Request via request module of Node',
+          click: (item, focusedWindow) => {
+            request.get(
+              'http://garoon4.intra.cyberlinks.ad.jp/cgi-bin/cl_cbgrn4/grn.cgi/schedule/index?',
+              (err, res, body) => {
+                console.log(err, body);
+              }
+            );
+
           },
         },
       ],
