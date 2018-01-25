@@ -1,0 +1,62 @@
+// Bulma css framework style import.
+@import "../node_modules/bulma/sass/utilities/_all";
+@import "../node_modules/bulma/sass/base/_all";
+@import "../node_modules/bulma/sass/components/card";
+@import "../node_modules/bulma/sass/elements/button";
+@import "../node_modules/bulma/sass/elements/content";
+@import "../node_modules/bulma/sass/elements/form";
+
+html {
+  overflow-y: auto;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  color: rgba(0,0,0,.87);
+}
+
+pre {
+  background-color: transparent;
+  font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+  padding: 0 !important;
+}
+
+/* Customize scroll bar without much stress because all I need to care is Chrome. */
+.fancy-scroll {
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #E0E0E0;
+    border-radius: 10px;
+  }
+}
+
+.columns {
+  display: flex;
+  .column {
+    flex: 1;
+  }
+}
+
+.center-h {
+  display: flex;
+  justify-content: center;
+}
+
+.clickable {
+  cursor: pointer;
+}

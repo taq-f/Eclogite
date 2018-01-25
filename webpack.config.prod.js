@@ -22,53 +22,53 @@ const { AngularCompilerPlugin } = require('@ngtools/webpack');
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
-const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
+const entryPoints = ["inline", "polyfills", "sw-register", "styles", "vendor", "main"];
 const minimizeCss = true;
 const baseHref = "";
 const deployUrl = "";
 const postcssPlugins = function () {
-        // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
-        const importantCommentRe = /@preserve|@licen[cs]e|[@#]\s*source(?:Mapping)?URL|^!/i;
-        const minimizeOptions = {
-            autoprefixer: false,
-            safe: true,
-            mergeLonghand: false,
-            discardComments: { remove: (comment) => !importantCommentRe.test(comment) }
-        };
-        return [
-            postcssUrl([
-                {
-                    // Only convert root relative URLs, which CSS-Loader won't process into require().
-                    filter: ({ url }) => url.startsWith('/') && !url.startsWith('//'),
-                    url: ({ url }) => {
-                        if (deployUrl.match(/:\/\//) || deployUrl.startsWith('/')) {
-                            // If deployUrl is absolute or root relative, ignore baseHref & use deployUrl as is.
-                            return `${deployUrl.replace(/\/$/, '')}${url}`;
-                        }
-                        else if (baseHref.match(/:\/\//)) {
-                            // If baseHref contains a scheme, include it as is.
-                            return baseHref.replace(/\/$/, '') +
-                                `/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
-                        }
-                        else {
-                            // Join together base-href, deploy-url and the original URL.
-                            // Also dedupe multiple slashes into single ones.
-                            return `/${baseHref}/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
-                        }
-                    }
-                },
-                {
-                    // TODO: inline .cur if not supporting IE (use browserslist to check)
-                    filter: (asset) => !asset.hash && !asset.absolutePath.endsWith('.cur'),
-                    url: 'inline',
-                    // NOTE: maxSize is in KB
-                    maxSize: 10
-                }
-            ]),
-            autoprefixer(),
-            customProperties({ preserve: true })
-        ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
-    };
+  // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
+  const importantCommentRe = /@preserve|@licen[cs]e|[@#]\s*source(?:Mapping)?URL|^!/i;
+  const minimizeOptions = {
+    autoprefixer: false,
+    safe: true,
+    mergeLonghand: false,
+    discardComments: { remove: (comment) => !importantCommentRe.test(comment) }
+  };
+  return [
+    postcssUrl([
+      {
+        // Only convert root relative URLs, which CSS-Loader won't process into require().
+        filter: ({ url }) => url.startsWith('/') && !url.startsWith('//'),
+        url: ({ url }) => {
+          if (deployUrl.match(/:\/\//) || deployUrl.startsWith('/')) {
+            // If deployUrl is absolute or root relative, ignore baseHref & use deployUrl as is.
+            return `${deployUrl.replace(/\/$/, '')}${url}`;
+          }
+          else if (baseHref.match(/:\/\//)) {
+            // If baseHref contains a scheme, include it as is.
+            return baseHref.replace(/\/$/, '') +
+              `/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
+          }
+          else {
+            // Join together base-href, deploy-url and the original URL.
+            // Also dedupe multiple slashes into single ones.
+            return `/${baseHref}/${deployUrl}/${url}`.replace(/\/\/+/g, '/');
+          }
+        }
+      },
+      {
+        // TODO: inline .cur if not supporting IE (use browserslist to check)
+        filter: (asset) => !asset.hash && !asset.absolutePath.endsWith('.cur'),
+        url: 'inline',
+        // NOTE: maxSize is in KB
+        maxSize: 10
+      }
+    ]),
+    autoprefixer(),
+    customProperties({ preserve: true })
+  ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
+};
 
 
 
@@ -112,7 +112,7 @@ module.exports = {
       "./src/polyfills.ts"
     ],
     "styles": [
-      "./src/styles.styl"
+      "./src/styles.scss"
     ]
   },
   "output": {
@@ -156,7 +156,7 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.css$/,
         "use": [
@@ -180,7 +180,7 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.scss$|\.sass$/,
         "use": [
@@ -212,7 +212,7 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.less$/,
         "use": [
@@ -242,7 +242,7 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.styl$/,
         "use": [
@@ -273,128 +273,128 @@ module.exports = {
       },
       {
         "include": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.css$/,
         "loaders": ExtractTextPlugin.extract({
-  "use": [
-    {
-      "loader": "css-loader",
-      "options": {
-        "sourceMap": false,
-        "importLoaders": 1
-      }
-    },
-    {
-      "loader": "postcss-loader",
-      "options": {
-        "ident": "postcss",
-        "plugins": postcssPlugins,
-        "sourceMap": false
-      }
-    }
-  ],
-  "publicPath": ""
-})
+          "use": [
+            {
+              "loader": "css-loader",
+              "options": {
+                "sourceMap": false,
+                "importLoaders": 1
+              }
+            },
+            {
+              "loader": "postcss-loader",
+              "options": {
+                "ident": "postcss",
+                "plugins": postcssPlugins,
+                "sourceMap": false
+              }
+            }
+          ],
+          "publicPath": ""
+        })
       },
       {
         "include": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.scss$|\.sass$/,
         "loaders": ExtractTextPlugin.extract({
-  "use": [
-    {
-      "loader": "css-loader",
-      "options": {
-        "sourceMap": false,
-        "importLoaders": 1
-      }
-    },
-    {
-      "loader": "postcss-loader",
-      "options": {
-        "ident": "postcss",
-        "plugins": postcssPlugins,
-        "sourceMap": false
-      }
-    },
-    {
-      "loader": "sass-loader",
-      "options": {
-        "sourceMap": false,
-        "precision": 8,
-        "includePaths": []
-      }
-    }
-  ],
-  "publicPath": ""
-})
+          "use": [
+            {
+              "loader": "css-loader",
+              "options": {
+                "sourceMap": false,
+                "importLoaders": 1
+              }
+            },
+            {
+              "loader": "postcss-loader",
+              "options": {
+                "ident": "postcss",
+                "plugins": postcssPlugins,
+                "sourceMap": false
+              }
+            },
+            {
+              "loader": "sass-loader",
+              "options": {
+                "sourceMap": false,
+                "precision": 8,
+                "includePaths": []
+              }
+            }
+          ],
+          "publicPath": ""
+        })
       },
       {
         "include": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.less$/,
         "loaders": ExtractTextPlugin.extract({
-  "use": [
-    {
-      "loader": "css-loader",
-      "options": {
-        "sourceMap": false,
-        "importLoaders": 1
-      }
-    },
-    {
-      "loader": "postcss-loader",
-      "options": {
-        "ident": "postcss",
-        "plugins": postcssPlugins,
-        "sourceMap": false
-      }
-    },
-    {
-      "loader": "less-loader",
-      "options": {
-        "sourceMap": false
-      }
-    }
-  ],
-  "publicPath": ""
-})
+          "use": [
+            {
+              "loader": "css-loader",
+              "options": {
+                "sourceMap": false,
+                "importLoaders": 1
+              }
+            },
+            {
+              "loader": "postcss-loader",
+              "options": {
+                "ident": "postcss",
+                "plugins": postcssPlugins,
+                "sourceMap": false
+              }
+            },
+            {
+              "loader": "less-loader",
+              "options": {
+                "sourceMap": false
+              }
+            }
+          ],
+          "publicPath": ""
+        })
       },
       {
         "include": [
-          path.join(process.cwd(), "src/styles.styl")
+          path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.styl$/,
         "loaders": ExtractTextPlugin.extract({
-  "use": [
-    {
-      "loader": "css-loader",
-      "options": {
-        "sourceMap": false,
-        "importLoaders": 1
-      }
-    },
-    {
-      "loader": "postcss-loader",
-      "options": {
-        "ident": "postcss",
-        "plugins": postcssPlugins,
-        "sourceMap": false
-      }
-    },
-    {
-      "loader": "stylus-loader",
-      "options": {
-        "sourceMap": false,
-        "paths": []
-      }
-    }
-  ],
-  "publicPath": ""
-})
+          "use": [
+            {
+              "loader": "css-loader",
+              "options": {
+                "sourceMap": false,
+                "importLoaders": 1
+              }
+            },
+            {
+              "loader": "postcss-loader",
+              "options": {
+                "ident": "postcss",
+                "plugins": postcssPlugins,
+                "sourceMap": false
+              }
+            },
+            {
+              "loader": "stylus-loader",
+              "options": {
+                "sourceMap": false,
+                "paths": []
+              }
+            }
+          ],
+          "publicPath": ""
+        })
       },
       {
         "test": /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
@@ -430,13 +430,13 @@ module.exports = {
         }
       }
     ], {
-      "ignore": [
-        ".gitkeep",
-        "**/.DS_Store",
-        "**/Thumbs.db"
-      ],
-      "debug": "warning"
-    }),
+        "ignore": [
+          ".gitkeep",
+          "**/.DS_Store",
+          "**/Thumbs.db"
+        ],
+        "debug": "warning"
+      }),
     new ProgressPlugin(),
     new CircularDependencyPlugin({
       "exclude": /(\\|\/)node_modules(\\|\/)/,
@@ -465,15 +465,15 @@ module.exports = {
         let leftIndex = entryPoints.indexOf(left.names[0]);
         let rightindex = entryPoints.indexOf(right.names[0]);
         if (leftIndex > rightindex) {
-            return 1;
+          return 1;
         }
         else if (leftIndex < rightindex) {
-            return -1;
+          return -1;
         }
         else {
-            return 0;
+          return 0;
         }
-    }
+      }
     }),
     new BaseHrefWebpackPlugin({}),
     new CommonsChunkPlugin({
