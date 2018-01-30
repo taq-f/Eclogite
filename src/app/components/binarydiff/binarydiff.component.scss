@@ -1,4 +1,20 @@
+@import "../../styles/_variables";
+
 .img {
-    border: 1px solid #000;
-    max-width: 100%;
+  max-width: 100%;
+  background: url(/assets/bg_img.png);
+}
+
+.img-container {
+  &:not(:first-child) {
+    margin-top: var(--spacing-normal);
+  }
+}
+
+.deleted {
+  border: 2px solid #E57373;
+}
+
+.added {
+  border: 2px solid #81C784;
 }

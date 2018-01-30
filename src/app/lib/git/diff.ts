@@ -152,9 +152,9 @@ export async function getDiff(
   }
 
   const binary = isBinary(diffInfo);
-  let binaryContent;
+  let binaryContents;
   if (binary) {
-    binaryContent = await getWorkingFileBinaryContents(
+    binaryContents = await retrieveBinaryContents(
       repository,
       fileChange.path
     );
@@ -164,9 +164,21 @@ export async function getDiff(
     path: filepath,
     diffInfo,
     hunks,
-    binaryContent,
+    binaryContents,
     isBinary: binary,
   });
+}
+
+async function retrieveBinaryContents(
+  repository: Repository,
+  path: string
+): Promise<{ index: Buffer, workingfile: Buffer }> {
+  const index = await getBinaryContents(repository, 'HEAD', path);
+  const workingfile = await getWorkingFileBinaryContents(repository, path);
+  return {
+    index,
+    workingfile,
+  };
 }
 
 /**

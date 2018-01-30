@@ -1,2 +1,7 @@
-<img class="img" [src]="getSrc(diff)">
+<div class="img-container" *ngIf="diff.binaryContents.index.length">
+  <img class="img deleted" [src]="getSrc(diff.binaryContents.index)">
+</div>
+<div class="img-container" *ngIf="diff.binaryContents.workingfile.length">
+  <img class="img added" [src]="getSrc(diff.binaryContents.workingfile)">
+</div>
   

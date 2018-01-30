@@ -16,7 +16,7 @@ interface IFileDiff {
   readonly path: string;
   readonly diffInfo: ReadonlyArray<string>;
   readonly hunks: ReadonlyArray<Hunk>;
-  readonly binaryContent?: Buffer; // TODO need to separete.
+  readonly binaryContents?: { index: Buffer, workingfile: Buffer }; // TODO need to separete.
   readonly isBinary: boolean;
 }
 
@@ -34,14 +34,14 @@ export class FileDiff implements IFileDiff {
   readonly path: string;
   readonly diffInfo: ReadonlyArray<string>;
   readonly hunks: ReadonlyArray<Hunk>;
-  readonly binaryContent?: Buffer;
+  readonly binaryContents?: { index: Buffer, workingfile: Buffer };
   readonly isBinary: boolean;
 
   constructor(fileDiff: IFileDiff) {
     this.path = fileDiff.path;
     this.diffInfo = fileDiff.diffInfo;
     this.hunks = fileDiff.hunks;
-    this.binaryContent = fileDiff.binaryContent;
+    this.binaryContents = fileDiff.binaryContents;
     this.isBinary = fileDiff.isBinary;
   }
 

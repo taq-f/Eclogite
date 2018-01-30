@@ -1,3 +1,4 @@
+import { extname } from 'path';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Component, Input, OnInit } from '@angular/core';
 import { FileDiff } from '../../models/diff';
@@ -20,9 +21,10 @@ export class BinarydiffComponent implements OnInit {
     this.logger.info('Previewing diff:', this.diff);
   }
 
-  getSrc(diff: FileDiff) {
+  getSrc(buffer: Buffer) {
+    const ext = extname(this.diff.path); // TODO unrecognized extension
     return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `data:image/png;base64,${this.diff.binaryContent.toString('base64')}`
+      `data:image/${ext};base64,${buffer.toString('base64')}`
     );
   }
 }
