@@ -40,6 +40,7 @@ import { BranchService } from './services/branch.service';
 
 import { DragDirective } from './directives/drag.directive';
 import { RightClickDirective } from './directives/right-click.directive';
+import { BinarydiffComponent } from './components/binarydiff/binarydiff.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { RightClickDirective } from './directives/right-click.directive';
     DiscardChangeConfirmationDialogComponent,
     DragDirective,
     RightClickDirective,
+    BinarydiffComponent,
   ],
   entryComponents: [
     ErrorDialogComponent,

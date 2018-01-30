@@ -1,11 +1,16 @@
 <div class="container">
-  <div *ngIf="_workingfile" class="file-opening">
-    <button mat-button class="smaller" [color]="buttonColor" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
-    <button mat-button class="smaller" color="warn" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
-  </div>
-  <div *ngIf="fileDiff; else noDiff" class="diff fancy-scroll">
-    <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
-      <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (hunkStatusChange)="onHunkStatusChange()" (patch)="apply($event)"></app-hunk>
+  <div *ngIf="_workingfile; else noDiff">
+    <div *ngIf="_workingfile" class="file-opening">
+      <button mat-button class="smaller" [color]="buttonColor" [disabled]="!editable" (click)="apply()">{{buttonText}}</button>
+      <button mat-button class="smaller" color="warn" [disabled]="_workingfile.indexState !== 'unstaged'" (click)="discardChanges(_workingfile)">Discard Changes</button>
+    </div>
+    <div *ngIf="fileDiff && !fileDiff.isBinary" class="diff fancy-scroll">
+      <div class="hunk-container" *ngFor="let hunk of fileDiff.hunks">
+        <app-hunk [hunk]="hunk" [fileChange]="_workingfile" (hunkStatusChange)="onHunkStatusChange()" (patch)="apply($event)"></app-hunk>
+      </div>
+    </div>
+    <div *ngIf="fileDiff && fileDiff.isBinary">
+      <app-binarydiff></app-binarydiff>
     </div>
   </div>
 </div>

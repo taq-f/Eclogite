@@ -3,6 +3,7 @@ import { FileDiff, Hunk, HunkLine } from '../../models/diff';
 import { AppStatusEntry, AppWorkingFileChange } from '../../models/workingfile';
 
 const noNewlineWarning = 'No newline at end of file';
+const imageFileExtensions = new Set(['.png', '.jpg', '.jpeg', '.gif', '.ico']);
 
 export async function getDiff(
   repositoryPath: string,
