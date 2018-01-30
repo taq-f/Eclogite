@@ -131,6 +131,7 @@ export class DiffComponent {
       path: this.fileDiff.path,
       diffInfo: this.fileDiff.diffInfo,
       hunks: hunks,
+      isBinary: this.fileDiff.isBinary,
     });
 
     const states = new Set(newFileDiff.hunks.map(h => h.selectedState));

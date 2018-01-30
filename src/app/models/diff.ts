@@ -13,9 +13,10 @@ export type SelectedState = 'all' | 'partial' | 'none';
 export type HunkLineType = 'unchanged' | 'plus' | 'minus';
 
 interface IFileDiff {
-  path: string;
-  diffInfo: ReadonlyArray<string>;
-  hunks: ReadonlyArray<Hunk>;
+  readonly path: string;
+  readonly diffInfo: ReadonlyArray<string>;
+  readonly hunks: ReadonlyArray<Hunk>;
+  readonly isBinary: boolean;
 }
 
 interface IHunk {
@@ -29,14 +30,16 @@ interface IHunk {
 }
 
 export class FileDiff implements IFileDiff {
-  path: string;
-  diffInfo: ReadonlyArray<string>;
-  hunks: ReadonlyArray<Hunk>;
+  readonly path: string;
+  readonly diffInfo: ReadonlyArray<string>;
+  readonly hunks: ReadonlyArray<Hunk>;
+  readonly isBinary: boolean;
 
   constructor(fileDiff: IFileDiff) {
     this.path = fileDiff.path;
     this.diffInfo = fileDiff.diffInfo;
     this.hunks = fileDiff.hunks;
+    this.isBinary = fileDiff.isBinary;
   }
 
   /**

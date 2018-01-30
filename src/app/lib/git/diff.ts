@@ -152,5 +152,18 @@ export async function getDiff(
     path: filepath,
     diffInfo,
     hunks,
+    isBinary: isBinary(diffInfo),
   });
+}
+
+/**
+ * Inspect if the file is a binary file or not.
+ */
+function isBinary(lines: ReadonlyArray<string>): boolean {
+  for (const l of lines) {
+    if (l.startsWith('Binary files') && l.endsWith('differ')) {
+      return true;
+    }
+  }
+  return false;
 }
