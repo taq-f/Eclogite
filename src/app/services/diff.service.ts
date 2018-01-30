@@ -16,13 +16,13 @@ export class DiffService {
 
   getDiff(
     fileChange: AppWorkingFileChange,
-    repositoryPath?: string
+    repository?: Repository
   ): Observable<FileDiff> {
-    if (repositoryPath) {
-      return fromPromise(getDiff(repositoryPath, fileChange));
+    if (repository) {
+      return fromPromise(getDiff(repository, fileChange));
     }
     return this.repositoryService.getLastOpenRepository()
-      .concatMap(r => fromPromise(getDiff(r.path, fileChange)));
+      .concatMap(r => fromPromise(getDiff(r, fileChange)));
   }
 
   applyPatch(patch: string, repositoryPath?: string): Observable<undefined> {

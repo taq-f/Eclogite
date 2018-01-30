@@ -78,6 +78,7 @@ module.exports = {
     "electron": "require('electron')",
     "dugite": "require('dugite')",
     "path": "require('path')",
+    "fs": "require('fs')",
     "js-sha256": "require('js-sha256')",
   },
   "resolve": {

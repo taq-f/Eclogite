@@ -11,7 +11,7 @@ import { DiscardChangeConfirmationDialogComponent } from '../discard-change-conf
 @Component({
   selector: 'app-diff',
   templateUrl: './diff.component.html',
-  styleUrls: ['./diff.component.styl'],
+  styleUrls: ['./diff.component.scss'],
 })
 export class DiffComponent {
 
@@ -19,6 +19,7 @@ export class DiffComponent {
 
   @Input()
   set workingfile(v: AppWorkingFileChange) {
+    this.logger.info('Diff component receives working file change:', v);
     if (v) {
       this._workingfile = v;
       this.getDiff();
@@ -71,6 +72,7 @@ export class DiffComponent {
     this.diffService.getDiff(
       this._workingfile
     ).subscribe(fileDiff => {
+      this.logger.info('Got file diff:', fileDiff);
       this.fileDiff = fileDiff;
     });
   }

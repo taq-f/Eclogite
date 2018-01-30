@@ -1,12 +1,14 @@
 import { git, IGitResult } from './core';
+import { getBinaryContents, getWorkingFileBinaryContents } from './show';
 import { FileDiff, Hunk, HunkLine } from '../../models/diff';
 import { AppStatusEntry, AppWorkingFileChange } from '../../models/workingfile';
+import { Repository } from '../../models/repository';
 
 const noNewlineWarning = 'No newline at end of file';
 const imageFileExtensions = new Set(['.png', '.jpg', '.jpeg', '.gif', '.ico']);
 
 export async function getDiff(
-  repositoryPath: string,
+  repository: Repository,
   fileChange: AppWorkingFileChange
 ): Promise<FileDiff> {
   const filepath = fileChange.path;
@@ -29,7 +31,7 @@ export async function getDiff(
       filepath,
     ];
     successExitCode = new Set([0, 1]);
-    result = await git(args, repositoryPath);
+    result = await git(args, repository.path);
   } else if (status === AppStatusEntry.Modified) {
     const args = [
       'diff',
@@ -41,7 +43,7 @@ export async function getDiff(
       '--',
       filepath,
     ];
-    result = await git(args, repositoryPath);
+    result = await git(args, repository.path);
     successExitCode = new Set([0]);
   } else if (status === AppStatusEntry.Deleted) {
     const args = [
@@ -54,7 +56,7 @@ export async function getDiff(
       '--',
       filepath,
     ];
-    result = await git(args, repositoryPath);
+    result = await git(args, repository.path);
     successExitCode = new Set([0]);
   }
 
@@ -149,11 +151,21 @@ export async function getDiff(
     }
   }
 
+  const binary = isBinary(diffInfo);
+  let binaryContent;
+  if (binary) {
+    binaryContent = await getWorkingFileBinaryContents(
+      repository,
+      fileChange.path
+    );
+  }
+
   return new FileDiff({
     path: filepath,
     diffInfo,
     hunks,
-    isBinary: isBinary(diffInfo),
+    binaryContent,
+    isBinary: binary,
   });
 }
 
