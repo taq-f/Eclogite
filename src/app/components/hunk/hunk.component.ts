@@ -9,10 +9,10 @@ import { Hunk, HunkLine, SelectedState, setHunkState } from '../../models/diff';
   templateUrl: './hunk.component.html',
   styleUrls: ['./hunk.component.styl'],
   animations: [
-    trigger('flyin', [
-      state('in', style({ transform: 'translateX(0)' })),
-      state('void', style({ transform: 'translateX(-100%)' })),
-      transition(':enter', animate('0.2s ease-in')),
+    trigger('fadein', [
+      state('in', style({ opacity: 1 })),
+      state('void', style({ opacity: 0 })),
+      transition(':enter', animate('0.1s ease-in')),
     ])
   ]
 })
