@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header">
-    <button mat-button color="primary" (click)="openNewBranchDialog()">New Branch</button>
-    <mat-form-field>
+    <button mat-button class="smaller" color="primary" (click)="openNewBranchDialog()">New Branch</button>
+    <mat-form-field class="smaller">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
