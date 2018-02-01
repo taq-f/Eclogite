@@ -1,38 +1,41 @@
 <div class="container">
-  <button mat-button color="primary" (click)="openNewBranchDialog()">New Branch</button>
+  <div class="header">
+    <button mat-button color="primary" (click)="openNewBranchDialog()">New Branch</button>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
 
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
+  <div class="list fancy-scroll">
+    <mat-table [dataSource]="branches">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>
+          Name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let b" [class.current]="b.current" [class.can-checkout]="!b.current" [class.remote]="b.type === 'remote'" (click)="b.current ? undefind : checkout(b)">
+          {{b.name}}
+        </mat-cell>
+      </ng-container>
 
-  <mat-table [dataSource]="branches">
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>
-        Name
-      </mat-header-cell>
-      <mat-cell *matCellDef="let b" [class.current]="b.current" [class.can-checkout]="!b.current" (click)="b.current ? undefind : checkout(b)">
-        {{b.name}}
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="upstream">
+        <mat-header-cell *matHeaderCellDef>
+          Upstream
+        </mat-header-cell>
+        <mat-cell *matCellDef="let b">
+          {{b.upstream}}
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="upstream">
-      <mat-header-cell *matHeaderCellDef>
-        Upstream
-      </mat-header-cell>
-      <mat-cell *matCellDef="let b">
-        {{b.upstream}}
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef class="col-delete">
+        </mat-header-cell>
+        <mat-cell class="col-delete" *matCellDef="let b">
+          <i *ngIf="b.type === 'local'" class="clickable material-icons" (click)="delete(b)">delete</i>
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="delete">
-      <mat-header-cell *matHeaderCellDef class="col-delete">
-      </mat-header-cell>
-      <mat-cell class="col-delete" *matCellDef="let b">
-        <i class="clickable material-icons" (click)="delete(b)">delete</i>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="['name', 'upstream', 'delete']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['name', 'upstream', 'delete'];"></mat-row>
-  </mat-table>
+      <mat-header-row *matHeaderRowDef="['name', 'upstream', 'delete']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['name', 'upstream', 'delete'];"></mat-row>
+    </mat-table>
+  </div>
 </div>

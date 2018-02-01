@@ -1,10 +1,18 @@
 @import "../../styles/_variables";
 
-// hover-bgcolor = #E0E0E0
-// branch-height = 40px
-
 .container {
-  padding: var(--spacing-normal);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  // padding: var(--spacing-normal);
+}
+
+.header {
+  
+}
+
+.list {
+  flex: 1;
 }
 
 .current {
@@ -13,6 +21,10 @@
 
 .can-checkout {
   cursor: pointer;
+}
+
+.remote {
+  color: var(--font-color-secondary-text);
 }
 
 .col-delete {

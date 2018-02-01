@@ -80,8 +80,15 @@ export class BranchComponent implements OnInit {
   getBranch(): void {
     this.branchService.getBranches().subscribe(branches => {
       this.logger.info('branches to be listed', branches);
-      const list = branches.filter(b => b.type === 'local');
-      this.branches = new MatTableDataSource<Branch>(list);
+
+      const locals = branches.filter(v => v.type === 'local');
+      const upsteams = new Set(locals.map(v => v.upstream));
+      const remotes = branches.filter(
+        v => v.type === 'remote' &&  // should be type: remote
+        !v.name.endsWith('/HEAD') && // and not HEAD, which is a special one
+        !upsteams.has(v.name));      // and not local upstream
+
+      this.branches = new MatTableDataSource<Branch>([...locals, ...remotes]);
     });
   }
 
