@@ -30,7 +30,7 @@
         <mat-header-cell *matHeaderCellDef class="col-delete">
         </mat-header-cell>
         <mat-cell class="col-delete" *matCellDef="let b">
-          <i *ngIf="b.type === 'local'" class="clickable material-icons" (click)="delete(b)">delete</i>
+          <i *ngIf="!b.current && b.type === 'local'" class="clickable material-icons" (click)="delete(b)">delete</i>
         </mat-cell>
       </ng-container>
 
