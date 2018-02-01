@@ -12,6 +12,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './components/app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -99,7 +100,8 @@ import { BinarydiffComponent } from './components/binarydiff/binarydiff.componen
     MatTabsModule,
     MatCardModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule
   ],
   providers: [
     { provide: LoggerService, useClass: ConsoleLoggerService },

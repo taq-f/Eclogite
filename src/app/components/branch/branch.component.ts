@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { MatSnackBar, MatMenuTrigger } from '@angular/material';
 import { LoggerService } from '../../services/logger.service';
@@ -7,16 +8,19 @@ import { Branch } from '../../models/branch';
 import { Repository } from '../../models/repository';
 import { NewBranchComponent } from '../new-branch/new-branch.component';
 
+// TODO make it service.
+import { remote } from 'electron';
+
 @Component({
   selector: 'app-branch',
   templateUrl: './branch.component.html',
-  styleUrls: ['./branch.component.styl'],
+  styleUrls: ['./branch.component.scss'],
 })
 export class BranchComponent implements OnInit {
   /**
    * List of existing branches.
    */
-  branches: ReadonlyArray<Branch>;
+  branches: MatTableDataSource<Branch>;
 
   /**
    * Checking out a branch is in progress.
@@ -44,7 +48,7 @@ export class BranchComponent implements OnInit {
    */
   openNewBranchDialog(): void {
     this.branchService.getCurrentBranch().subscribe(b => {
-      const dialogRef = this.dialog.open(
+      this.dialog.open(
         NewBranchComponent,
         {
           width: '350px',
@@ -52,8 +56,7 @@ export class BranchComponent implements OnInit {
             branch: b
           }
         }
-      );
-      dialogRef.afterClosed().subscribe(cancel => {
+      ).afterClosed().subscribe(cancel => {
         if (cancel) {
           return;
         }
@@ -68,7 +71,8 @@ export class BranchComponent implements OnInit {
   getBranch(): void {
     this.branchService.getBranches().subscribe(branches => {
       this.logger.info('branches to be listed', branches);
-      this.branches = branches;
+      const list = branches.filter(b => b.type === 'local');
+      this.branches = new MatTableDataSource<Branch>(list);
     });
   }
 
@@ -93,6 +97,19 @@ export class BranchComponent implements OnInit {
       this.isCheckingOutBranch = false;
     }, error => {
       this.isCheckingOutBranch = false;
+    });
+  }
+
+  /**
+   * Delete a branch.
+   */
+  delete(branch: Branch): void {
+    this.branchService.deleteBranch(branch).subscribe(b => {
+      this.logger.info('Branch deleted:', branch);
+      this.getBranch();
+      this.snackBar.open(`Deleted: ${b.name}`, undefined, {
+        duration: 800,
+      });
     });
   }
 }

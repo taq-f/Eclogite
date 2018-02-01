@@ -1,26 +1,34 @@
 <div class="container">
   <button mat-button color="primary" class="smaller" (click)="openNewBranchDialog()">New Branch</button>
 
-  <div class="branch-list">
-    <div class="branch clickable" [class.current]="branch.current" *ngFor="let branch of branches">
-      <div class="branch-name" (click)="checkout(branch)">
-        {{branch.name}}
-      </div>
-      <div class="buttons">
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item class="smaller" [disabled]="branch.current">
-            <mat-icon>dialpad</mat-icon>
-            <span>Do Something</span>
-          </button>
-          <button mat-menu-item class="smaller">
-            <mat-icon>notifications_off</mat-icon>
-            <span>Do Another</span>
-          </button>
-        </mat-menu>
-      </div>
-    </div>
-  </div>
+  <mat-table [dataSource]="branches">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        Name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let b" [class.current]="b.current" [class.can-checkout]="!b.current" (click)="b.current ? undefind : checkout(b)">
+        {{b.name}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="upstream">
+      <mat-header-cell *matHeaderCellDef>
+        Upstream
+      </mat-header-cell>
+      <mat-cell *matCellDef="let b">
+        {{b.upstream}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef class="col-delete">
+      </mat-header-cell>
+      <mat-cell class="col-delete" *matCellDef="let b">
+        <i class="clickable material-icons" (click)="delete(b)">delete</i>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['name', 'upstream', 'delete']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'upstream', 'delete'];"></mat-row>
+  </mat-table>
 </div>

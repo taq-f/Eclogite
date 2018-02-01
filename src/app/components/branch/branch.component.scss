@@ -1,0 +1,24 @@
+@import "../../styles/_variables";
+
+// hover-bgcolor = #E0E0E0
+// branch-height = 40px
+
+.container {
+  padding: var(--spacing-normal);
+}
+
+.current {
+  font-weight: bold;
+}
+
+.can-checkout {
+  cursor: pointer;
+}
+
+.col-delete {
+  flex: 0 0 30px;
+}
+
+.material-icons{
+  color: var(--font-color-secondary-text);
+}
