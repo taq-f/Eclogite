@@ -10,6 +10,7 @@ import { LoggerService } from './logger.service';
 import { RepositoryService } from './repository.service';
 import { ErrorService } from './error.service';
 import { getCurrentBranch, getBranches, checkout, createBranch, deleteBranch } from '../lib/git/branch';
+import { push } from '../lib/git/push';
 import { Repository } from '../models/repository';
 import { Branch } from '../models/branch';
 
@@ -88,6 +89,23 @@ export class BranchService {
 
     return this.repositoryService.getLastOpenRepository()
       .concatMap(r => fromPromise(createBranch(r, branchName)))
+      .catch(error => {
+        this.errorService.showGitError(error);
+        return Observable.throw(error);
+      });
+  }
+
+  pushBranch(branch: Branch, repository?: Repository): Observable<Branch> {
+    if (repository) {
+      return fromPromise(push(repository, branch))
+        .catch(error => {
+          this.errorService.showGitError(error);
+          return Observable.throw(error);
+        });
+    }
+
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(push(r, branch)))
       .catch(error => {
         this.errorService.showGitError(error);
         return Observable.throw(error);

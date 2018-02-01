@@ -117,6 +117,15 @@ export class BranchComponent implements OnInit {
   }
 
   /**
+   * Push a branch.
+   */
+  push(branch: Branch): void {
+    this.branchService.pushBranch(branch).subscribe(b => {
+      this.logger.info("Pushed:", b);
+    });
+  }
+
+  /**
    * Delete a branch.
    */
   delete(branch: Branch): void {

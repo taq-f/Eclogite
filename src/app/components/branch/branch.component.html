@@ -8,6 +8,14 @@
 
   <div class="list fancy-scroll">
     <mat-table [dataSource]="branches">
+      <ng-container matColumnDef="push">
+        <mat-header-cell *matHeaderCellDef class="col-icon">
+        </mat-header-cell>
+        <mat-cell *matCellDef="let b" class="col-icon">
+          <i *ngIf="b.current" class="clickable material-icons" (click)="push(b)">file_upload</i>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>
           Name
@@ -27,15 +35,15 @@
       </ng-container>
 
       <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef class="col-delete">
+        <mat-header-cell *matHeaderCellDef class="col-icon">
         </mat-header-cell>
-        <mat-cell class="col-delete" *matCellDef="let b">
+        <mat-cell class="col-icon" *matCellDef="let b">
           <i *ngIf="!b.current && b.type === 'local'" class="clickable material-icons" (click)="delete(b)">delete</i>
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="['name', 'upstream', 'delete']"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: ['name', 'upstream', 'delete'];"></mat-row>
+      <mat-header-row *matHeaderRowDef="['push', 'name', 'upstream', 'delete']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['push', 'name', 'upstream', 'delete'];"></mat-row>
     </mat-table>
   </div>
 </div>
