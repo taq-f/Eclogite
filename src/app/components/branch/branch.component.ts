@@ -66,6 +66,15 @@ export class BranchComponent implements OnInit {
   }
 
   /**
+   * Apply filter with givin text.
+   */
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.branches.filter = filterValue;
+  }
+
+  /**
    * Get and load existing branches.
    */
   getBranch(): void {
