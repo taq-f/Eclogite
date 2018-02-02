@@ -48,6 +48,10 @@ export class CommitComponent implements OnInit {
 
   size = 'shrink';
 
+  /**
+   * States
+   */
+  isCommiting: boolean;
   isMouseOver: boolean;
   isEditing: boolean;
 
@@ -70,9 +74,6 @@ export class CommitComponent implements OnInit {
 
   ngOnInit(): void {
     this.commitable = this.isCommitable();
-    this.configService.getUser().subscribe(user => {
-      // console.log(user);
-    });
   }
 
   updateSummary(v: string): void {
@@ -85,14 +86,15 @@ export class CommitComponent implements OnInit {
   }
 
   commit(): void {
-    // Make the state uncommitable to prevent execute before the previous
-    // one.
+    // Make the state uncommitable to prevent execute before the previous one.
     this.commitable = false;
+    this.isCommiting = true;
 
     this.commitService.commit(this.message).subscribe(() => {
       this.summary = '';
       this.description = '';
       this.commitable = this.isCommitable();
+      this.isCommiting = false;
       this.commitDone.emit();
     });
   }
