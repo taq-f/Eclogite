@@ -13,6 +13,10 @@
 
 .list {
   flex: 1;
+
+  .material-icons {
+    color: var(--font-color-secondary-text);
+  }
 }
 
 .current {
@@ -29,8 +33,4 @@
 
 .col-icon {
   flex: 0 0 50px;
-}
-
-.material-icons{
-  color: var(--font-color-secondary-text);
 }
