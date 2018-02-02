@@ -1,0 +1,44 @@
+button.smaller {
+  height: 30px;
+  line-height: 30px;
+  font-size: var(--font-size-small);
+}
+
+button.mat-menu-item.smaller {
+  height: 30px;
+  line-height: 30px;
+  font-size: var(--font-size-normal);
+}
+
+button {
+  &.loading {
+    color: transparent !important;
+    pointer-events: none;
+  }
+  &.loading::after {
+    animation: rotate 500ms infinite linear;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--font-color-secondary-text);
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: 1em;
+    position: relative;
+    width: 1em;
+    left: calc(50% - (1em / 2));
+    top: calc(50% - (1em / 2));
+    position: absolute !important;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+	100% {
+    transform: rotate(360deg);
+  }
+}

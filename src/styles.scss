@@ -1,5 +1,6 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "app/styles/_variables";
+@import "app/styles/button";
 
 html, body {
   margin: 0;
@@ -53,20 +54,6 @@ pre {
 .dialog-action {
   width: 100%;
   text-align: center;
-}
-
-/* Overrides of Angular Material */
-
-button.smaller {
-  height: 30px;
-  line-height: 30px;
-  font-size: var(--font-size-small);
-}
-
-button.mat-menu-item.smaller {
-  height: 30px;
-  line-height: 30px;
-  font-size: var(--font-size-normal);
 }
 
 mat-form-field.smaller {
