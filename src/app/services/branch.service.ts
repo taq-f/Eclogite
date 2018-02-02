@@ -13,6 +13,7 @@ import { getCurrentBranch, getBranches, checkout, createBranch, deleteBranch } f
 import { push } from '../lib/git/push';
 import { Repository } from '../models/repository';
 import { Branch } from '../models/branch';
+import { fetch } from '../lib/git/fetch';
 
 @Injectable()
 export class BranchService {
@@ -89,6 +90,23 @@ export class BranchService {
 
     return this.repositoryService.getLastOpenRepository()
       .concatMap(r => fromPromise(createBranch(r, branchName)))
+      .catch(error => {
+        this.errorService.showGitError(error);
+        return Observable.throw(error);
+      });
+  }
+
+  fetchBranch(branch: Branch, repository?: Repository): Observable<Branch> {
+    if (repository) {
+      return fromPromise(fetch(repository, branch))
+        .catch(error => {
+          this.errorService.showGitError(error);
+          return Observable.throw(error);
+        });
+    }
+
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(fetch(r, branch)))
       .catch(error => {
         this.errorService.showGitError(error);
         return Observable.throw(error);
