@@ -1,0 +1,17 @@
+// @import "../../styles/font"
+// @import "../../styles/layout"
+@import "../../styles/_variables";
+
+.wrapper {
+  padding: var(--spacing-small);
+}
+
+.title {
+  font-size: var(--font-size-normal);
+  height: 30px;
+  line-height: 30px;
+}
+
+.action-container {
+  text-align: center;
+}

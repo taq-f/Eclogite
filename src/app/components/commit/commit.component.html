@@ -10,5 +10,7 @@
     <textarea style="height: 80px;" matInput placeholder="Description" (focus)="toggleInputFocusState('focus')" (blur)="toggleInputFocusState('blur')"
       [(ngModel)]="description"></textarea>
   </mat-form-field>
-  <button mat-button color="primary" [disabled]="!commitable" [class.loading]="isCommiting" class="smaller" (click)="commit()">Commit</button>
+  <div class="action-container">
+    <button mat-button color="primary" [disabled]="!commitable" [class.loading]="isCommiting" class="smaller" (click)="commit()">Commit</button>
+  </div>
 </div>
