@@ -119,7 +119,7 @@ export class BranchComponent implements OnInit {
   /**
    * Fetch.
    */
-  fetch(branch: Branch): void {
+  fetch(branch?: Branch): void {
     this.isInAction = true;
 
     this.branchService.fetchBranch(branch).subscribe(b => {
@@ -133,7 +133,7 @@ export class BranchComponent implements OnInit {
   /**
    * Push a branch.
    */
-  push(branch: Branch): void {
+  push(branch?: Branch): void {
     this.branchService.pushBranch(branch).subscribe(b => {
       // TODO loading icon?
       this.logger.info('Pushed:', b);
