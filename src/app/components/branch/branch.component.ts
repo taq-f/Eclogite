@@ -25,7 +25,7 @@ export class BranchComponent implements OnInit {
   /**
    * Checking out a branch is in progress.
    */
-  isCheckingOutBranch: boolean;
+  isInAction: boolean;
 
   /**
    * A new branch name that the user specifies.
@@ -85,8 +85,8 @@ export class BranchComponent implements OnInit {
       const upsteams = new Set(locals.map(v => v.upstream));
       const remotes = branches.filter(
         v => v.type === 'remote' &&  // should be type: remote
-        !v.name.endsWith('/HEAD') && // and not HEAD, which is a special one
-        !upsteams.has(v.name));      // and not local upstream
+          !v.name.endsWith('/HEAD') && // and not HEAD, which is a special one
+          !upsteams.has(v.name));      // and not local upstream
 
       this.branches = new MatTableDataSource<Branch>([...locals, ...remotes]);
     });
@@ -96,13 +96,13 @@ export class BranchComponent implements OnInit {
    * Switch branches.
    */
   checkout(branch: Branch): void {
-    if (this.isCheckingOutBranch) {
+    if (this.isInAction) {
       this.logger.warn('Checkout a branch is in progress.');
       return;
     }
 
     this.logger.info('Switch to branch', branch);
-    this.isCheckingOutBranch = true;
+    this.isInAction = true;
 
     this.branchService.checkout(branch).subscribe(b => {
       this.branchService.setCurrentBranch(branch);
@@ -110,9 +110,23 @@ export class BranchComponent implements OnInit {
       this.snackBar.open(`Switch to ${b.name}`, undefined, {
         duration: 800,
       });
-      this.isCheckingOutBranch = false;
+      this.isInAction = false;
     }, error => {
-      this.isCheckingOutBranch = false;
+      this.isInAction = false;
+    });
+  }
+
+  /**
+   * Fetch.
+   */
+  fetch(branch: Branch): void {
+    this.isInAction = true;
+
+    this.branchService.fetchBranch(branch).subscribe(b => {
+      this.logger.info('Fetched:', b);
+      this.isInAction = false;
+    }, err => {
+      this.isInAction = false;
     });
   }
 
@@ -121,7 +135,8 @@ export class BranchComponent implements OnInit {
    */
   push(branch: Branch): void {
     this.branchService.pushBranch(branch).subscribe(b => {
-      this.logger.info("Pushed:", b);
+      // TODO loading icon?
+      this.logger.info('Pushed:', b);
     });
   }
 
