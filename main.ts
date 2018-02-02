@@ -33,7 +33,12 @@ function readPackage(): Promise<Package> {
 }
 
 function createWindow(): void {
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    minWidth: 800,
+    minHeight: 600,
+  });
 
   if (development) {
     win.loadURL('http://localhost:4200');
