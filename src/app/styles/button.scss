@@ -1,7 +1,18 @@
+button {
+  i.material-icons{
+    margin-bottom: 2px;
+  }
+}
+
 button.smaller {
   height: 30px;
   line-height: 30px;
   font-size: var(--font-size-small);
+
+  i.material-icons {
+    font-size: 20px;
+    margin-bottom: 1px;
+  }
 }
 
 button.mat-menu-item.smaller {
