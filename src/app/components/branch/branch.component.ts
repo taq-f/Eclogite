@@ -23,9 +23,19 @@ export class BranchComponent implements OnInit {
   branches: MatTableDataSource<Branch>;
 
   /**
-   * Checking out a branch is in progress.
+   * An action is in progress.
    */
   isInAction: boolean;
+
+  /**
+   * Fetching remote.
+   */
+  isFetching: boolean;
+
+  /**
+   * Pusing to remote.
+   */
+  isPushing: boolean;
 
   /**
    * A new branch name that the user specifies.
@@ -121,12 +131,15 @@ export class BranchComponent implements OnInit {
    */
   fetch(branch?: Branch): void {
     this.isInAction = true;
+    this.isFetching = true;
 
     this.branchService.fetchBranch(branch).subscribe(b => {
       this.logger.info('Fetched:', b);
       this.isInAction = false;
+      this.isFetching = false;
     }, err => {
       this.isInAction = false;
+      this.isFetching = false;
     });
   }
 
@@ -134,9 +147,16 @@ export class BranchComponent implements OnInit {
    * Push a branch.
    */
   push(branch?: Branch): void {
+    this.isInAction = true;
+    this.isPushing = true;
+
     this.branchService.pushBranch(branch).subscribe(b => {
-      // TODO loading icon?
       this.logger.info('Pushed:', b);
+      this.isInAction = false;
+      this.isPushing = false;
+    }, err => {
+      this.isInAction = false;
+      this.isPushing = false;
     });
   }
 

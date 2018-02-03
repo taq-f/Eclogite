@@ -1,10 +1,10 @@
 <div class="container">
   <div class="header">
     <div>
-      <button mat-button class="smaller" [class.loading]="isInAction" color="primary" (click)="fetch()">
+      <button mat-button class="smaller" [class.loading]="isFetching" [disabled]="isInAction" color="primary" (click)="fetch()">
         <i class="material-icons">file_download</i>Fetch
       </button>
-      <button mat-button class="smaller" [class.loading]="isInAction" color="primary" (click)="push()">
+      <button mat-button class="smaller" [class.loading]="isPushing" [disabled]="isInAction" color="primary" (click)="push()">
         <i class="material-icons">file_upload</i>Push
       </button>
       <button mat-button class="smaller" color="primary" (click)="openNewBranchDialog()">
