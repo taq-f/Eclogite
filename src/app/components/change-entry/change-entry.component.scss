@@ -1,0 +1,32 @@
+@import "../../styles/_variables";
+
+.wrapper {
+  padding: 0 var(--spacing-small);
+}
+
+.change-entry {
+  align-items: center;
+  display: flex;
+  height: 30px;
+  flex-grow: 1;
+  font-size: var(--font-size-small);
+}
+
+/* Customize icon colors here. Class names are equivalent to Material icons name. */
+.icon {
+  &.add_circle_outline { color: #009688; }
+  &.check_circle { color: #009688; }
+  &.delete { color: #FF5722; }
+  &.arrow_forward { color: #03A9F4; }
+  &.warning { color: #E91E63; }
+}
+
+.path {
+  flex: 1;
+  overflow-x: hidden;
+}
+
+.icon {
+  margin-left: var(--spacing-small);
+  font-size: 20px;
+}

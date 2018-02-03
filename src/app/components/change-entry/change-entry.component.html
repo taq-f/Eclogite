@@ -3,8 +3,6 @@
     <div class="path">
       <app-filepath [file]="change"></app-filepath>
     </div>
-    <div class="status-icon {{toIconText(change.state)}}">
-      <i class="icon material-icons">{{toIconText(change.state)}}</i>
-    </div>
+    <i class="icon material-icons {{toIconText(change.state)}}">{{toIconText(change.state)}}</i>
   </div>
 </div>

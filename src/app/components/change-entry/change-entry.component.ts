@@ -7,7 +7,7 @@ import { StatusService } from '../../services/status.service';
 @Component({
   selector: 'app-change-entry',
   templateUrl: './change-entry.component.html',
-  styleUrls: ['./change-entry.component.styl'],
+  styleUrls: ['./change-entry.component.scss'],
   animations: [
     trigger('select', [
       state('unselected', style({ backgroundColor: 'transparent' })),
