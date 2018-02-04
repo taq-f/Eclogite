@@ -28,7 +28,7 @@ import { HunkComponent } from './components/hunk/hunk.component';
 import { BranchComponent } from './components/branch/branch.component';
 import { NewBranchComponent } from './components/new-branch/new-branch.component';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
-import { DiscardChangeConfirmationDialogComponent } from './components/discard-change-confirmation-dialog/discard-change-confirmation-dialog.compoment';
+import { DiscardChangeConfirmationComponent } from './components/discard-change-confirmation/discard-change-confirmation.compoment';
 import { LoggerService } from './services/logger.service';
 import { ErrorService } from './services/error.service';
 import { ConsoleLoggerService } from './services/consolelogger.service';
@@ -59,14 +59,14 @@ import { BinarydiffComponent } from './components/binarydiff/binarydiff.componen
     BranchComponent,
     NewBranchComponent,
     ErrorDialogComponent,
-    DiscardChangeConfirmationDialogComponent,
+    DiscardChangeConfirmationComponent,
     DragDirective,
     RightClickDirective,
     BinarydiffComponent,
   ],
   entryComponents: [
     ErrorDialogComponent,
-    DiscardChangeConfirmationDialogComponent,
+    DiscardChangeConfirmationComponent,
     NewBranchComponent
   ],
   imports: [

@@ -6,7 +6,7 @@ import { AppWorkingFileChange } from '../../models/workingfile';
 import { FileDiff, Hunk, HunkLine, setHunkState } from '../../models/diff';
 import { DiffService } from '../../services/diff.service';
 import { LoggerService } from '../../services/logger.service';
-import { DiscardChangeConfirmationDialogComponent } from '../discard-change-confirmation-dialog/discard-change-confirmation-dialog.compoment'
+import { DiscardChangeConfirmationComponent } from '../discard-change-confirmation/discard-change-confirmation.compoment'
 
 @Component({
   selector: 'app-diff',
@@ -95,7 +95,7 @@ export class DiffComponent {
   }
 
   discardChanges(file: AppWorkingFileChange): void {
-    this.dialog.open(DiscardChangeConfirmationDialogComponent, {
+    this.dialog.open(DiscardChangeConfirmationComponent, {
       data: { files: [file] }
     }).afterClosed().subscribe((result: boolean) => {
       if (result) {
