@@ -1,5 +1,5 @@
 <div class="path">
-  <div class="dir" *ngIf="file.dir !== '.'">{{file.dir}}</div>
-  <div class="sep" *ngIf="file.dir !== '.'">{{file.sep}}</div>
-  <div class="filename">{{file.filename}}</div>
+  <div class="dir" [style.color]="secondaryColor" *ngIf="file.dir !== '.'">{{file.dir}}</div>
+  <div class="sep" [style.color]="secondaryColor" *ngIf="file.dir !== '.'">{{file.sep}}</div>
+  <div class="filename" [style.color]="primaryColor">{{file.filename}}</div>
 </div>

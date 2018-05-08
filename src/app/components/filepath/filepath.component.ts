@@ -8,4 +8,6 @@ import { AppWorkingFileChange } from '../../models/workingfile';
 })
 export class FilepathComponent {
   @Input() file: AppWorkingFileChange;
+  @Input() primaryColor: string;
+  @Input() secondaryColor: string;
 }

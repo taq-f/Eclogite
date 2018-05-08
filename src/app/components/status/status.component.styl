@@ -16,16 +16,17 @@
   list-style none
 
 .label
+  color #fff
   display inline-block
-  &.unstaged
-    &::first-letter
-      color #EF5350
-  &.staged
-    &::first-letter
-      color #66BB6A
-  &.conflicted
-    &::first-letter
-      color #FF6F00
+  // &.unstaged
+  //   &::first-letter
+  //     color #EF5350
+  // &.staged
+  //   &::first-letter
+  //     color #66BB6A
+  // &.conflicted
+  //   &::first-letter
+  //     color #FF6F00
 
 .no-item
   align-items center
@@ -33,7 +34,7 @@
   height 30px
   padding 0 layout-spacing-small
   &::after
-    color font-color-secondary-text
+    color #BDBDBD
     content "// No Item : )"
     font-size font-size-small
 

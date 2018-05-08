@@ -1,7 +1,8 @@
 <div class="wrapper" [@select]="selectState" [@flyin]="'in'">
   <div class="change-entry">
     <div class="path">
-      <app-filepath [file]="change"></app-filepath>
+      <app-filepath [file]="change" [primaryColor]="selectState === 'unselected' ? '#FFF' : '#000'" [secondaryColor]="selectState === 'unselected' ? '#BDBDBD' : '#616161'">
+      </app-filepath>
     </div>
     <i class="icon material-icons {{toIconText(change.state)}}">{{toIconText(change.state)}}</i>
   </div>
