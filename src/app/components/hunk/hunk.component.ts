@@ -7,7 +7,7 @@ import { Hunk, HunkLine, SelectedState, setHunkState } from '../../models/diff';
 @Component({
   selector: 'app-hunk',
   templateUrl: './hunk.component.html',
-  styleUrls: ['./hunk.component.styl'],
+  styleUrls: ['./hunk.component.scss'],
   animations: [
     trigger('fadein', [
       state('in', style({ opacity: 1 })),
@@ -57,10 +57,8 @@ export class HunkComponent implements OnInit {
 
     if (this.fileChange.indexState === 'unstaged') {
       this.buttonText = 'Stage Hunk';
-      this.buttonColor = 'primary';
     } else if (this.fileChange.indexState === 'staged') {
       this.buttonText = 'Unstage Hunk';
-      this.buttonColor = 'accent';
     } else {
       this.buttonText = undefined;
       this.buttonColor = undefined;
