@@ -6,7 +6,7 @@ import { AppWorkingFileChange } from '../../models/workingfile';
 import { FileDiff, Hunk, HunkLine, setHunkState } from '../../models/diff';
 import { DiffService } from '../../services/diff.service';
 import { LoggerService } from '../../services/logger.service';
-import { DiscardChangeConfirmationComponent } from '../discard-change-confirmation/discard-change-confirmation.compoment'
+import { DiscardChangeConfirmationComponent } from '../discard-change-confirmation/discard-change-confirmation.compoment';
 
 @Component({
   selector: 'app-diff',
