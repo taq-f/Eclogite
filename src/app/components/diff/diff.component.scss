@@ -1,21 +1,29 @@
 @import "../../styles/_variables";
 
+// layout
+
 .container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.file-opening {
-  border-bottom: var(--devider);
+.diff {
+  flex: 1;
+}
+
+.file-operation {
+  flex: 0 0 50px;
+}
+
+.file-operation {
+  align-items: center;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
-  min-height: 50px;
   padding: var(--spacing-small);
 }
 
-// .hunk-container,
 .image-container {
   margin-left: var(--spacing-normal);
   margin-right: var(--spacing-normal);
@@ -23,10 +31,6 @@
   &:last-child {
     margin-bottom: var(--spacing-normal);
   }
-}
-
-.diff {
-  flex: 1;
 }
 
 .no-diff {
