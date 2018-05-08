@@ -7,7 +7,20 @@ import { AppWorkingFileChange } from '../../models/workingfile';
   styleUrls: ['./filepath.component.styl'],
 })
 export class FilepathComponent {
-  @Input() file: AppWorkingFileChange;
+  /**
+   * directory
+   */
+  @Input() dir: string;
+  /**
+   * filename
+   */
+  @Input() filename: string;
+  /**
+   * filename text color
+   */
   @Input() primaryColor: string;
+  /**
+   * directory text color
+   */
   @Input() secondaryColor: string;
 }
