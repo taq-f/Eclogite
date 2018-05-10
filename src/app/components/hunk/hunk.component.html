@@ -1,4 +1,4 @@
-<div>
+<div class="hunk">
   <div class="header {{hunk.selectedState}}" (click)="toggleHunkSelectState(hunk)">
     <div class="check">
       <span *ngIf="editable">
@@ -6,23 +6,21 @@
       </span>
     </div>
     <div class="content">
-      <pre>{{hunk.header.content}}</pre>
+      {{hunk.header.content}}
     </div>
     <div class="hunk-operation">
       <button mat-raised-button class="smaller" (click)="patch.emit(hunk)" [disabled]="hunk.selectedState === 'none'">{{buttonText}}</button>
     </div>
   </div>
 
-  <div class="lines">
-    <div *ngFor="let line of hunk.lines" class="line {{line.type}}" [class.selected]="line.selected" (click)="toggleSelected(line)">
-      <div class="diff-background {{line.type}}" [class.selected]="line.selected"></div>
-      <pre class="line-components">
-        <span class="check" style="line-height:1;"><i *ngIf="editable && line.type !== 'unchanged'" class="material-icons">{{line.selected ? 'check_box' : 'check_box_outline_blank'}}</i></span>
-        <span class="line-no line-no-before"><span *ngIf="line.oldLineNo > -1">{{line.oldLineNo}}</span></span>
-        <span class="line-no line-no-after"><span *ngIf="line.newLineNo > -1">{{line.newLineNo}}</span></span>
-        <span class="devider"></span>
-        <span class="content">{{line.content}}</span>
-      </pre>
-    </div>
+  <div *ngFor="let line of hunk.lines" class="line-wrapper" [class.selected]="line.selected" (click)="toggleSelected(line)">
+    <div class="background {{line.type}}" [class.selected]="line.selected"></div>
+    <pre class="line">
+      <span class="check" style="line-height:1;"><i *ngIf="editable && line.type !== 'unchanged'" class="material-icons">{{line.selected ? 'check_box' : 'check_box_outline_blank'}}</i></span>
+      <span class="line-no line-no-before"><span *ngIf="line.oldLineNo > -1">{{line.oldLineNo}}</span></span>
+      <span class="line-no line-no-after"><span *ngIf="line.newLineNo > -1">{{line.newLineNo}}</span></span>
+      <span class="devider"></span>
+      <span class="content">{{line.content}}</span>
+    </pre>
   </div>
 </div>

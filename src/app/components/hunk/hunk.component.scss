@@ -1,8 +1,102 @@
-@import "../../styles/_variables";
+.hunk {
+  position: relative;
+  // should fit to container
+  width: 100%;
+}
+
+// *** horizontal structures
+.header {
+  display: flex;
+  .check {
+    flex: 0 0 35px;
+  }
+  .content {
+    flex: 1;
+  }
+  .hunk-operation {
+    flex: 0 0 100px;
+  }
+}
+
+.line {
+  display: flex;
+  .check {
+    flex: 0 0 35px;
+  }
+  .line-no {
+    flex: 0 0 30px;
+  }
+  .devider {
+    flex: 0 0 4px;
+  }
+  .content {
+    flex: 1;
+  }
+}
+// *** end horizontal structures
+
+.line-wrapper {
+  // line wrapper contains actual line texts and div element that acts just as
+  // a background painter, and wapper must have position: relative for the div
+  // to fill the wrapper.
+  position: relative;
+}
+
+.background {
+  // fill parent
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  pointer-events: none; // should not capture any mouse event
+
+  opacity: 0.1; // default to this opacity (when not selected)
+  transition: opacity 100ms 0s ease-out;
+
+  &.plus {
+    background-color: #4caf50;
+  }
+  &.minus {
+    background-color: #f44336;
+  }
+  &.selected {
+    opacity: 0.3;
+  }
+}
+
+.line {
+  font-size: 11px;
+  line-height: 23px;
+  margin: 0;
+
+  // word break anywhere
+  white-space: pre-wrap;
+  word-break: break-all;
+
+  span {
+    display: inline-block;
+    z-index: 1;
+  }
+
+  .line-no {
+    color: var(--font-color-secondary-text);
+    margin-right: var(--spacing-small);
+    text-align: right;
+  }
+
+  .devider {
+    background-color: #e0e0e0;
+  }
+
+  .content {
+    margin-left: var(--spacing-small);
+    margin-right: var(--spacing-small);
+  }
+}
 
 .check {
   font-size: var(--font-size-normal);
-  flex: 0 0 35px;
   .material-icons {
     color: var(--font-color-secondary-text);
     font-size: var(--font-size-normal);
@@ -31,64 +125,6 @@
 
   .content {
     color: #fff;
-    flex: 1;
-  }
-
-  .hunk-operation {
-    flex: 0 0 100px;
   }
 }
 
-.line {
-  position: relative;
-
-  .line-components {
-    display: flex;
-    font-size: 11px;
-    line-height: 23px;
-    margin: 0;
-    white-space: pre-wrap;
-    word-break: break-all;
-    span {
-      display: inline-block;
-      z-index: 1;
-    }
-  }
-
-  .line-no {
-    color: var(--font-color-secondary-text);
-    flex: 0 0 30px;
-    margin-right: var(--spacing-small);
-    text-align: right;
-  }
-
-  .devider {
-    border-right: 4px solid #e0e0e0;
-    flex: 0 0 0px;
-  }
-
-  .content {
-    margin-left: var(--spacing-small);
-    margin-right: var(--spacing-small);
-  }
-}
-
-.diff-background {
-  bottom: 0;
-  left: 0;
-  opacity: 0.1;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transition: opacity 100ms 0s ease-out;
-  z-index: 0;
-  &.plus {
-    background-color: #4caf50;
-  }
-  &.minus {
-    background-color: #f44336;
-  }
-  &.selected {
-    opacity: 0.3;
-  }
-}
