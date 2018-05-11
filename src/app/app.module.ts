@@ -28,6 +28,7 @@ import { CommitComponent } from './components/commit/commit.component';
 import { DiffComponent } from './components/diff/diff.component';
 import { HunkComponent } from './components/hunk/hunk.component';
 import { BranchComponent } from './components/branch/branch.component';
+import { BranchListComponent } from './components/branch-list/branch-list.component';
 import { NewBranchComponent } from './components/new-branch/new-branch.component';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { DiscardChangeConfirmationComponent } from './components/discard-change-confirmation/discard-change-confirmation.compoment';
@@ -59,6 +60,7 @@ import { BinarydiffComponent } from './components/binarydiff/binarydiff.componen
     DiffComponent,
     HunkComponent,
     BranchComponent,
+    BranchListComponent,
     NewBranchComponent,
     ErrorDialogComponent,
     DiscardChangeConfirmationComponent,

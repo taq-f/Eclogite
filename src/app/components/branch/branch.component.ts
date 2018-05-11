@@ -21,6 +21,7 @@ export class BranchComponent implements OnInit {
    * List of existing branches.
    */
   branches: MatTableDataSource<Branch>;
+  b_ranches: ReadonlyArray<Branch>;
 
   /**
    * An action is in progress.
@@ -76,15 +77,6 @@ export class BranchComponent implements OnInit {
   }
 
   /**
-   * Apply filter with givin text.
-   */
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.branches.filter = filterValue;
-  }
-
-  /**
    * Get and load existing branches.
    */
   getBranch(): void {
@@ -98,7 +90,7 @@ export class BranchComponent implements OnInit {
           !v.name.endsWith('/HEAD') && // and not HEAD, which is a special one
           !upsteams.has(v.name));      // and not local upstream
 
-      this.branches = new MatTableDataSource<Branch>([...locals, ...remotes]);
+      this.b_ranches = [...locals, ...remotes];
     });
   }
 
