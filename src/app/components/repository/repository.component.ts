@@ -17,7 +17,6 @@ import { Repository } from '../../models/repository';
 })
 export class RepositoryComponent implements OnInit {
 
-  recentlyOpenedRepositories: ReadonlyArray<Repository>;
   repositories: ReadonlyArray<Repository>;
   repositoryPath: string;
 
@@ -32,15 +31,18 @@ export class RepositoryComponent implements OnInit {
   /**
    * Get repositories opened in the past, and show them.
    */
-  getRepositories(): void {
-    this.repositoryService.getRecentlyOpenedRepositories().subscribe(repositories => {
-      this.recentlyOpenedRepositories = repositories;
-    });
-    this.repositoryService.getRepositories().subscribe(repositories => {
-      // The list of all repositories sorted in alphabetical order of repository name.
-      this.repositories = repositories
-        .sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1);
-    });
+  getRepositories(showAll = false): void {
+    if (showAll) {
+      this.repositoryService.getRepositories().subscribe(repositories => {
+        // The list of all repositories sorted in alphabetical order of repository name.
+        this.repositories = repositories
+          .sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1);
+      });
+    } else {
+      this.repositoryService.getRecentlyOpenedRepositories().subscribe(repositories => {
+        this.repositories = repositories;
+      });
+    }
   }
 
   /**

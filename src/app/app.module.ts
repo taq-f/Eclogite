@@ -13,6 +13,8 @@ import { MatCardModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './components/app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -101,7 +103,9 @@ import { BinarydiffComponent } from './components/binarydiff/binarydiff.componen
     MatCardModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonToggleModule,
+    MatCheckboxModule
   ],
   providers: [
     { provide: LoggerService, useClass: ConsoleLoggerService },

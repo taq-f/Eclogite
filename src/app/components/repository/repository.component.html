@@ -1,6 +1,8 @@
 <div class="container center-h">
   <div class="content">
-    <h2>Local Repository</h2>
+
+    <h2> Local Repository </h2>
+
     <div class="line">
       <div class="take-rest">
         <mat-form-field class="smaller" style="width: 100%">
@@ -15,20 +17,18 @@
       </div>
     </div>
 
-    <h2>Repositories</h2>
-    <mat-tab-group>
-      <mat-tab label="Recent">
-        <div class="tab-content">
-          <app-repository-list [repositories]="recentlyOpenedRepositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-          </app-repository-list>
-        </div>
-      </mat-tab>
-      <mat-tab label="All">
-        <div class="tab-content">
-          <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
-          </app-repository-list>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+    <h2> Repositories </h2>
+
+    <mat-button-toggle-group [value]="'recently-opened'">
+      <mat-button-toggle value="all" (click)="getRepositories(true)">
+        All
+      </mat-button-toggle>
+      <mat-button-toggle value="recently-opened" (click)="getRepositories(false)">
+        Recently Opened
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <app-repository-list [repositories]="repositories" (openClick)="openRepository($event)" (deleteClick)="deleteRepository($event)">
+    </app-repository-list>
   </div>
 </div>
