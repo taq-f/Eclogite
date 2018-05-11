@@ -9,7 +9,7 @@
       {{hunk.header.content}}
     </div>
     <div class="hunk-operation">
-      <button mat-raised-button class="smaller" (click)="patch.emit(hunk)" [disabled]="hunk.selectedState === 'none'">{{buttonText}}</button>
+      <a href="#" class="stage" (click)="$event.preventDefault(); $event.stopPropagation(); patch.emit(hunk)">{{buttonText}}</a>
     </div>
   </div>
 

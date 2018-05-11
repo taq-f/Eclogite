@@ -13,9 +13,6 @@
   .content {
     flex: 1;
   }
-  .hunk-operation {
-    flex: 0 0 100px;
-  }
 }
 
 .line {
@@ -79,6 +76,10 @@
     z-index: 1;
   }
 
+  .check {
+    color: var(--font-color-secondary-text);
+  }
+
   .line-no {
     color: var(--font-color-secondary-text);
     margin-right: var(--spacing-small);
@@ -98,7 +99,6 @@
 .check {
   font-size: var(--font-size-normal);
   .material-icons {
-    color: var(--font-color-secondary-text);
     font-size: var(--font-size-normal);
     margin-top: 4px;
     text-align: center;
@@ -109,22 +109,23 @@
 .header {
   align-items: center;
   background-color: #1E88E5;
+  color: #fff;
   display: flex;
   font-size: var(--font-size-small);
-  height: 40px;
+  min-height: 30px;
+  position: relative;
 
   &.none {
     opacity: 0.6;
   }
 
-  .check {
-    .material-icons {
-      color:#fff;
-    }
-  }
+  .hunk-operation {
+    margin-left: var(--spacing-small);
+    margin-right: var(--spacing-small);
 
-  .content {
-    color: #fff;
+    .stage {
+      color: #FFF;
+    }
   }
 }
 
