@@ -7,7 +7,7 @@ import { Repository } from '../../models/repository';
 @Component({
   selector: 'app-status',
   templateUrl: './status.component.html',
-  styleUrls: ['./status.component.styl']
+  styleUrls: ['./status.component.scss']
 })
 export class StatusComponent {
 

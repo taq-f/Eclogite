@@ -1,0 +1,33 @@
+.changes {
+  margin: 0;
+  padding: 0;
+}
+
+.category {
+  align-items: center;
+  display: flex;
+  font-size: var(--font-size-normal);
+  height: 50px;
+  padding: 0 var(--spacing-small);
+}
+
+.change {
+  list-style: none;
+}
+
+.label {
+  color: #fff;
+  display: inline-block;
+}
+
+.no-item {
+  align-items: center;
+  display: flex;
+  height: 30px;
+  padding: 0 var(--spacing-small);
+  &::after {
+    color: #BDBDBD;
+    content: "// No Item : )";
+    font-size: var(--font-size-small);
+  }
+}
