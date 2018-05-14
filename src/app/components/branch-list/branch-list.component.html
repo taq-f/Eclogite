@@ -1,0 +1,39 @@
+<div>
+  <div class="filter-area">
+    <mat-form-field class="smaller">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table [dataSource]="branchSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        Name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let b" [class.current]="b.current" [class.can-checkout]="!b.current" [class.remote]="b.type === 'remote'"
+        (click)="b.current ? undefind : checkout.emit(b)">
+        {{b.name}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="upstream">
+      <mat-header-cell *matHeaderCellDef>
+        Upstream
+      </mat-header-cell>
+      <mat-cell *matCellDef="let b">
+        {{b.upstream}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef class="col-icon">
+      </mat-header-cell>
+      <mat-cell class="col-icon" *matCellDef="let b">
+        <i *ngIf="!b.current && b.type === 'local'" class="clickable material-icons" (click)="delete(b)">delete</i>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['name', 'upstream', 'delete']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'upstream', 'delete'];"></mat-row>
+  </mat-table>
+</div>
