@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { RepositoryService } from './repository.service';
 import { getDiff } from '../lib/git/diff';
-import { applyPatch, unstage, discardChange } from '../lib/git/apply';
+import { applyPatch, unstage, discardChange, stage } from '../lib/git/apply';
 import { FileDiff, Hunk } from '../models/diff';
 import { AppStatusEntry, AppWorkingFileChange } from '../models/workingfile';
 import { Repository } from '../models/repository';
@@ -31,6 +31,14 @@ export class DiffService {
     }
     return this.repositoryService.getLastOpenRepository()
       .concatMap(r => fromPromise(applyPatch(r.path, patch)));
+  }
+
+  stageFile(path: string, repositoryPath?: string): Observable<undefined> {
+    if (repositoryPath) {
+      return fromPromise(stage(repositoryPath, path));
+    }
+    return this.repositoryService.getLastOpenRepository()
+      .concatMap(r => fromPromise(stage(r.path, path)));
   }
 
   unstageFile(path: string, repositoryPath?: string): Observable<undefined> {

@@ -3,6 +3,9 @@ import { AppStatusEntry, AppWorkingFileChange, IndexState } from '../../models/w
 import { LoggerService } from '../../services/logger.service';
 import { StatusService } from '../../services/status.service';
 import { Repository } from '../../models/repository';
+import { MatDialog } from '@angular/material';
+import { DiffService } from '../../services/diff.service';
+import { DiscardChangeConfirmationComponent } from '../discard-change-confirmation/discard-change-confirmation.compoment';
 
 @Component({
   selector: 'app-status',
@@ -54,9 +57,11 @@ export class StatusComponent {
    */
   constructor(
     private logger: LoggerService,
-    private statusService: StatusService) { }
+    private statusService: StatusService,
+    private dialog: MatDialog,
+    private diffService: DiffService) { }
 
-  getChanges() {
+  getChanges(): void {
     this.statusService.getStatus(this._repository.path).subscribe(status => {
       const fileChanges = status.changes;
       const unstaged: AppWorkingFileChange[] = [];
@@ -115,8 +120,50 @@ export class StatusComponent {
   /**
    * Select specified change entry.
    */
-  selectChange(c: AppWorkingFileChange) {
+  selectChange(c: AppWorkingFileChange): void {
     this.selectedChange = c;
     this.entrySelectChange.emit(c);
+  }
+
+  /**
+   * Stage a file.
+   *
+   * @param change
+   */
+  stageFile(change: AppWorkingFileChange): void {
+    this.logger.info('stage file: not working right now', change.filename);
+    this.diffService.stageFile(change.path).subscribe(() => {
+      this.getChanges();
+    });
+  }
+
+  /**
+   * Unstage a file.
+   *
+   * @param change
+   */
+  unstageFile(change: AppWorkingFileChange): void {
+    this.logger.info('unstage file');
+    this.diffService.unstageFile(change.path).subscribe(() => {
+      this.getChanges();
+    });
+  }
+
+  /**
+   * Discard changes of a file.
+   *
+   * @param change
+   */
+  discardChanges(change: AppWorkingFileChange): void {
+    this.dialog.open(DiscardChangeConfirmationComponent, {
+      data: { files: [change] }
+    }).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.logger.info('discard changes of', change.filename);
+        this.diffService.discardChanges(change).subscribe(() => {
+          this.getChanges();
+        });
+      }
+    });
   }
 }

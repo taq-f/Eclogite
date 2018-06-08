@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { AppStatusEntry, AppWorkingFileChange } from '../../models/workingfile';
-import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-change-entry',
@@ -28,6 +27,10 @@ export class ChangeEntryComponent {
   set selected(v: boolean) {
     this.selectState = v ? 'selected' : 'unselected';
   }
+
+  @Output() clickAdd = new EventEmitter<AppWorkingFileChange>();
+  @Output() clickDiscard = new EventEmitter<AppWorkingFileChange>();
+  @Output() clickUnstage = new EventEmitter<AppWorkingFileChange>();
 
   selectState = 'unselected';
 

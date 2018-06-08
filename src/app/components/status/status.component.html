@@ -5,7 +5,7 @@
     </div>
   </li>
   <li class="change" *ngFor="let change of unstagedChanges" (click)="selectChange(change)">
-    <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+    <app-change-entry [change]="change" [selected]="selectedChange === change" (clickAdd)="stageFile(change)" (clickDiscard)="discardChanges(change)"></app-change-entry>
   </li>
   <li class="no-item" *ngIf="unstagedChanges.length === 0"></li>
 
@@ -15,7 +15,7 @@
     </div>
   </li>
   <li class="change" *ngFor="let change of stagedChanges" (click)="selectChange(change)">
-    <app-change-entry [change]="change" [selected]="selectedChange === change"></app-change-entry>
+    <app-change-entry [change]="change" [selected]="selectedChange === change" (clickUnstage)="unstageFile(change)"></app-change-entry>
   </li>
   <li class="no-item" *ngIf="stagedChanges.length === 0"></li>
 

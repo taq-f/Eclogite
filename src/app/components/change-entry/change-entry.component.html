@@ -5,6 +5,11 @@
         [secondaryColor]="selectState === 'unselected' ? '#BDBDBD' : '#616161'">
       </app-filepath>
     </div>
+    <div class="over" [style.color]="selectState === 'unselected' ? '#FFF' : '#000'" [style.backgroundColor]="selectState === 'unselected' ? '#2E3D49' : '#CFD8DC'">
+      <i *ngIf="change.indexState === 'unstaged'" class="material-icons clickable" title="stage file" (click)="$event.stopPropagation(); clickAdd.emit(change)">add</i>
+      <i *ngIf="change.indexState === 'unstaged'" class="material-icons clickable" title="discard change" (click)="$event.stopPropagation(); clickDiscard.emit(change)">delete</i>
+      <i *ngIf="change.indexState === 'staged'" class="material-icons clickable" title="unstage file" (click)="$event.stopPropagation(); clickUnstage.emit(change)">remove</i>
+    </div>
     <i class="icon material-icons {{toIconText(change.state)}}">{{toIconText(change.state)}}</i>
   </div>
 </div>

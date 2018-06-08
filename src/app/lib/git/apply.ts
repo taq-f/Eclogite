@@ -27,6 +27,27 @@ export async function applyPatch(
   return undefined;
 }
 
+export async function stage(
+  repositoryPath: string,
+  filepath: string
+): Promise<undefined> {
+  const result = await git(
+    [
+      'add',
+      filepath,
+    ],
+    repositoryPath,
+  );
+
+  if (result.exitCode !== 0) {
+    // TODO
+    console.log('err', result.stderr);
+    return;
+  }
+
+  return undefined;
+}
+
 export async function unstage(
   repositoryPath: string,
   filepath: string
