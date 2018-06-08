@@ -137,6 +137,13 @@ export class StatusComponent {
     });
   }
 
+  stageFiles(): void {
+    this.logger.info('stage all files');
+    this.diffService.stageFiles(this.unstagedChanges.map(c => c.path)).subscribe(() => {
+      this.getChanges();
+    });
+  }
+
   /**
    * Unstage a file.
    *
@@ -145,6 +152,13 @@ export class StatusComponent {
   unstageFile(change: AppWorkingFileChange): void {
     this.logger.info('unstage file');
     this.diffService.unstageFile(change.path).subscribe(() => {
+      this.getChanges();
+    });
+  }
+
+  unstageFiles(): void {
+    this.logger.info('unstage all files');
+    this.diffService.unstageFiles(this.stagedChanges.map(c => c.path)).subscribe(() => {
       this.getChanges();
     });
   }

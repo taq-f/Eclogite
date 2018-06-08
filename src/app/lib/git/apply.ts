@@ -27,7 +27,7 @@ export async function applyPatch(
   return undefined;
 }
 
-export async function stage(
+export async function addFile(
   repositoryPath: string,
   filepath: string
 ): Promise<undefined> {
@@ -35,6 +35,27 @@ export async function stage(
     [
       'add',
       filepath,
+    ],
+    repositoryPath,
+  );
+
+  if (result.exitCode !== 0) {
+    // TODO
+    console.log('err', result.stderr);
+    return;
+  }
+
+  return undefined;
+}
+
+export async function addFiles(
+  repositoryPath: string,
+  filepath: ReadonlyArray<string>
+): Promise<undefined> {
+  const result = await git(
+    [
+      'add',
+      ...filepath,
     ],
     repositoryPath,
   );
@@ -57,6 +78,28 @@ export async function unstage(
       'reset',
       'HEAD',
       filepath,
+    ],
+    repositoryPath,
+  );
+
+  if (result.exitCode !== 0) {
+    // TODO
+    console.log('err', result.stderr);
+    return;
+  }
+
+  return undefined;
+}
+
+export async function unstageFs(
+  repositoryPath: string,
+  filepath: ReadonlyArray<string>
+): Promise<undefined> {
+  const result = await git(
+    [
+      'reset',
+      'HEAD',
+      ...filepath,
     ],
     repositoryPath,
   );
