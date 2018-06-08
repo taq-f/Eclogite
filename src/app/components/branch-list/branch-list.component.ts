@@ -12,7 +12,7 @@ export class BranchListComponent {
   /**
    * Data source for MAT table.
    */
-  private branchSource: MatTableDataSource<Branch>;
+  branchSource: MatTableDataSource<Branch>;
 
   /**
    * List of branches to show.
