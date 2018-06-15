@@ -3,12 +3,17 @@
   padding: 0;
 }
 
+.list-item {
+  display: block;
+}
+
 .category {
   align-items: center;
   display: flex;
   font-size: var(--font-size-normal);
   height: 50px;
   padding: 0 var(--spacing-small);
+  position: relative;
 }
 
 .change {
@@ -43,4 +48,7 @@
 
 .icon {
   font-size: 20px;
+  color: #FFF;
+  position: absolute;
+  right: 10px;
 }
