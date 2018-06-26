@@ -10,15 +10,6 @@
   font-size: var(--font-size-small);
 }
 
-/* Customize icon colors here. Class names are equivalent to Material icons name. */
-.icon {
-  &.add_circle_outline { color: #009688; }
-  &.check_circle { color: #009688; }
-  &.delete { color: #FF5722; }
-  &.arrow_forward { color: #03A9F4; }
-  &.warning { color: #E91E63; }
-}
-
 .path {
   flex: 1;
   overflow-x: hidden;
@@ -29,22 +20,35 @@
   font-size: 20px;
 }
 
-.over {
-  align-items: center;
-  background-color: #2e3d49;
-  display: flex;
-  font-size: 20px;
-  height: 100%;
-  opacity: 0.8;
-  position: absolute;
-  // right: 40px;
-  left: 0px;
+.actions {
+  overflow: hidden;
+  transition: width 0.1s ease-out;
+  white-space: nowrap;
+
+  .icon {
+    margin-left: 0;
+  }
 }
 
-.wrapper {
-  &:not(:hover) {
-    .over {
-      display: none;
-    }
+.wrapper:hover {
+  .actions:not(.unstaged) {
+    width: 25px;
   }
+  .actions.unstaged {
+    width: 50px;
+  }
+}
+.wrapper:not(:hover) {
+  .actions {
+    width: 0px;
+  }
+}
+
+/* Customize icon colors here. Class names are equivalent to Material icons name. */
+.icon {
+  &.add_circle_outline { color: #009688; }
+  &.check_circle { color: #009688; }
+  &.delete { color: #FF5722; }
+  &.arrow_forward { color: #03A9F4; }
+  &.warning { color: #E91E63; }
 }

@@ -1,15 +1,17 @@
 <div class="wrapper" [@select]="selectState" [@flyin]="'in'">
   <div class="change-entry">
+    <div class="actions" [class.unstaged]="change.indexState === 'unstaged'" [style.color]="selectState === 'unselected' ? '#FFF' : '#000'">
+      <i *ngIf="change.indexState === 'unstaged'" class="icon material-icons clickable" title="stage file" (click)="$event.stopPropagation(); clickAdd.emit(change)">add</i>
+      <i *ngIf="change.indexState === 'unstaged'" class="icon material-icons clickable" title="discard change" (click)="$event.stopPropagation(); clickDiscard.emit(change)">delete</i>
+      <i *ngIf="change.indexState === 'staged'" class="icon material-icons clickable" title="unstage file" (click)="$event.stopPropagation(); clickUnstage.emit(change)">remove</i>
+    </div>
+
     <div class="path">
       <app-filepath [dir]="change.dir" [filename]="change.filename" [primaryColor]="selectState === 'unselected' ? '#FFF' : '#000'"
         [secondaryColor]="selectState === 'unselected' ? '#BDBDBD' : '#616161'">
       </app-filepath>
     </div>
-    <div class="over" [style.color]="selectState === 'unselected' ? '#FFF' : '#000'" [style.backgroundColor]="selectState === 'unselected' ? '#2E3D49' : '#CFD8DC'">
-      <i *ngIf="change.indexState === 'unstaged'" class="icon material-icons clickable" title="stage file" (click)="$event.stopPropagation(); clickAdd.emit(change)">add</i>
-      <i *ngIf="change.indexState === 'unstaged'" class="icon material-icons clickable" title="discard change" (click)="$event.stopPropagation(); clickDiscard.emit(change)">delete</i>
-      <i *ngIf="change.indexState === 'staged'" class="icon material-icons clickable" title="unstage file" (click)="$event.stopPropagation(); clickUnstage.emit(change)">remove</i>
-    </div>
+
     <i class="icon material-icons {{toIconText(change.state)}}">{{toIconText(change.state)}}</i>
   </div>
 </div>
